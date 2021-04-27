@@ -1,4 +1,4 @@
-package pt.isel.leic.ps.g42.Cri_Art.controller
+package pt.isel.leic.ps.g42.Cri_Art.controllers
 
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
