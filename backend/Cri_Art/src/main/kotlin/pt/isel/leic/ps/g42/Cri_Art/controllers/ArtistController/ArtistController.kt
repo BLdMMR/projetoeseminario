@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*
 import pt.isel.leic.ps.g42.Cri_Art.models.Artist
 import pt.isel.leic.ps.g42.Cri_Art.models.Tag
 import pt.isel.leic.ps.g42.Cri_Art.services.ArtistServices
+import java.util.*
 
 
 @RestController
@@ -11,12 +12,12 @@ import pt.isel.leic.ps.g42.Cri_Art.services.ArtistServices
 class ArtistController (private val services : ArtistServices){
 
     @GetMapping("/{aid}")
-    fun getSpecificArtist(@PathVariable("aid") artist_id :String) {
-        throw NotImplementedError()
+    fun getSpecificArtist(@PathVariable("aid") artist_id :String): Artist? {
+        return services.getSpecificArtist(UUID.fromString(artist_id))
     }
 
     @GetMapping
-    fun searchArtistOnTag(@RequestParam tagToSearchBy: String): List<Artist> {
+    fun searchArtistByTag(@RequestParam tagToSearchBy: String): List<Artist> {
         val tag = Tag(tagToSearchBy)
         return services.getArtistsByTag(tag);
     }
@@ -27,7 +28,7 @@ class ArtistController (private val services : ArtistServices){
         return services.createArtist(artist)
     }
 
-    @GetMapping("/debug")
+    @GetMapping //DEBUG
     fun getAllArtists(): List<Artist> {
         return services.getAllArtists()
     }

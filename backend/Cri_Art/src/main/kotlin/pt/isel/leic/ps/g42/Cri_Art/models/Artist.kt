@@ -4,12 +4,12 @@ import java.util.*
 
 
 class Artist (
-        val username: String,
-        val email: String,
-        val description: String,
-        val artist_id: UUID = UUID.randomUUID(),
-        val reviews: Float? = null,
-        val tags: List<Tag>? = null,
-        val works: List<Work>? = null
+    val username: String,
+    val email: String,
+    val description: String,
+    val artist_id: UUID = UUID.randomUUID(),
+    val reviews: Float? = null,
+    var tags: LinkedList<Tag>? = null,
+    val works: LinkedList<Work>? = null
 ) {
 }

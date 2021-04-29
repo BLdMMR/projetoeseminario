@@ -1,9 +1,6 @@
 package pt.isel.leic.ps.g42.Cri_Art.controllers.WorkController
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 
 @RestController
@@ -11,13 +8,22 @@ import org.springframework.web.bind.annotation.RestController
 class WorkController {
 
     @GetMapping
-    fun GetAllWorks(@PathVariable("aid") artist_id: String) {
-        throw NotImplementedError()
+    fun getAllWorks(@PathVariable("aid") artist_id: String) {
+
     }
+
+    /**
+     *Questions for the input to be an image since the data input probably is or will be JSON
+     * **/
+//    @PostMapping
+//    fun addWork(@PathVariable("aid"), workInput :WorkInputModel) {
+//
+//    }
 
     @GetMapping("/{wid}")
-    fun getSpecificWork(@PathVariable("wid") work_id: String) {
+    fun getSpecificWork(@PathVariable("aid") artist_id: String, @PathVariable("wid") work_id: String) {
 
     }
+
 
 }
