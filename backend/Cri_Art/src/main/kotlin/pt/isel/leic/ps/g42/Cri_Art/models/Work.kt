@@ -1,5 +1,6 @@
 package pt.isel.leic.ps.g42.Cri_Art.models
 
+import java.io.File
 import java.util.*
 
 class Work constructor(
@@ -9,4 +10,5 @@ class Work constructor(
         val description: String,
         val reviews: Float?,
         val tags: List<Tag>?,
+        val workFile: File
 )
