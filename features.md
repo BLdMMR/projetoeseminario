@@ -25,7 +25,7 @@
 ## Moderador
  **Nota: O moderador é o único tipo de perfil que não pode ser criado por um utilizador e não tem por objectivo o contacto ou exposição de e sobre arte**
  - Remover trabalhos de artistas por conteúdo impróprio
- - Remover comentários relativos a abusos de linguagem de conteúdo impróprio
+ - Remover comentários relativos a abusos de linguagem e conteúdo impróprio
  - Remover contas (tanto de clientes como de artistas) por constante abuso de linguagem ou de conteúdos impróprios (_BAN_)
 
 # _Tags_ Disponíveis (Tanto para perfil como para trabalho)
