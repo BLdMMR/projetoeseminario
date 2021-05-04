@@ -8,7 +8,9 @@ class Work constructor(
         val work_name: String,
         val owner: UUID,
         val description: String,
-        val reviews: Float?,
-        val tags: List<Tag>?,
-        val workFile: File
-)
+        val reviews: Float = 0.0f,
+        val tags: List<Tag>? = listOf(Tag()),
+        val workFile: File? = null
+) {
+        constructor(ownerId :UUID) : this(UUID(0L, 0L), "", ownerId, "", 0.0f)
+}

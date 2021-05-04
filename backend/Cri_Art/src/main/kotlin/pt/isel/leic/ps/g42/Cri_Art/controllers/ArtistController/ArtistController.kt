@@ -16,14 +16,14 @@ class ArtistController (private val services : ArtistServices){
         return services.getSpecificArtist(UUID.fromString(artist_id))
     }
 
-    @GetMapping
+    @GetMapping("/tag")
     fun searchArtistByTag(@RequestParam tagToSearchBy: String): List<Artist> {
         val tag = Tag(tagToSearchBy)
         return services.getArtistsByTag(tag);
     }
 
     @PostMapping
-    fun createArtist(@RequestBody artistIM: ArtistInputModel): Boolean {
+    fun createArtist(@RequestBody artistIM: ArtistInputModel): Artist {
         val artist = artistIM.toArtist()
         return services.createArtist(artist)
     }
