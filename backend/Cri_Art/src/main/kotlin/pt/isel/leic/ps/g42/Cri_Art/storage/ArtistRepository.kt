@@ -1,21 +1,19 @@
 package pt.isel.leic.ps.g42.Cri_Art.storage
 
 import org.slf4j.LoggerFactory
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 import org.springframework.stereotype.Component
 import pt.isel.leic.ps.g42.Cri_Art.models.Artist
 import pt.isel.leic.ps.g42.Cri_Art.models.Tag
-import java.net.URI
-import java.net.http.HttpClient
-import java.net.http.HttpRequest
-import java.net.http.HttpResponse
+import pt.isel.leic.ps.g42.Cri_Art.storage.irepositories.IArtistRepository
 import java.util.*
-import java.util.logging.Logger
 
-interface IArtistRepository : ElasticsearchRepository<Artist, UUID>
+
+/**
+* To run elasticsearch: docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.12.1
+* **/
 
 @Component
-class ArtistRepository (private val es_repository :IArtistRepository){
+class ArtistRepository (private val es_repository : IArtistRepository){
 
     private val logger = LoggerFactory.getLogger("Artist Repository Logger")
 
