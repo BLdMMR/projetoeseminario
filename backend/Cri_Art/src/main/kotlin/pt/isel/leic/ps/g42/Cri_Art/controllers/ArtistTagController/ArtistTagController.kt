@@ -16,8 +16,8 @@ class ArtistTagController(private val services :ArtistServices) {
         return services.addTagToArtist(UUID.fromString(artist_id), tag)
     }
 
-    @PatchMapping
-    fun removeTagFromArtist(@PathVariable("aid") artist_id: String, @RequestParam("remove") tagToRemove: String): Artist? {
+    @PatchMapping("/{tag}")
+    fun removeTagFromArtist(@PathVariable("aid") artist_id: String, @PathVariable("tag") tagToRemove: String): Artist? {
         val tag = Tag(tagToRemove)
         return services.removeTagFromArtist(UUID.fromString(artist_id), tag)
     }

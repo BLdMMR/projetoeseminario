@@ -9,7 +9,7 @@ import java.util.*
 @Component
 class ArtistServices(private val repository: ArtistRepository) {
 
-    fun createArtist(artist: Artist): Boolean{
+    fun createArtist(artist: Artist): Artist {
         return repository.addArtist(artist)
     }
 
