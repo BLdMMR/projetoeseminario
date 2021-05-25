@@ -14,7 +14,7 @@ import pt.isel.leic.ps.g42.Cri_Art.services.HomeServices
 
 @RestController
 @RequestMapping("/")
-class HomeController (private val services : HomeServices){
+class HomeController (private val services : HomeServices) {
 
     @GetMapping
     fun getHomePage(): ResponseEntity<String> {
@@ -23,7 +23,6 @@ class HomeController (private val services : HomeServices){
                 .status(200)
                 .body("Welcome to the homepage!")
     }
-
 
 
 }
