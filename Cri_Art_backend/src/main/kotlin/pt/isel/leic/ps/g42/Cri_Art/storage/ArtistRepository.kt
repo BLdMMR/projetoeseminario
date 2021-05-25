@@ -1,17 +1,11 @@
 package pt.isel.leic.ps.g42.Cri_Art.storage
 
-import org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchDataAutoConfiguration
-import org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchRepositoriesAutoConfiguration
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
-import org.yaml.snakeyaml.tokens.Token
 import pt.isel.leic.ps.g42.Cri_Art.models.Artist
 import pt.isel.leic.ps.g42.Cri_Art.models.Tag
 import pt.isel.leic.ps.g42.Cri_Art.storage.irepositories.IArtistRepository
 import java.util.*
-
-interface IArtistRepository :ElasticsearchRepository<Artist, UUID>
 
 
 /**
