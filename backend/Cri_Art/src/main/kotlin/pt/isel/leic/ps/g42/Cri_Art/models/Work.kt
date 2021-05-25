@@ -5,7 +5,7 @@ import java.io.File
 import java.util.*
 
 class Work(
-        val work_id: UUID = UUID.randomUUID(),
+        val id: UUID = UUID.randomUUID(),
         val work_name: String,
         val content: MultipartFile?,
         val owner: UUID,
