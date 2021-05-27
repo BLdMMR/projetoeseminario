@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.elasticsearch.annotations.Document
 import java.util.*
 
-@Document(indexName = "cri_art_index")
+@Document(indexName = "artist")
 data class Artist(
     val username: String,
     val email: String,

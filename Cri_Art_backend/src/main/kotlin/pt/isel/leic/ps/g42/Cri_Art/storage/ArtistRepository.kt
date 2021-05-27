@@ -2,9 +2,11 @@ package pt.isel.leic.ps.g42.Cri_Art.storage
 
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
+import pt.isel.leic.ps.g42.Cri_Art.STORAGE_LOCATION
 import pt.isel.leic.ps.g42.Cri_Art.models.Artist
 import pt.isel.leic.ps.g42.Cri_Art.models.Tag
 import pt.isel.leic.ps.g42.Cri_Art.storage.irepositories.IArtistRepository
+import java.io.File
 import java.util.*
 
 
@@ -18,6 +20,7 @@ class ArtistRepository (private val es_repository : IArtistRepository){
     private val logger = LoggerFactory.getLogger("Artist Repository Logger")
 
     fun addArtist(artist: Artist): Artist {
+        File("$STORAGE_LOCATION\\${artist.artist_id}").mkdir()
         return es_repository.save(artist)
     }
 
