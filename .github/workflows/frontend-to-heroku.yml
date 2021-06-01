@@ -37,7 +37,7 @@ jobs:
           # (Optional, default: "./")
           # Dockerfile directory.
           # For example, if you have a Dockerfile in the root of your project, leave it as follows:
-          dockerfile_directory: ./
+          dockerfile_directory: ./Cri_Art_frontend
 
           # (Optional, default: "Dockerfile")
           # Dockerfile name.
@@ -51,10 +51,7 @@ jobs:
           # Select the process type for which you want the docker container to be uploaded.
           # By default, this argument is set to "web".
           # For more information look at https://devcenter.heroku.com/articles/process-model
-          process_type: web
-          
-          working-directory: ./Cri_Art_frontend
-          
+          process_type: web          
    
           
 ### ⬆ IMPORTANT PART ⬆ ###
