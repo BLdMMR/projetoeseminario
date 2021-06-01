@@ -3,12 +3,14 @@ package pt.isel.leic.ps.g42.Cri_Art.services
 import org.springframework.stereotype.Component
 import pt.isel.leic.ps.g42.Cri_Art.models.Work
 import pt.isel.leic.ps.g42.Cri_Art.storage.WorkRepository
+import java.io.File
 import java.util.*
+
 
 @Component
 class WorkServices (private val repository : WorkRepository){
-    fun addWork(aid: UUID, toWork: Work) {
-
+    fun addWork(aid: UUID, work: Work) {
+        repository.addWork(aid, work)
     }
 
 }
