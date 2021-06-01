@@ -18,7 +18,6 @@ jobs:
 ### ⬇ IMPORTANT PART ⬇ ###
 
       - name: Build, Push and Release a Docker container to Heroku. # Your custom step name
-        working-directory: ./Cri_Art_frontend
         uses: gonuit/heroku-docker-deploy@v1.3.2 # GitHub action name (leave it as it is).
         with:
           # Below you must provide variables for your Heroku app.
@@ -47,12 +46,14 @@ jobs:
           # (Optional, default: "")
           # Additional options of docker build command.
           docker_options: "--no-cache"
-
+        
           # (Optional, default: "web")
           # Select the process type for which you want the docker container to be uploaded.
           # By default, this argument is set to "web".
           # For more information look at https://devcenter.heroku.com/articles/process-model
           process_type: web
+          
+          working-directory: ./Cri_Art_frontend
           
    
           
