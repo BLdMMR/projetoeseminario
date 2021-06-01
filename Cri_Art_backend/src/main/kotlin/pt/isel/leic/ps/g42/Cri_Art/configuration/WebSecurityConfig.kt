@@ -28,8 +28,7 @@ class WebSecurityConfig(
                 .permitAll()
                 .anyRequest()
                 .authenticated()
-            .and()
-                .oauth2ResourceServer { oauth -> oauth.jwt() }
+            //.and().oauth2ResourceServer { oauth -> oauth.jwt() }
     }
 
     override fun userDetailsService(): UserDetailsService = this.registeredUserDetailsService

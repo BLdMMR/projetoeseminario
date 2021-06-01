@@ -10,4 +10,9 @@ class Hello {
     fun helloWorld(): String {
         return "hello world!"
     }
+
+    @GetMapping("/api/hello")
+    fun apiHelloWorld(): String {
+        return "hello secure world!"
+    }
 }
