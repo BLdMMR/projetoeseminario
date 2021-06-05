@@ -13,5 +13,4 @@ USER spring:spring
 ARG JAR_FILE=/home/gradle/src/build/libs/Cri_Art.jar
 COPY --from=build-stage ${JAR_FILE} app.jar
 
-EXPOSE 8080
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java", "-jar", "-Dspring.active.profiles=prod", "/app.jar"]

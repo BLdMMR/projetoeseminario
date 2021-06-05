@@ -1,12 +1,12 @@
 # Your workflow name.
-name: Deploy Cri.Art website to heroku.
+name: Deploy Cri.Art backend service to heroku.
 
 # Run workflow on every push to master branch.
 on:
   push:
     branches: [ main ]
     paths:
-    - 'Cri_Art_frontend/**'
+    - 'Cri_Art_backend/**'
 
 # Your workflows jobs.
 jobs:
@@ -34,12 +34,12 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           
           # Name of the heroku application to which the build is to be sent.
-          heroku_app_name: cri-art
+          heroku_app_name: cri-art-backend
 
           # (Optional, default: "./")
           # Dockerfile directory.
           # For example, if you have a Dockerfile in the root of your project, leave it as follows:
-          dockerfile_directory: ./Cri_Art_frontend
+          dockerfile_directory: ./Cri_Art_backend
 
           # (Optional, default: "Dockerfile")
           # Dockerfile name.
