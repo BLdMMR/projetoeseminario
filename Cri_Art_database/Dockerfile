@@ -1,6 +1,5 @@
 
-FROM elasticsearch:5.3-alpine
-
+FROM elasticsearch:6.8.16
 
 WORKDIR /usr/share/elasticsearch
 
@@ -13,6 +12,5 @@ ENV ES_JAVA_OPTS="-Xms256m -Xmx256m"
 
 VOLUME data
 
-
-CMD elasticsearch -E http.port=${PORT}
+CMD elasticsearch -E http.port=${PORT} -E discovery.type=single-node
 
