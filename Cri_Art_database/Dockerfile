@@ -1,14 +1,11 @@
 
-FROM elasticsearch:7.10.1
+FROM elasticsearch:7.7.0
 
 WORKDIR /usr/share/elasticsearch
 
-# RUN rm -rf plugins
-# RUN mkdir plugins
-
 USER elasticsearch
 
-ENV ES_JAVA_OPTS="-Xms256m -Xmx256m"
+ENV ES_JAVA_OPTS="-Xms192m -Xmx192m"
 
 VOLUME data
 
