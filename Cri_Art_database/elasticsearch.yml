@@ -1,6 +1,6 @@
 
 http:
-    port: ${PORT}
+    port: ${{ PORT }}
   
 discovery:
     type: single-node
