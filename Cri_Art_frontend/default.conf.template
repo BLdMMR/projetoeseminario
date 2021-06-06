@@ -5,4 +5,8 @@ server {
     root   /usr/share/nginx/html;
     index  index.html index.htm;
   }
+  
+  location /api {
+	proxy_pass https://cri-art-backend.herokuapp.com/api/;
+  }
 }
