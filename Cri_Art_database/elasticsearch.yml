@@ -1,6 +1,0 @@
-
-http:
-    port: ${{ PORT }}
-  
-discovery:
-    type: single-node
