@@ -1,5 +1,5 @@
 
-FROM elasticsearch:6.8.16
+FROM elasticsearch:7.8.0
 
 WORKDIR /usr/share/elasticsearch
 
