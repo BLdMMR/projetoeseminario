@@ -1,4 +1,3 @@
-
 FROM elasticsearch:7.7.0
 
 WORKDIR /usr/share/elasticsearch
@@ -10,4 +9,3 @@ ENV ES_JAVA_OPTS="-Xms192m -Xmx192m"
 VOLUME data
 
 CMD elasticsearch -E http.port=${PORT} -E discovery.type=single-node
-
