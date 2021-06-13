@@ -4,12 +4,12 @@ import org.springframework.stereotype.Component
 import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 
-//
-//@Service
-//class UserService (private val repository: UserRepository){
-//
-//    fun signUpUser(username :String , name :String, password :String, mail :String) :ProtectedUser {
-//        if
-//    }
-//
-//}
+
+@Service
+class UserService (private val repository: UserRepository){
+
+    fun signUpUser(username :String , name :String, password :String, mail :String) : ProtectedUser? {
+        return null
+    }
+
+}
