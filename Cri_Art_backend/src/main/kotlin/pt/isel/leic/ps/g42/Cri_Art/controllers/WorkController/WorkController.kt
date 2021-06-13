@@ -8,7 +8,7 @@ import java.util.*
 
 
 @RestController
-@RequestMapping("arrtist/{aid}/worksofart")
+@RequestMapping("artist/{aid}/worksofart")
 class WorkController (private val services : WorkServices){
 
     val log = LoggerFactory.getLogger("WorkControllerLogger")
@@ -21,10 +21,8 @@ class WorkController (private val services : WorkServices){
     @PostMapping
     fun addWork(@PathVariable("aid") artist_id :String, workInput :WorkInputModel) {
         val aid = UUID.fromString(artist_id)
+
         services.addWork(aid, workInput.toWork(aid))
-        val fileExtension = workInput.content.contentType?.split("/")?.get(1)
-        log.info("fileExtension: $fileExtension")
-        val file = File("", workInput.name + ".${fileExtension}").writeBytes(workInput.content.bytes)
 
         log.info("Work Saved")
     }

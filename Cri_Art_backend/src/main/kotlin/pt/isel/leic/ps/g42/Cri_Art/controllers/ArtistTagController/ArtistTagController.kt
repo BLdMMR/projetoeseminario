@@ -7,7 +7,7 @@ import pt.isel.leic.ps.g42.Cri_Art.services.ArtistServices
 import java.util.*
 
 @RestController
-@RequestMapping("/artist/{aid}/tags")
+@RequestMapping("/artist/{aid}/tag")
 class ArtistTagController(private val services :ArtistServices) {
 
     @PatchMapping
