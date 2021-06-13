@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
+        http.cors().and().csrf().disable()
+
         http.authorizeRequests()
             .antMatchers("/**")
             .permitAll()
