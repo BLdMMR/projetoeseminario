@@ -3,6 +3,7 @@ package pt.isel.leic.ps.g42.Cri_Art.storage
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 import org.springframework.stereotype.Component
 import pt.isel.leic.ps.g42.Cri_Art.STORAGE_LOCATION
+import pt.isel.leic.ps.g42.Cri_Art.models.Tag
 import pt.isel.leic.ps.g42.Cri_Art.models.Work
 import pt.isel.leic.ps.g42.Cri_Art.models.WorkSaveModel
 import pt.isel.leic.ps.g42.Cri_Art.storage.irepositories.IWorkRepository
@@ -26,6 +27,16 @@ class WorkRepository (private val es_repository : IWorkRepository){
         val file = File(workToSave.filePath, work.work_name + ".${fileExtension}").writeBytes((work.content?.bytes ?: ByteArray(0)))
 
         es_repository.save(workToSave)
+    }
+
+    fun searchWork(nameToSearchBy: String): List<WorkSaveModel> {
+        val all = es_repository.findAll()
+        return all.filter { it.work_name == nameToSearchBy || it.work_name.contains(nameToSearchBy) || it.description!!.contains(nameToSearchBy) }
+    }
+
+    fun getAllWorksByTag(tag: Tag): List<WorkSaveModel> {
+        val all = es_repository.findAll()
+        return all.filter { it.tags!!.contains(tag) }
     }
 
 }
