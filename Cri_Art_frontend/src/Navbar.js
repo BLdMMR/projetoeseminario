@@ -1,12 +1,12 @@
 import  React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+/* import {Link} from 'react-router-dom'; */
 import { Button } from './Button';
 import './Navbar.css';
 
 function Navbar() {
 	const [click, setClick] = useState(false);
 	const Clickhandler = () => setClick(!click);
-	const closedmenu= () => setClick(false);
+	/* const closedmenu= () => setClick(false); */
 	const [button, setButton] = useState(true);
 	const showButton = ()=> {
 		if(window.innerWidth<=960){
@@ -23,23 +23,25 @@ function Navbar() {
 	return(<>
 	<nav className='navbar'>
 	<div className='navbar-stuff'>
-	<Link to="/" className='logo' onClick={closedmenu}>
+	{/* <Link to="/" className='logo' onClick={closedmenu}>
 		Cri_Art
 		<i class='fab fa-typo3' />
-	</Link>
+	</Link> */}
 	<div className='menu' onClick={Clickhandler}>
 		<i className={click ? 'fas fa-times' : 'fas fa-bars'} />
 	</div>
 	   <ul className={click ? 'menu-active' : 'menu-inactive'} >
 		   <li className='navItem'>
-		   <Link to="/" className='navLinks' onClick={closedmenu}>
+			   HOME
+		   {/* <Link to="/" className='navLinks' onClick={closedmenu}>
 			Home
-			</Link>
+			</Link> */}
 		   </li>
 		   <li className='navItem'>
-		   <Link to="/login" className='navLinksclosed' onClick={closedmenu}>
+			   LOGIN
+		   {/* <Link to="/login" className='navLinksclosed' onClick={closedmenu}>
 			Login
-			</Link>
+			</Link> */}
 		   
 		   </li>
 	   </ul>

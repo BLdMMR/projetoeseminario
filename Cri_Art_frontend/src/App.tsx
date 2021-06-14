@@ -1,11 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
+import logo from './logo_grayblue.svg';
 import './App.css';
+import Navbar from './Navbar';
+import HomePage from './HomePage';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" id='app'>
+      <img src={logo} alt="" />
+      {/* <Navbar/> */}
       <h1>Welcome to CRI_ART</h1>
+      <HomePage/>
     </div>
 
   )
