@@ -37,6 +37,22 @@
   }
 }
 
-#app {
+#search {
+  width: 1000px;
+  height: 33px;
+  margin-top: 200px;
+  margin-right: 10px;
+}
+
+button {
+  height: 40px;
+  width: 100px;
+}
+
+#logo {
+  height: 150px;
+}
+
+nav {
   background-color: #fF7F00;
 }

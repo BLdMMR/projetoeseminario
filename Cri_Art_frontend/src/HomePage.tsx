@@ -1,12 +1,17 @@
 import React from 'react'
+import logo from './logo_grayblue.svg'
 
 
 function HomePage() {
     return(
         <div>
-            <h1>Paragraphs</h1>
-            <p>Paragraph 1</p>
-            <p>Paragraph 2</p>
+        <nav className='navbar'>
+        <img src={logo} id='logo' alt="" />
+        {/* <Navbar/> */}
+        </nav>
+        <form action="/home/search" method="get"></form>
+        <input id='search'></input>
+        <button type="submit">Search</button>
         </div>
     )
 }

@@ -5,14 +5,11 @@ import Navbar from './Navbar';
 import HomePage from './HomePage';
 
 function App() {
-  return (
+  return (<>
     <div className="App" id='app'>
-      <img src={logo} alt="" />
-      {/* <Navbar/> */}
-      <h1>Welcome to CRI_ART</h1>
       <HomePage/>
-    </div>
-
+    </div>  
+    </>
   )
   /* return (
     <div className="App">
