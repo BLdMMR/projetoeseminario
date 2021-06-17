@@ -2,6 +2,7 @@ import React from 'react'
 import logo from './logo_grayblue.svg'
 
 
+
 function HomePage() {
     return(
         <div>
@@ -14,6 +15,10 @@ function HomePage() {
         <button type="submit">Search</button>
         </div>
     )
+}
+
+function search() {
+
 }
 
 export default HomePage

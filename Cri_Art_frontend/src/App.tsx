@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { Component } from 'react';
 import logo from './logo_grayblue.svg';
 import './App.css';
 import Navbar from './Navbar';
 import HomePage from './HomePage';
 
-function App() {
+class App extends Component  {
+  render() {
+    return (<>
+      <div className="App" id='app'>
+        <HomePage/>
+      </div>  
+      </>
+    )
+  }
+}
+
+/* function App() {
   return (<>
     <div className="App" id='app'>
       <HomePage/>
@@ -28,7 +39,7 @@ function App() {
         </a>
       </header>
     </div>
-  ); */
-}
+  ); 
+} */
 
 export default App;

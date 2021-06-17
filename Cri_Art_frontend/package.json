@@ -23,6 +23,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "https://cri_art_backend.herokuapp.com",
   "eslintConfig": {
     "extends": [
       "react-app",
