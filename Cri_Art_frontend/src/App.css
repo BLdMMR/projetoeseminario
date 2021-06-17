@@ -50,9 +50,18 @@ button {
 }
 
 #logo {
-  height: 150px;
+  margin: 10px;
+  text-align: left;
+}
+
+#login {
+  height: 50px;
+  margin-top: 25px;
+
 }
 
 nav {
-  background-color: #fF7F00;
+  background-color: #ffb164;
+  height: 100px;
+  text-align: left;
 }

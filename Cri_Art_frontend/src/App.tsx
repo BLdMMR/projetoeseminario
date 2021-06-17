@@ -1,7 +1,7 @@
 import React from 'react';
-import logo from './logo_grayblue.svg';
+import logo from './new_logo.svg';
 import './App.css';
-import Navbar from './Navbar';
+//import Navbar from './Navbar';
 import HomePage from './HomePage';
 
 function App() {
