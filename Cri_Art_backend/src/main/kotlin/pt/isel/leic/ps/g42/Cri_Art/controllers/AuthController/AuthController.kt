@@ -1,30 +1,45 @@
 package pt.isel.leic.ps.g42.Cri_Art.controllers.AuthController
 
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
+import org.springframework.web.bind.annotation.*
+import pt.isel.leic.ps.g42.Cri_Art.controllers.AuthController.model.LoginRequest
+import pt.isel.leic.ps.g42.Cri_Art.controllers.AuthController.model.LoginResponse
+import pt.isel.leic.ps.g42.Cri_Art.controllers.AuthController.model.SignupRequest
+import pt.isel.leic.ps.g42.Cri_Art.services.auth.AuthService
+import java.lang.IllegalArgumentException
+import java.util.*
+import org.springframework.http.ResponseEntity as ResponseEntity
 
 @RestController
-class AuthController {
+@RequestMapping("/auth")
+class AuthController(
+    private val authService: AuthService
+) {
 
-    @PostMapping("/signin")
-    fun signin() {
-
+    @PostMapping("/login",
+        consumes = [MediaType.APPLICATION_JSON_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<LoginResponse> {
+        val token = this.authService.loginUser(loginRequest.email, loginRequest.password)
+        return ResponseEntity(LoginResponse(token), HttpStatus.CREATED)
     }
 
-    @DeleteMapping("/signout")
-    fun signout() {
-
+    @DeleteMapping("/logout")
+    fun logout(@RequestParam token: String) {
+        try {
+            val formattedToken = UUID.fromString(token)
+            this.authService.logoutUser(formattedToken)
+        } catch (exception: IllegalArgumentException) {
+            //TODO error in case the given token does not respect UUID format
+        }
     }
 
-    @PostMapping("/register")
-    fun register() {
-
+    @PostMapping("/signup",
+        consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun signup(@RequestBody signupRequest: SignupRequest): ResponseEntity<String> {
+        this.authService.registerNewUser(signupRequest.name, signupRequest.email, signupRequest.password)
+        return ResponseEntity("New user created successfully!", HttpStatus.CREATED)
     }
 
-    @GetMapping("/recover")
-    fun recover() {
-
-    }
 }

@@ -6,13 +6,9 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class Hello {
 
-    @GetMapping(value=["/hello", "/api/hello"])
+    @GetMapping("/hello")
     fun helloWorld(): String {
         return "hello world!"
     }
 
-    @GetMapping("/api/hello")
-    fun apiHelloWorld(): String {
-        return "hello secure world!"
-    }
 }

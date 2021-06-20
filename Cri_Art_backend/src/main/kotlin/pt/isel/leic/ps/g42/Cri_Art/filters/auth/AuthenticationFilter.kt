@@ -1,43 +1,60 @@
 package pt.isel.leic.ps.g42.Cri_Art.filters.auth
 
+import org.springframework.boot.web.servlet.FilterRegistrationBean
+import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
-import pt.isel.leic.ps.g42.Cri_Art.models.User
-import javax.servlet.Filter
+import org.springframework.web.filter.OncePerRequestFilter
+import pt.isel.leic.ps.g42.Cri_Art.services.auth.AuthService
+import pt.isel.leic.ps.g42.Cri_Art.storage.irepositories.ITokenRepository
+import java.util.*
 import javax.servlet.FilterChain
-import javax.servlet.ServletRequest
-import javax.servlet.ServletResponse
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class AuthenticationFilter : Filter {
+class AuthenticationFilter(private val authService: AuthService) : OncePerRequestFilter() {
 
-    private final val CRI_ART_REALM_VALUE: String = "cri-art"
+    private val log = java.util.logging.Logger.getLogger(AuthenticationFilter::class.java.name)
 
-    override fun doFilter(request: ServletRequest?, response: ServletResponse?, chain: FilterChain?) {
-        val httpRequest = request as HttpServletRequest
+    override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
+        this.log.warning("REQUEST: ${request.method} ${request.requestURI}")
+        val tokenParam: String? = request.getParameter("token")
+        this.log.warning("TOKEN: $tokenParam")
 
-        val authorizationHeader :String = httpRequest.getHeader("authorization")
-        val visitor = verifyBasicSchemeCredentials(authorizationHeader)
-        if (visitor != null) {
-            httpRequest.setAttribute("user-attributes", visitor)
-            chain?.doFilter(request, response)
+        val token: UUID
+        try {
+            token = UUID.fromString(tokenParam)
+        } catch (e: Exception) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED)
+            return
         }
-        else {
-            val httpResponse = response as HttpServletResponse
-            httpResponse.status = HttpServletResponse.SC_UNAUTHORIZED
-            httpResponse.addHeader("WWW-Authenticate", "Basic realm=\"${CRI_ART_REALM_VALUE}\"")
+
+        val user = this.authService.getLoggedInUser(token)
+
+        if (user != null) {
+            request.setAttribute("user", user)
+            chain.doFilter(request, response)
+        } else {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED)
         }
     }
 
-    fun verifyBasicSchemeCredentials(challengeResponse :String) : User?{
-        val trimmedChallengeResponse = challengeResponse.trim()
-        return if (trimmedChallengeResponse.startsWith("Basic", ignoreCase = true)) {
-            val userCredentials = trimmedChallengeResponse.drop("Basic".length + 1).trim()
-            val (username, password) = decodeBase64(userCredentials)
-            authenticate(userService, username, password)
-        }
-        else null
+    /**
+     * Validate if starts with "/api/auth/" or "/api/public/"
+     */
+    private val filterExclusionUriMatcher = Regex("^(\\/api\\/auth\\/|\\/api\\/public\\/)")
+
+    override fun shouldNotFilter(request: HttpServletRequest): Boolean {
+        return request.requestURI.contains(this.filterExclusionUriMatcher)
+    }
+
+    @Bean
+    fun authFilterBean(): FilterRegistrationBean<AuthenticationFilter> {
+        val regBean = FilterRegistrationBean<AuthenticationFilter>()
+        regBean.filter = this
+        return regBean
     }
 
 }
+
+

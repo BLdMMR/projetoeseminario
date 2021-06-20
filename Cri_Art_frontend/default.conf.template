@@ -7,6 +7,6 @@ server {
   }
   
   location /api {
-	proxy_pass https://cri-art-backend.herokuapp.com/api/;
+	proxy_pass http://cri-art-backend.herokuapp.com/api;
   }
 }

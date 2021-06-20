@@ -8,7 +8,7 @@ import java.util.*
 
 
 @RestController
-@RequestMapping("/artist")
+@RequestMapping("/artist", "/api/artist")
 class ArtistController (private val services : ArtistServices){
 
     @GetMapping("/{aid}")
