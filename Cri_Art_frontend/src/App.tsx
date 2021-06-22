@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import logo from './logo_grayblue.svg';
 import './App.css';
-import Navbar from './Navbar';
+//import Navbar from './Navbar';
 import HomePage from './HomePage';
 
-class App extends Component  {
-  render() {
+
+
+function App () {
     return (<>
       <div className="App" id='app'>
-        <HomePage/>
+        <HomePage id="banana" user="slam banana" arvore="Super slam banana"/>
       </div>  
       </>
     )
-  }
 }
 
 /* function App() {
