@@ -10,5 +10,4 @@ class Hello {
     fun helloWorld(): String {
         return "hello world!"
     }
-
 }

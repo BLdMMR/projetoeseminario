@@ -1,8 +1,11 @@
 package pt.isel.leic.ps.g42.Cri_Art.controllers.ArtistController
 
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import pt.isel.leic.ps.g42.Cri_Art.models.Artist
 import pt.isel.leic.ps.g42.Cri_Art.models.Tag
+import pt.isel.leic.ps.g42.Cri_Art.models.User
+import pt.isel.leic.ps.g42.Cri_Art.models.UserType
 import pt.isel.leic.ps.g42.Cri_Art.services.ArtistServices
 import java.util.*
 
@@ -29,11 +32,8 @@ class ArtistController (private val services : ArtistServices){
     }
 
     @GetMapping //DEBUG
-    fun getAllArtists(): List<Artist> {
+    fun getAllArtists(@RequestAttribute user : User): List<Artist> {
+        if (user.type != UserType.MODERATOR) return emptyList()
         return services.getAllArtists()
     }
-
-
-
-
 }
