@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import Navbar from './Navbar'
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import { Artists } from './Artist'
 
 function App(){
 	return (
@@ -11,6 +12,9 @@ function App(){
 			<Switch>
 				<Route path='/'>
 					
+					</Route>
+					<Route path='/api/artist'>
+						<Artists/>
 					</Route>
 			</Switch>
 		</Router>
