@@ -55,7 +55,7 @@ class AuthService(
             throw RuntimeException("login failed!")
         }
 
-        val token = Token(userId = user.id, token = UUID.randomUUID(), TokenType.SIGNIN)
+        val token = Token(userId = user.id, token = UUID.randomUUID(), tokenType = TokenType.SIGNIN)
         this.tokenRepository.save(token)
         return token.token
     }

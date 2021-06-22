@@ -14,8 +14,7 @@ class Work(
         val owner: UUID,
         val description: String?,
         val reviews: Float = 0.0f,
-        val tags: List<Tag>? = listOf(Tag()),
-        val workFile: File? = null
+        val tags: List<Tag>? = listOf(Tag())
 ) {
         constructor(ownerId :UUID) : this(UUID(0L, 0L), "",null, ownerId, "", 0.0f)
 
@@ -26,7 +25,8 @@ class Work(
                 owner = owner,
                 reviews = reviews,
                 tags = tags,
-                filePath = "$STORAGE_LOCATION\\$owner"
+                content = content?.bytes,
+                fileExtension = content?.originalFilename!!.split('.')[1]
         )
 }
 
@@ -38,7 +38,9 @@ data class WorkSaveModel(
         val description: String?,
         val reviews: Float = 0.0f,
         val tags: List<Tag>? = listOf(Tag()),
-        val filePath :String? = STORAGE_LOCATION
+        val content: ByteArray? = ByteArray(0),
+        val fileExtension: String? = "",
+        var comments: List<String>? = emptyList()
 ) {
 
 }
