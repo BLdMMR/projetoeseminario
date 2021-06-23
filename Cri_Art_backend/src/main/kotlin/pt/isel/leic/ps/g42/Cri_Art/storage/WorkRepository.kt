@@ -1,6 +1,7 @@
 package pt.isel.leic.ps.g42.Cri_Art.storage
 
 import org.springframework.stereotype.Component
+import pt.isel.leic.ps.g42.Cri_Art.models.Tag
 import pt.isel.leic.ps.g42.Cri_Art.models.Work
 import pt.isel.leic.ps.g42.Cri_Art.models.WorkSaveModel
 import pt.isel.leic.ps.g42.Cri_Art.storage.irepositories.IWorkRepository
@@ -27,6 +28,16 @@ class WorkRepository (private val es_repository : IWorkRepository){
         es_repository.deleteById(work_id)
         es_repository.save(work)
         return work
+    }
+
+    fun searchWork(nameToSearchBy: String): List<WorkSaveModel> {
+        val all = es_repository.findAll()
+        return all.filter { it.work_name == nameToSearchBy || it.work_name.contains(nameToSearchBy) || it.description!!.contains(nameToSearchBy) }
+    }
+
+    fun getAllWorksByTag(tag: Tag): List<WorkSaveModel> {
+        val all = es_repository.findAll()
+        return all.filter { it.tags!!.contains(tag) }
     }
 
 }

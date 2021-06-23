@@ -1,0 +1,16 @@
+nav {
+      color: #ffb164;
+      display: flex;
+}
+
+#login_button {
+      -ms-flex-align: end;
+}
+
+#logo{
+      -ms-flex-align: start;
+}
+
+.App {
+      background-color: #ffb164;
+}
