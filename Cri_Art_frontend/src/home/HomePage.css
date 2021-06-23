@@ -1,0 +1,11 @@
+/* #search_bar {
+      align-content: center;
+      size: 75%;
+}
+ */
+#search_bar {
+      width: 1000px;
+      height: 33px;
+      margin-top: 200px;
+      margin-right: 10px;
+    }
