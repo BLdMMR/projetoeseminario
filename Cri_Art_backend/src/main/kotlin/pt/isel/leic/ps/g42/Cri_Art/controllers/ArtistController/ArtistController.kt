@@ -1,6 +1,5 @@
 package pt.isel.leic.ps.g42.Cri_Art.controllers.ArtistController
 
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import pt.isel.leic.ps.g42.Cri_Art.models.Artist
 import pt.isel.leic.ps.g42.Cri_Art.models.Tag
@@ -26,8 +25,8 @@ class ArtistController (private val services : ArtistServices){
     }
 
     @PostMapping
-    fun createArtist(@RequestBody artistIM: ArtistInputModel): Artist {
-        val artist = artistIM.toArtist()
+    fun createArtist(@RequestBody artistIM: ArtistInputModel, @RequestAttribute user :User): Artist {
+        val artist = artistIM.toArtist(user.id)
         return services.createArtist(artist)
     }
 

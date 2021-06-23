@@ -59,4 +59,11 @@ class ArtistRepository (private val es_repository : IArtistRepository){
 
     }
 
+    fun searchArtist(nameToSearchBy: String): List<Artist> {
+        val all = es_repository.findAll()
+        val filtered = all.filter { it.username == nameToSearchBy || it.username.contains(nameToSearchBy) || it.description.contains(nameToSearchBy) }
+        return filtered
+    }
+
+
 }

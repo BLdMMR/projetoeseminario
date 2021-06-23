@@ -2,6 +2,7 @@ package pt.isel.leic.ps.g42.Cri_Art.controllers.ArtistController
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import pt.isel.leic.ps.g42.Cri_Art.models.Artist
+import java.util.*
 
 class ArtistInputModel @JsonCreator constructor(
         private val username :String,
@@ -9,8 +10,8 @@ class ArtistInputModel @JsonCreator constructor(
         private val email :String,
 ) {
 
-    fun toArtist() :Artist{
-        return Artist(username, email, description)
+    fun toArtist(id: UUID):Artist{
+        return Artist(username, email, description, id)
     }
 }
 
