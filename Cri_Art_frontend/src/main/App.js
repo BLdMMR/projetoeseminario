@@ -8,10 +8,14 @@ function App() {
 	return (
 		<Router>
 			<Switch>
-				<Route path='/artist'>
+				<Route path={'/home'}>
+				</Route>
+				<Route path={'/login'}>
+				</Route>
+				<Route path={'/artist'}>
 					<Artist/>
 				</Route>
-				<Route path='/'>
+				<Route path={'/'}>
 					<Navbar/>
 				</Route>
 			</Switch>
