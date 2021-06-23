@@ -1,6 +1,6 @@
-import  React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
-import { Button } from './Button';
+import  React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from '../button/Button';
 import './Navbar.css';
 
 function Navbar() {
@@ -8,14 +8,15 @@ function Navbar() {
 	const Clickhandler = () => setClick(!click);
 	const closedmenu= () => setClick(false);
 	const [button, setButton] = useState(true);
-	const showButton = ()=> {
-		if(window.innerWidth<=960){
+
+	const showButton = () => {
+		if(window.innerWidth <= 960) {
 			setButton(false);
-		}else{
+		} else {
 			setButton(true);
 		}
 	}
-	useEffect(()=> {
+	useEffect(() => {
 		showButton();
 	}, [])
 	window.addEventListener('resize', showButton);
@@ -25,7 +26,7 @@ function Navbar() {
 	<div className='navbar-stuff'>
 	<Link to="/" className='logo' onClick={closedmenu}>
 		Cri_Art
-		<i class='fab fa-typo3' />
+		<i className='fab fa-typo3' />
 	</Link>
 	<div className='menu' onClick={Clickhandler}>
 		<i className={click ? 'fas fa-times' : 'fas fa-bars'} />

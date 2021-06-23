@@ -17,9 +17,9 @@ class AuthenticationFilter(private val authService: AuthService) : OncePerReques
     private val log = java.util.logging.Logger.getLogger(AuthenticationFilter::class.java.name)
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
-        this.log.warning("REQUEST: ${request.method} ${request.requestURI}")
+        this.log.info("REQUEST: ${request.method} ${request.requestURI}")
         val tokenParam: String? = request.getParameter("token")
-        this.log.warning("TOKEN: $tokenParam")
+        this.log.info("TOKEN: $tokenParam")
 
         val token: UUID
         try {
