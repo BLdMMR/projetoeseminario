@@ -1,5 +1,6 @@
 package pt.isel.leic.ps.g42.Cri_Art.controllers.AuthController
 
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
@@ -11,16 +12,21 @@ import java.lang.IllegalArgumentException
 import java.util.*
 import org.springframework.http.ResponseEntity as ResponseEntity
 
+@CrossOrigin(origins = ["http://localhost:3000", "https://cri-art.herokuapp.com"], maxAge = 3600)
 @RestController
 @RequestMapping("/auth")
 class AuthController(
     private val authService: AuthService
 ) {
 
+    val log = LoggerFactory.getLogger("Auth Controller")
+
     @PostMapping("/login",
         consumes = [MediaType.APPLICATION_JSON_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE])
     fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<LoginResponse> {
+        log.info("Login Request: $loginRequest")
+        print("banana")
         val token = this.authService.loginUser(loginRequest.email, loginRequest.password)
         return ResponseEntity(LoginResponse(token), HttpStatus.CREATED)
     }

@@ -25,6 +25,7 @@ class AuthenticationFilter(private val authService: AuthService) : OncePerReques
         try {
             token = UUID.fromString(tokenParam)
         } catch (e: Exception) {
+            log.warning("Unauthorized Access")
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED)
             return
         }
@@ -35,6 +36,7 @@ class AuthenticationFilter(private val authService: AuthService) : OncePerReques
             request.setAttribute("user", user)
             chain.doFilter(request, response)
         } else {
+            log.warning("Unauthorized Access 2")
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED)
         }
     }
@@ -45,6 +47,7 @@ class AuthenticationFilter(private val authService: AuthService) : OncePerReques
     private val filterExclusionUriMatcher = Regex("^(\\/api\\/auth\\/|\\/api\\/public\\/)")
 
     override fun shouldNotFilter(request: HttpServletRequest): Boolean {
+        log.info("$request.requestURI.contains(this.filterExclusionUriMatcher)")
         return request.requestURI.contains(this.filterExclusionUriMatcher)
     }
 

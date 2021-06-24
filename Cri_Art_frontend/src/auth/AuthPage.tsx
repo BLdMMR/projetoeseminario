@@ -1,18 +1,32 @@
 import { useRef } from "react"
-
+import { Api } from '../api/Api'
+/* import { Redirect } from 'react-router-dom'
+ */
 function AuthPage() {
       const usernameRef = useRef<HTMLInputElement>(null)
       const passwordRef = useRef<HTMLInputElement>(null)
+      const api = new Api()
 
-      function handleSubmit() {
+      async function handleSubmit() {
             const username = usernameRef.current?.value
             const password = passwordRef.current?.value
 
             console.log(`Username: ${username}`)
             console.log(`Password: ${password}`)
 
+            const headers = new Headers()
+            headers.append('Content-Type', 'application/json')
             //Fetch to the API With these credentials
-
+            const token = api.fetchFromAPI(
+                  'POST',
+                  '/auth/login',
+                  headers, 
+                  {
+                        email: username,
+                        password: btoa(password!!)
+                  }
+            )
+            console.log(await token)
       }
 
       return (

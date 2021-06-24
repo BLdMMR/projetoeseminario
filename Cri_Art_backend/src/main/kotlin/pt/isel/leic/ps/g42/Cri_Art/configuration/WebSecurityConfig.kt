@@ -5,18 +5,18 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.web.servlet.config.annotation.CorsRegistry
+import org.springframework.web.servlet.config.annotation.EnableWebMvc
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 
 //@Configuration
 //@EnableWebSecurity
 //class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 //
-//    override fun configure(auth: AuthenticationManagerBuilder?) {
-//
-//    }
-//
 //    override fun configure(http: HttpSecurity) {
-//        http.cors().and().csrf().disable()
+//        http.cors().and().csrf()
+//                .disable()
 //            .authorizeRequests()
 //            .antMatchers("/api/auth/*")
 //            .permitAll()
@@ -25,4 +25,4 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 //    }
 //
 //}
-
+//
