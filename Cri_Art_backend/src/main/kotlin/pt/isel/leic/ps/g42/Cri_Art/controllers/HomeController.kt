@@ -1,18 +1,17 @@
 package pt.isel.leic.ps.g42.Cri_Art.controllers
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import pt.isel.leic.ps.g42.Cri_Art.models.Tag
 import pt.isel.leic.ps.g42.Cri_Art.services.HomeServices
 
+@CrossOrigin("http://localhost:3000", "https://cri-art.herokuapp.com")
 @RestController
 @RequestMapping("/home")
 class HomeController (private val services: HomeServices){
 
     @GetMapping("/search")
     fun searchByName(@RequestParam nameToSearchBy: String): HomeServices.Searchlist {
+        println(nameToSearchBy)
         return services.searchByName(nameToSearchBy);
     }
 

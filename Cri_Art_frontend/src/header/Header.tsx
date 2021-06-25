@@ -7,7 +7,7 @@ export function Header() {
       return (
             <div className="App" >
                   <nav className='navbar'>
-                        <Link to = "/">
+                        <Link to = "/home">
                               <img src={logo} className="ui left mini image" alt="logo" id='logo'>  
                               </img>
                         </Link>

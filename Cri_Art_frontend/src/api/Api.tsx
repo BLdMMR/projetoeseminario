@@ -4,7 +4,6 @@ export class Api {
     private readonly HOME_PATH = '/api'
 
     async fetchFromAPI<T>(method?: string, path?: string, headers?: Headers,body?: T) : Promise<any>{
-        console.log("Arrived to fetch")
         const meth = method? method : 'GET'
         const pth = path? this.API_BASE_URL.concat(path) : this.API_BASE_URL
         const reqInfo = { 
