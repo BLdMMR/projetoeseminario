@@ -2,14 +2,17 @@ import React from 'react';
 import './App.css';
 import Navbar from './navbar/Navbar'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Artist from './artist/Artist'
+import Artists from './artist/Artist'
 
 function App() {
 	return (
 		<Router>
 			<Switch>
 				<Route path='/artist'>
-					<Artist/>
+					<Artists/>
+				</Route>
+				<Route path='artist/:id'>
+					<Artists/>
 				</Route>
 				<Route path='/'>
 					<Navbar/>
