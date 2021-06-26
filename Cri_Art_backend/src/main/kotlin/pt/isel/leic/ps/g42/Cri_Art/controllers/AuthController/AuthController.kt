@@ -12,7 +12,6 @@ import java.lang.IllegalArgumentException
 import java.util.*
 import org.springframework.http.ResponseEntity as ResponseEntity
 
-@CrossOrigin(origins = ["http://localhost:3000", "https://cri-art.herokuapp.com"], maxAge = 3600)
 @RestController
 @RequestMapping("/auth")
 class AuthController(

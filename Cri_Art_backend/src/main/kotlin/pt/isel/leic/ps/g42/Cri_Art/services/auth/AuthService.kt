@@ -4,6 +4,7 @@ import io.netty.handler.codec.base64.Base64Encoder
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import org.springframework.util.Base64Utils
 import pt.isel.leic.ps.g42.Cri_Art.filters.auth.AuthenticationFilter
@@ -67,6 +68,13 @@ class AuthService(
         } else {
             //TODO
         }
+    }
+
+    @Scheduled(fixedRate = 10000, initialDelay = 5000)
+    fun getTokenCount(): Long {
+        val tokenCount = this.tokenRepository.count()
+        this.log.info("Current Token Count: $tokenCount")
+        return tokenCount
     }
 
 }
