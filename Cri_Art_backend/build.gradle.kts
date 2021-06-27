@@ -23,7 +23,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.springframework.data:spring-data-elasticsearch:4.2.0")
 	implementation("org.springframework.boot:spring-boot-starter-security:2.5.0")
-	implementation("org.springframework.security.oauth:spring-security-oauth2:2.5.0.RELEASE")
+	implementation("org.springframework.boot:spring-boot-starter-mail:2.5.2")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
