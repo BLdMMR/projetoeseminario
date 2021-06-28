@@ -1,7 +1,5 @@
 import { Api } from '../api/Api'
 
-const api = new Api()
-
 interface Token {
     token: string
 }
@@ -24,7 +22,7 @@ export default class Credentials {
         headers.append('Content-Type', 'application/json')
         
         //Fetch to the API With these credentials
-        const tokenPromise = api.fetchFromAPI(
+        const tokenPromise = this.api?.fetchFromAPI(
                 'POST',
                 '/auth/login',
                 headers, 
@@ -35,7 +33,7 @@ export default class Credentials {
         )
         
         const token = await tokenPromise
-        if (token.token != undefined) this.token = token
+        if (token.token !== undefined) this.token = token
         console.log(this)
         return this
     }
@@ -52,5 +50,28 @@ export default class Credentials {
         this.email = undefined
         this.password = undefined
         this.token = undefined
+    }
+
+    async signUp(username: string, password :string, email :string) {
+        console.log(`From UserSession Studios:\nEmail: ${email} \nPassword: ${password} \nUsername: ${username}`)
+        const headers = new Headers()
+        headers.append('Content-Type', 'application/json')
+        const response = this.api?.fetchFromAPI(
+            'POST',
+            '/auth/signup',
+            headers,
+            {
+                name: username,
+                email: email,
+                password: btoa(password)
+            }
+        )
+        const result = await response
+        console.log(result)
+
+        if (result.message === "New user created successfully!") return this.login(email, password)
+        return this
+        
+
     }
 }

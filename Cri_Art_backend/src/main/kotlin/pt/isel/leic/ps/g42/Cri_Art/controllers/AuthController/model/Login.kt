@@ -10,3 +10,7 @@ data class LoginRequest (
 data class LoginResponse(
     val token: UUID
 )
+
+data class SignUpResponse(
+    val message: String
+)

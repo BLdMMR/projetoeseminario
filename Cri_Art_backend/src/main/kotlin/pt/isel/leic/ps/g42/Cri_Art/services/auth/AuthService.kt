@@ -70,11 +70,5 @@ class AuthService(
         }
     }
 
-    @Scheduled(fixedRate = 10000, initialDelay = 5000)
-    fun getTokenCount(): Long {
-        val tokenCount = this.tokenRepository.count()
-        this.log.info("Current Token Count: $tokenCount")
-        return tokenCount
-    }
 
 }

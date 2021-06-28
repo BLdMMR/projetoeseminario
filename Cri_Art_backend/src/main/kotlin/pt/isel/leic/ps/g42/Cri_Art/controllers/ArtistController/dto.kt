@@ -8,6 +8,7 @@ class ArtistInputModel @JsonCreator constructor(
         private val username :String,
         private val description :String,
         private val email :String,
+        private val tags: List<String>
 ) {
 
     fun toArtist(id: UUID):Artist{

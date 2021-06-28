@@ -6,12 +6,14 @@ import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 import pt.isel.leic.ps.g42.Cri_Art.controllers.AuthController.model.LoginRequest
 import pt.isel.leic.ps.g42.Cri_Art.controllers.AuthController.model.LoginResponse
+import pt.isel.leic.ps.g42.Cri_Art.controllers.AuthController.model.SignUpResponse
 import pt.isel.leic.ps.g42.Cri_Art.controllers.AuthController.model.SignupRequest
 import pt.isel.leic.ps.g42.Cri_Art.services.auth.AuthService
 import java.lang.IllegalArgumentException
 import java.util.*
 import org.springframework.http.ResponseEntity as ResponseEntity
 
+@CrossOrigin("http://localhost:3000", "https://cri-art-frontend.herokuapp.com")
 @RestController
 @RequestMapping("/auth")
 class AuthController(
@@ -42,9 +44,9 @@ class AuthController(
 
     @PostMapping("/signup",
         consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun signup(@RequestBody signupRequest: SignupRequest): ResponseEntity<String> {
+    fun signup(@RequestBody signupRequest: SignupRequest): ResponseEntity<SignUpResponse> {
         this.authService.registerNewUser(signupRequest.name, signupRequest.email, signupRequest.password)
-        return ResponseEntity("New user created successfully!", HttpStatus.CREATED)
+        return ResponseEntity(SignUpResponse("New user created successfully!"), HttpStatus.CREATED)
     }
 
 }

@@ -6,11 +6,6 @@ import org.springframework.scheduling.annotation.EnableScheduling
 
 
 @SpringBootApplication
-/*
-Scheduling is used to keep the deployments alive,
-keeping them from shutting down for inactivity
- */
-@EnableScheduling
 class CriArtApplication
 
 fun main(args: Array<String>) {
