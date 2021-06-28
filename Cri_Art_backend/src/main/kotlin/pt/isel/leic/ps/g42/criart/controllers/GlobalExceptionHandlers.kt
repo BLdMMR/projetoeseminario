@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
-import pt.isel.leic.ps.g42.criart.controllers.AuthController.exceptions.Base64DecodeException
-import pt.isel.leic.ps.g42.criart.controllers.AuthController.exceptions.MalformedTokenException
-import pt.isel.leic.ps.g42.criart.controllers.AuthController.exceptions.TokenNotFoundException
-import pt.isel.leic.ps.g42.criart.controllers.AuthController.exceptions.UserEmailAlreadyExistsException
+import pt.isel.leic.ps.g42.criart.controllers.AuthController.exceptions.*
 import java.lang.RuntimeException
 
 
@@ -18,7 +15,7 @@ import java.lang.RuntimeException
 class GlobalExceptionHandlers: ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(value = [(Base64DecodeException::class)])
-    fun handleBase64DecodeException(exception: RuntimeException, request: WebRequest): ResponseEntity<Any> {
+    fun handleBase64DecodeException(exception: Base64DecodeException, request: WebRequest): ResponseEntity<Any> {
 
         return handleExceptionInternal(
             exception,
@@ -31,7 +28,7 @@ class GlobalExceptionHandlers: ResponseEntityExceptionHandler() {
 
 
     @ExceptionHandler(value = [(UserEmailAlreadyExistsException::class)])
-    fun handleEntityAlreadyExistsException(exception: RuntimeException, request: WebRequest): ResponseEntity<Any> {
+    fun handleEntityAlreadyExistsException(exception: UserEmailAlreadyExistsException, request: WebRequest): ResponseEntity<Any> {
 
         return handleExceptionInternal(
             exception,
@@ -43,7 +40,7 @@ class GlobalExceptionHandlers: ResponseEntityExceptionHandler() {
     }
 
     @ExceptionHandler(value = [(TokenNotFoundException::class)])
-    fun handleResourceNotFoundException(exception: RuntimeException, request: WebRequest): ResponseEntity<Any> {
+    fun handleResourceNotFoundException(exception: TokenNotFoundException, request: WebRequest): ResponseEntity<Any> {
         return handleExceptionInternal(
             exception,
             exception.message,
@@ -54,12 +51,34 @@ class GlobalExceptionHandlers: ResponseEntityExceptionHandler() {
     }
 
     @ExceptionHandler(value = [(MalformedTokenException::class)])
-    fun handleMalformedRequestException(exception: RuntimeException, request: WebRequest): ResponseEntity<Any> {
+    fun handleMalformedRequestException(exception: MalformedTokenException, request: WebRequest): ResponseEntity<Any> {
         return handleExceptionInternal(
             exception,
             exception.message,
             HttpHeaders(),
             HttpStatus.BAD_REQUEST,
+            request
+        )
+    }
+
+    @ExceptionHandler(value = [(LoginFailedException::class)])
+    fun handleAuthenticationFailedException(exception: LoginFailedException, request: WebRequest): ResponseEntity<Any> {
+        return handleExceptionInternal(
+            exception,
+            exception.message,
+            HttpHeaders(),
+            HttpStatus.UNAUTHORIZED,
+            request
+        )
+    }
+
+    @ExceptionHandler(value = [(SendEmailException::class)])
+    fun handleEmailException(exception: SendEmailException, request: WebRequest): ResponseEntity<Any> {
+        return handleExceptionInternal(
+            exception,
+            exception.message,
+            HttpHeaders(),
+            HttpStatus.BAD_GATEWAY,
             request
         )
     }
