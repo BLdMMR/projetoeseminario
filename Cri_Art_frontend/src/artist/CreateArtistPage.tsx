@@ -16,7 +16,9 @@ function CreateArtistPage() {
 
     function renderTags(tag: string) {
         return (
-            <input type="checkbox" ref={tagsRefs[tags.indexOf(tag)]} name={tag} id="tag_option" />
+            <label htmlFor="">
+            <input type="checkbox" ref={tagsRefs[tags.indexOf(tag)]} name={tag} id="tag_option" />{tag}
+            </label>
         )
     }
 
