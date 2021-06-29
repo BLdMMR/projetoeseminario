@@ -28,8 +28,6 @@ function HomePage(props: HomeProps) {
 
       return props.creds.hasToken() ? (
             <div>
-                  <h1>{props.creds.token?.token}</h1>
-                  <h4>Authenticated - Going for feed</h4>
                   <input type="text" id='search_bar' ref={searchRef}/>
                   <button type="button" onClick={handleSearch}>Search</button>
             </div>

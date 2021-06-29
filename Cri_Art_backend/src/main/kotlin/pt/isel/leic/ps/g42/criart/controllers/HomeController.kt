@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.*
 import pt.isel.leic.ps.g42.criart.models.Tag
 import pt.isel.leic.ps.g42.criart.services.HomeServices
 
-@CrossOrigin("http://localhost:3000", "https://cri-art.herokuapp.com")
 @RestController
 @RequestMapping("/home")
 class HomeController (private val services: HomeServices){
@@ -19,5 +18,10 @@ class HomeController (private val services: HomeServices){
     fun searchByTag(@RequestParam tagToSearchBy: String): HomeServices.Searchlist {
         val tag = tagToSearchBy.replace('-', ' ')
         return services.searchByTag(Tag(tag))
+    }
+
+    @GetMapping
+    fun getFeed(@RequestParam token: String) {
+
     }
 }
