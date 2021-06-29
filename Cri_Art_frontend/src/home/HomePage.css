@@ -3,9 +3,21 @@
       size: 75%;
 }
  */
-#search_bar {
-      width: 1000px;
-      height: 33px;
-      margin-top: 200px;
-      margin-right: 10px;
-    }
+#home_search_bar {
+  width: 70%;
+}
+
+#home_search_button {
+
+}
+
+.search-bar-home {
+  display: inline-block;
+  position: relative;
+  width: 50vw;
+  height: 33px;
+  top: 30vh;
+  left: 50vw;
+
+  transform: translateX(-50%);
+}
