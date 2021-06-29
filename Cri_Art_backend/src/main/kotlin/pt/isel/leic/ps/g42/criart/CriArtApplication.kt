@@ -10,7 +10,5 @@ import org.springframework.web.bind.annotation.RestController
 class CriArtApplication
 
 fun main(args: Array<String>) {
-	val appContext = runApplication<CriArtApplication>(*args)
-	val map = appContext.getBeansWithAnnotation(RestController::class.java)
-	println(map.keys)
+	runApplication<CriArtApplication>(*args)
 }

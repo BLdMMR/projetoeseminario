@@ -55,12 +55,11 @@ function SignUpPage(props: SignUpProps) {
             </div>
             <div>
                 <label htmlFor="">
-                <input type="radio" value="Artist" name="Artist" onClick={artistOnclick} ref={optionArtistRef}/>Artist
+                    <input type="radio" value="Artist" name="Artist" onClick={artistOnclick} ref={optionArtistRef}/>Artist
                 </label>
                 <label htmlFor="">
-                <input type="radio" value="Client" name="Client" onClick={clientOnclick} ref={optionClientRef}/>Client
-                </label>
-                
+                    <input type="radio" value="Client" name="Client" onClick={clientOnclick} ref={optionClientRef}/>Client
+                </label>                
             </div>
             <div>
                 <button type="button" onClick={handleSignUp}>Sign Up</button>

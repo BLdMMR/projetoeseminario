@@ -1,11 +1,11 @@
 import { useRef } from "react"
-import Credentials from './UserCredentials'
+import UserCredentials from './UserCredentials'
 
 import { Redirect, useHistory } from 'react-router-dom'
 
 
 export interface AuthPageProps {
-      session?: Credentials
+      session?: UserCredentials,
 }
 
 function AuthPage(props: AuthPageProps) {
@@ -16,29 +16,21 @@ function AuthPage(props: AuthPageProps) {
 /*       const api = new Api()
  */
       
-      if (props.session == null) return (
-            <div>
-            <input type="text" ref={usernameRef} placeholder='Username'/>
-            <input type="password" ref={passwordRef} placeholder='Password'/>
-            <button type="button" onClick={handleSubmit}>Login</button>
-            <p style={{color: '#ff3d3d'}}>Text</p>
-            </div>
-      )
 
-      async function handleSubmit() {
-            const username = usernameRef.current?.value
-            const password = passwordRef.current?.value
-
-            console.log(`Email: ${username}`)
-            console.log(`Password: ${password}`)
-
-            props.session?.login(username!!, password!!)
-                  .then(async (creds) => {
-                        history.push(`home?token=${creds.token!!.token}`)
+async function handleSubmit() {
+      const username = usernameRef.current?.value
+      const password = passwordRef.current?.value
+      
+      console.log(`Email: ${username}`)
+      console.log(`Password: ${password}`)
+      console.log('Slam Banana')
+      props.session?.login(username!!, password!!)
+      .then(async (creds) => {
+            history.push(`home?token=${creds.token!!.token}`)
                   })
+                  
 
-
-            /* const headers = new Headers()
+                  /* const headers = new Headers()
             headers.append('Content-Type', 'application/json')
             //Fetch to the API With these credentials
             const token = api.fetchFromAPI(
@@ -49,15 +41,14 @@ function AuthPage(props: AuthPageProps) {
                         email: username,
                         password: btoa(password!!)
                   }
-            ) 
-            console.log(await token)*/
-            
+                  ) 
+                  console.log(await token)*/
+                  
       }
-
-
+            
       return props.session?.hasToken() ? <Redirect to='/'/> : (
-            <div>
-                 <input type="text" ref={usernameRef} placeholder='Username'/>
+            <div id='login_page'>
+                 <input type="text" ref={usernameRef} placeholder='Email'/>
                  <input type="password" ref={passwordRef} placeholder='Password'/>
                  <button type="button" onClick={handleSubmit}>Login</button>
             </div>

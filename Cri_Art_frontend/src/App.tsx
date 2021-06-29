@@ -10,12 +10,14 @@ import { Api } from './api/Api'
 
 import './App.css';
 import CreateArtistPage from './artist/CreateArtistPage';
+import { useState } from 'react';
 
 const session = new UserCredentials()
 const api = new Api()
 session.setApi(api);
 
 function AppRouter() {
+  const [UserSession, setSession] = useState<UserCredentials>()
 
   /* const [session, setSession] = useState<UserCredentials>()
 

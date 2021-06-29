@@ -1,5 +1,5 @@
 nav {
-  position: fixed;
+/*   position: fixed; */
   background-color: #ffb164;
   display: flex;
   justify-content: space-between;

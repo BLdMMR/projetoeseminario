@@ -9,7 +9,8 @@ interface HeaderProps {
 }
 
 export function Header(props: HeaderProps) {
-  if (props.creds.token?.token)
+      console.log(props.creds.token != undefined)
+  if (props.creds.token != undefined){
     return (
       <div className="App">
         <nav className={'navbar'}>
@@ -32,30 +33,27 @@ export function Header(props: HeaderProps) {
         </nav>
       </div>
     )
+  }
 
+  /* <div className="App"> */
   return (
-    <div className="App">
       <nav className={'navbar'}>
         <div className={'logo-section'}>
           <Link to="/home">
             <img src={logo} className="ui left mini image" alt="logo" id='logo'/>
           </Link>
         </div>
-        <div className={'search-section-header'}>
-          <input type="text" id='search_bar_header' ref={undefined}/>
-          <button type="button" onClick={undefined}>Search</button>
-        </div>
         <div className={'auth-section'}>
           <form action="/login">
-            <button type="submit">Logout</button>
+            <button type="submit">Login</button>
           </form>
           <form action="/signup">
             <button type="submit">Sign Up</button>
           </form>
         </div>
       </nav>
-    </div>
   )
+  /* </div> */
 }
 
 export default Header

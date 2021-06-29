@@ -28,8 +28,7 @@ function HomePage(props: HomeProps) {
 
       return props.creds.hasToken() ? (
             <div>
-                  <input type="text" id='search_bar' ref={searchRef}/>
-                  <button type="button" onClick={handleSearch}>Search</button>
+                  <h1>FEED</h1>
             </div>
       ) : 
       (
@@ -37,6 +36,7 @@ function HomePage(props: HomeProps) {
                   <input type="text" id='search_bar' ref={searchRef}/>
                   <button type="button" onClick={handleSearch}>Search</button>
             </div>
+            
       )
 }
 

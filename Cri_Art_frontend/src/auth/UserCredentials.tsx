@@ -15,12 +15,12 @@ export default class Credentials {
     }
 
     async login(email: string, password: string) {
+        console.log("banana")
         this.email = email
         this.password = btoa(password)
 
         const headers = new Headers()
         headers.append('Content-Type', 'application/json')
-        
         //Fetch to the API With these credentials
         const tokenPromise = this.api?.fetchFromAPI(
                 'POST',
