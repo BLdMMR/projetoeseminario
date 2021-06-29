@@ -1,16 +1,36 @@
 nav {
-      color: #ffb164;
-      display: flex;
+  position: fixed;
+  background-color: #ffb164;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  justify-items: center;
+  width: 100vw;
+  height: 100px;
 }
 
 #login_button {
-      -ms-flex-align: end;
 }
 
-#logo{
-      -ms-flex-align: start;
+#logo {
 }
 
 .App {
-      background-color: #ffb164;
+  background-color: #ffb164;
+}
+
+.logo-section {
+}
+
+search-section-header {
+  width: 500px;
+}
+
+.auth-section {
+
+}
+
+#search_bar_header {
+  width: 400px;
 }

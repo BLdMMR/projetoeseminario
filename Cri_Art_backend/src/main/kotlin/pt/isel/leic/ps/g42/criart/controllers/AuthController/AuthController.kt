@@ -10,6 +10,7 @@ import pt.isel.leic.ps.g42.criart.services.AuthService
 import java.util.logging.Logger
 import org.springframework.http.ResponseEntity as ResponseEntity
 
+//@CrossOrigin("http://localhost:3000", "https://cri-art-frontend.herokuapp.com")
 @RestController
 @RequestMapping("/auth")
 class AuthController(
@@ -22,7 +23,7 @@ class AuthController(
         consumes = [MediaType.APPLICATION_JSON_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE])
     fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<LoginResponse> {
-        val token = this.authService.loginUser(loginRequest?.email, loginRequest?.password)
+        val token = this.authService.loginUser(loginRequest.email, loginRequest.password)
         return ResponseEntity(LoginResponse(token), HttpStatus.CREATED)
     }
 

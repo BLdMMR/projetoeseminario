@@ -65,7 +65,7 @@ class AuthService(
         }
 
         val hashPassEncoded = digestPassword(password)
-        if (hashPassEncoded != user?.password) {
+        if (hashPassEncoded != user.password) {
             this.log.warning("Invalid Password")
             throw LoginFailedException()
         }

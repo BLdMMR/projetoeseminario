@@ -12,14 +12,14 @@ import java.util.*
 class EmailService(private val mailSender: MailSender) {
 
 
-    fun sendRegistrationMail(emailAddress: String, confirmationUrl: String) {
+    fun sendRegistrationMail(emailAddress: String) {
 
         var mailMessage = SimpleMailMessage()
 
         mailMessage.setTo(emailAddress)
         mailMessage.setFrom("criartserviceacc@gmail.com")
         mailMessage.setSubject("Account creation")
-        mailMessage.setText("To complete the registration of your account please click the following link")
+        mailMessage.setText("Your account has been succesfully registered!")
         try {
             this.mailSender.send(mailMessage)
         } catch(exception: MailException) {
