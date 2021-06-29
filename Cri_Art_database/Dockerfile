@@ -4,7 +4,7 @@ WORKDIR /usr/share/elasticsearch
 
 USER elasticsearch
 
-ENV ES_JAVA_OPTS="-Xms192m -Xmx192m"
+ENV ES_JAVA_OPTS="-Xms64m -Xmx64m"
 
 VOLUME data
 
