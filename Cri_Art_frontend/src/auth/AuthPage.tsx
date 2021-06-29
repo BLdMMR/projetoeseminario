@@ -1,5 +1,7 @@
 import { useRef } from "react"
 import UserCredentials from './UserCredentials'
+import './AuthPage.css'
+
 
 import { Redirect, useHistory } from 'react-router-dom'
 
@@ -46,13 +48,13 @@ async function handleSubmit() {
                   
       }
             
-      return props.session?.hasToken() ? <Redirect to='/'/> : (
-            <div id='login_page'>
-                 <input type="text" ref={usernameRef} placeholder='Email'/>
-                 <input type="password" ref={passwordRef} placeholder='Password'/>
-                 <button type="button" onClick={handleSubmit}>Login</button>
-            </div>
-      )
+      return props.session?.hasToken()
+        ? <Redirect to='/'/>
+        : <div className={"login-page"}>
+                 <input className="login-input" type="text" ref={usernameRef} placeholder='Email'/>
+                 <input className="login-input" type="password" ref={passwordRef} placeholder='Password'/>
+                 <button className="login-button" type="button" onClick={handleSubmit}>Login</button>
+           </div>
 
       
 }

@@ -20,10 +20,8 @@ export function Header(props: HeaderProps) {
             </Link>
           </div>
           <div className={'search-section'}>
-            <div>
               <input type="text" id='search_bar' ref={undefined}/>
               <button type="button" onClick={undefined}>Search</button>
-            </div>
           </div>
           <div className={'auth-section'}>
             <form action="/login">
@@ -31,12 +29,15 @@ export function Header(props: HeaderProps) {
             </form>
           </div>
         </nav>
+        <div className={'behind-header'}>
+        </div>
       </div>
     )
   }
 
   /* <div className="App"> */
   return (
+    <div>
       <nav className={'navbar'}>
         <div className={'logo-section'}>
           <Link to="/home">
@@ -45,13 +46,16 @@ export function Header(props: HeaderProps) {
         </div>
         <div className={'auth-section'}>
           <form action="/login">
-            <button type="submit">Login</button>
+            <button className={'auth-button'} type="submit">Login</button>
           </form>
           <form action="/signup">
-            <button type="submit">Sign Up</button>
+            <button className={'auth-button'} type="submit">Sign Up</button>
           </form>
         </div>
       </nav>
+      <div className={'behind-header'}>
+      </div>
+    </div>
   )
   /* </div> */
 }

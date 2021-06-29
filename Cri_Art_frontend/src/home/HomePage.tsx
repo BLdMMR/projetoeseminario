@@ -16,7 +16,7 @@ function HomePage(props: HomeProps) {
             console.log(toSearchBy)
             const searchResponse = await props.api.fetchFromAPI(
                   'GET',
-                  `/home/search?nameToSearchBy=${toSearchBy}&token=${props.creds.token?.token}` 
+              `/home/search?nameToSearchBy=${toSearchBy}&token=${props.creds.token?.token}`
             )
 
             const searchResult = await searchResponse
@@ -32,11 +32,10 @@ function HomePage(props: HomeProps) {
             </div>
       ) : 
       (
-            <div>
-                  <input type="text" id='search_bar' ref={searchRef}/>
-                  <button type="button" onClick={handleSearch}>Search</button>
+            <div className={'search-bar-home'}>
+                  <input type="text" id='home_search_bar' ref={searchRef}/>
+                  <button type="button" id='home_search_button' onClick={handleSearch}>Search</button>
             </div>
-            
       )
 }
 

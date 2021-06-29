@@ -1,0 +1,24 @@
+
+.signup-form {
+  display: inline-flex;
+  flex-direction: column;
+
+  position: relative;
+  top: 25vh;
+  left: 50vw;
+  transform: translateX(-50%);
+}
+
+.signup-text-input {
+  margin-bottom: 8px;
+}
+
+.signup-button {
+  width: 50%;
+  transform: translateX(100%);
+  margin-top: 8px;
+}
+
+.client-label {
+  margin-left: 8px;
+}

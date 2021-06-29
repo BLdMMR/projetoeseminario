@@ -1,0 +1,19 @@
+
+.login-page {
+  display: inline-flex;
+  flex-direction: column;
+
+  position: relative;
+  top: 25vh;
+  left: 50vw;
+  transform: translateX(-50%);
+}
+
+.login-input {
+  margin-bottom: 8px;
+}
+
+.login-button {
+  width: 50%;
+  transform: translateX(100%);
+}

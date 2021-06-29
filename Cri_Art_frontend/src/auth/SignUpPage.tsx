@@ -2,7 +2,7 @@ import { Session } from 'inspector'
 import { useRef } from 'react'
 import Credentials from './UserCredentials'
 import { Redirect, useHistory } from 'react-router-dom'
-
+import './SignUpPage.css'
 
 
 export interface SignUpProps {
@@ -43,27 +43,19 @@ function SignUpPage(props: SignUpProps) {
     }
 
     return (
-        <div>
-            <div>
-                <input type="text" ref={usernameRef} placeholder="Username"/>
-            </div>
-            <div>
-                <input type="text" ref={emailRef} placeholder="Email"/>
-            </div>
-            <div>
-                <input type="password" ref={passwordRef} placeholder="Password"/>
-            </div>
+        <div className={'signup-form'}>
+            <input className={'signup-text-input'} type="text" ref={usernameRef} placeholder="Username"/>
+            <input className={'signup-text-input'} type="text" ref={emailRef} placeholder="Email"/>
+            <input className={'signup-text-input'} type="password" ref={passwordRef} placeholder="Password"/>
             <div>
                 <label htmlFor="">
-                    <input type="radio" value="Artist" name="Artist" onClick={artistOnclick} ref={optionArtistRef}/>Artist
+                    <input type="radio" value="Artist" name="type" onClick={artistOnclick} ref={optionArtistRef}/>Artist
                 </label>
-                <label htmlFor="">
-                    <input type="radio" value="Client" name="Client" onClick={clientOnclick} ref={optionClientRef}/>Client
+                <label htmlFor="" className={'client-label'}>
+                    <input type="radio" value="Client" name="type" onClick={clientOnclick} ref={optionClientRef}/>Client
                 </label>                
             </div>
-            <div>
-                <button type="button" onClick={handleSignUp}>Sign Up</button>
-            </div>
+            <button className={'signup-button'} type="button" onClick={handleSignUp}>Sign Up</button>
         </div>
     )
 }

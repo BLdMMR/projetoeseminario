@@ -1,5 +1,5 @@
 nav {
-/*   position: fixed; */
+  position: fixed;
   background-color: #ffb164;
   display: flex;
   justify-content: space-between;
@@ -23,14 +23,29 @@ nav {
 .logo-section {
 }
 
-search-section-header {
-  width: 500px;
+.search-section {
+  min-width: 33vw;
+  margin-left: -50px;
 }
 
 .auth-section {
-
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  justify-items: center;
 }
 
-#search_bar_header {
-  width: 400px;
+.auth-button {
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+#search_bar {
+  width: 25vw;
+}
+
+.behind-header {
+
+  height: 100px;
 }
