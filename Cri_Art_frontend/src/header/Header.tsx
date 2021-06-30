@@ -20,10 +20,10 @@ export function Header(props: HeaderProps) {
         const toSearchBy = searchRef.current?.value
         console.log(toSearchBy)
         //props.params.setResults(toSearchBy)
-
+        history.push(`/search?nameToSearchBy=${toSearchBy}`)
         
 
-        const searchResponse = await props.creds.api?.fetchFromAPI(
+        /* const searchResponse = await props.creds.api?.fetchFromAPI(
               'GET',
           `/public/home/search?nameToSearchBy=${toSearchBy}&token=${props.creds.token?.token}`,
           undefined,
@@ -34,7 +34,7 @@ export function Header(props: HeaderProps) {
         console.log(`Search Response: ${searchResponse}`)
         console.log(`Search Result: ${searchResult}`)
         console.log(searchResult)
-        props.params.setResults(searchResult.artistlist, searchResult.worklist)
+        props.params.setResults(searchResult.artistlist, searchResult.worklist) */
         /* props.params.artistlist = searchResult.artistlist
         props.params.worklist = searchResult.worklist */
         //Fetch from backend the search results
