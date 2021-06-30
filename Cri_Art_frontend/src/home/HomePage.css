@@ -8,14 +8,14 @@
 }
 
 #home_search_button {
-
+margin-left: 8px;
 }
 
 .search-bar-home {
-  display: inline-block;
+  display: inline-flex;
   position: relative;
   width: 50vw;
-  height: 33px;
+  height: 50px;
   top: 30vh;
   left: 50vw;
 

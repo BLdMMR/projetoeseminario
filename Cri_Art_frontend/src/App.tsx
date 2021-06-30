@@ -34,24 +34,24 @@ function AppRouter() {
           <Redirect to='/home'/>
         </Route>
         <Route exact path='/home'>
-          <Header creds={session}/>
+          <Header creds={session} api={api}/>
           <HomePage creds={session} api={api}/>      
         </Route>
         <Route exact path='/search'>
-          <Header creds={session}/>
+          <Header creds={session} api={api}/>
           <HelloPage/>      
         </Route>
         <Route exact path='/login'>
-          <Header creds={session}/>
-          <AuthPage session={session}/>
+          <Header creds={session} api={api}/>
+          <AuthPage session={session} />
         </Route>
         <Route exact path='/signup'>
-          <Header creds={session}/> 
+          <Header creds={session} api={api}/> 
           <SignUpPage session={session}/>
         </Route>
         <Route exact path='/createartist'>
-          <Header creds={session}/>
-          <CreateArtistPage/>
+          <Header creds={session} api={api}/>
+          <CreateArtistPage creds={session} api={api}/>
         </Route>
       </Switch>
       {/*Debug*/}<button onClick={printSession}>Print Session</button>

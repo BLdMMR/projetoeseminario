@@ -46,10 +46,16 @@ class AuthService(
             throw UserEmailAlreadyExistsException(emailAddress)
         }
 
+
         val newUser = User(id = UUID.randomUUID(), name = name, emailAddress = emailAddress, password = hashPassEncoded)
         this.userRepository.save(newUser)
 
-        this.emailService.sendRegistrationMail(emailAddress)
+
+        try{
+            this.emailService.sendRegistrationMail(emailAddress)
+        } catch (exception: Exception){
+            this.userRepository.delete(newUser)
+        }
     }
 
     fun loginUser(email: String?, password: String?): UUID {

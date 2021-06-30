@@ -1,5 +1,6 @@
 package pt.isel.leic.ps.g42.criart.controllers.ArtistController
 
+import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 import pt.isel.leic.ps.g42.criart.models.Artist
 import pt.isel.leic.ps.g42.criart.models.Tag
@@ -8,9 +9,9 @@ import pt.isel.leic.ps.g42.criart.models.UserType
 import pt.isel.leic.ps.g42.criart.services.ArtistServices
 import java.util.*
 
-
+@CrossOrigin("http://localhost:3000", "https://cri-art.herokuapp.com")
 @RestController
-@RequestMapping("/artist", "/api/artist")
+@RequestMapping("/artist")
 class ArtistController (private val services : ArtistServices){
 
     @GetMapping("/{aid}")
@@ -24,7 +25,8 @@ class ArtistController (private val services : ArtistServices){
         return services.getArtistsByTag(tag);
     }
 
-    @PostMapping
+    @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE],
+            produces = [MediaType.APPLICATION_JSON_VALUE])
     fun createArtist(@RequestBody artistIM: ArtistInputModel, @RequestAttribute user :User): Artist {
         val artist = artistIM.toArtist(user.id)
         return services.createArtist(artist)

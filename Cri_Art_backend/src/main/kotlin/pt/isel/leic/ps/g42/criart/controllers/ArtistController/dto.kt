@@ -7,7 +7,7 @@ import java.util.*
 class ArtistInputModel @JsonCreator constructor(
         private val username :String,
         private val description :String,
-        private val email :String,
+        private val email :String = "",
         private val tags: List<String>
 ) {
 

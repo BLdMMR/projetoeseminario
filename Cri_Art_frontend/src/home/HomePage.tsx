@@ -33,8 +33,11 @@ function HomePage(props: HomeProps) {
       ) : 
       (
             <div className={'search-bar-home'}>
-                  <input type="text" id='home_search_bar' ref={searchRef}/>
-                  <button type="button" id='home_search_button' onClick={handleSearch}>Search</button>
+                  <input type="text" className="form-control" id="exampleFormControlInput1" ref={searchRef} />
+                  {/* <input type="text" id='home_search_bar' ref={searchRef}/> */}
+                  <button type="button" id='home_search_button' className="btn btn-outline-primary" onClick={handleSearch}>Search</button>
+
+                  {/* <button type="button" id='home_search_button' onClick={handleSearch}>Search</button> */}
             </div>
       )
 }

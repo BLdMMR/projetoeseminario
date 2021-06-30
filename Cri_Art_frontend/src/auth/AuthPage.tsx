@@ -51,9 +51,18 @@ async function handleSubmit() {
       return props.session?.hasToken()
         ? <Redirect to='/'/>
         :   <div className={"login-page"}>
-                 <input className="login-input" type="text" ref={usernameRef} placeholder='Email'/>
-                 <input className="login-input" type="password" ref={passwordRef} placeholder='Password'/>
-                 <button className="login-button" type="button" onClick={handleSubmit}>Login</button>
+                  <div className="mb-3">
+                        <label className="form-label">Email address</label>
+                        <input type="email" className="form-control" id="exampleFormControlInput1" ref={usernameRef} placeholder="name@example.com"/>
+                  </div>
+                  <div className="mb-3">
+                        <label className="form-label">Password</label>
+                        <input type="password" className="form-control" id="exampleFormControlInput1" ref={passwordRef} placeholder="*************"/>
+                  </div>
+                  <div className="login-button">
+                        <button type="button" className="btn btn-primary" id="login-btn-auth-page" onClick={handleSubmit}>Login</button>
+                  </div>
+                
             </div>
 
       

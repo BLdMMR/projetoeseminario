@@ -44,18 +44,21 @@ function SignUpPage(props: SignUpProps) {
 
     return (
         <div className={'signup-form'}>
-            <input className={'signup-text-input'} type="text" ref={usernameRef} placeholder="Username"/>
-            <input className={'signup-text-input'} type="text" ref={emailRef} placeholder="Email"/>
-            <input className={'signup-text-input'} type="password" ref={passwordRef} placeholder="Password"/>
-            <div>
+						<label className="form-label">Username</label>
+					  <input type="text" className="form-control" id="exampleFormControlInput1" ref={usernameRef} placeholder="Ex.: Example123"/>
+						<label className="form-label">Email address</label>
+						<input type="email" className="form-control" id="exampleFormControlInput1" ref={emailRef} placeholder="Ex.: name@example.com"/>
+						<label className="form-label">Password</label>
+						<input type="password" className="form-control" id="Password" ref={passwordRef} placeholder="***********"/>
+            <div className={"radio-btns"}>
                 <label htmlFor="">
-                    <input type="radio" value="Artist" name="type" onClick={artistOnclick} ref={optionArtistRef}/>Artist
+                    <input type="radio" value="Artist" name="type" onClick={artistOnclick} ref={optionArtistRef}/> Artist
                 </label>
                 <label htmlFor="" className={'client-label'}>
-                    <input type="radio" value="Client" name="type" onClick={clientOnclick} ref={optionClientRef}/>Client
+                    <input type="radio" value="Client" name="type" onClick={clientOnclick} ref={optionClientRef} /> Client
                 </label>                
             </div>
-            <button className={'signup-button'} type="button" onClick={handleSignUp}>Sign Up</button>
+						<button type="button" id='signup-button' className="btn btn-primary" onClick={handleSignUp}>Sign Up</button>
         </div>
     )
 }

@@ -13,5 +13,5 @@ import java.util.*
 interface IUserRepository: ElasticsearchRepository<User, UUID> {
 
     @Query("{\"bool\" : {\"must\": {\"match\" : {\"emailAddress\" : \"?0\"}}}}")
-    fun findByEmail(email: String, pageable: Pageable): Page<User>
+    fun findByEmail(email: String, pageable: Pageable): Page<User?>
 }

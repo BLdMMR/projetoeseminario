@@ -7,7 +7,7 @@ nav {
   align-items: center;
   justify-items: center;
   width: 100vw;
-  height: 100px;
+  height: 10vh;
 }
 
 #login_button {
@@ -24,8 +24,16 @@ nav {
 }
 
 .search-section {
-  min-width: 33vw;
+  display: flex;
+  min-width: 25vw;
   margin-left: -50px;
+}
+
+#header_search_button {
+  background-color: #4686f2;
+  border-color: #4686f2;
+  margin-left: 8px;
+
 }
 
 .auth-section {
@@ -45,7 +53,23 @@ nav {
   width: 25vw;
 }
 
-.behind-header {
+/* .behind-header {
 
-  height: 100px;
+  height: 5vh;
+} */
+
+#sign-up-btn {
+  margin-right: 20px;
+  cursor: pointer;
+  background-color: #4686f2;
+  border-color: #4686f2;
+}
+
+#login-btn {
+  background-color: #ffb164;
+  border-color: #ffb164;
+  color: #ffffff;
+  text-decoration-color: #4686f2;
+  margin-right: 20px;
+  cursor: pointer;
 }

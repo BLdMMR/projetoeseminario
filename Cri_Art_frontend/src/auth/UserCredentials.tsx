@@ -66,8 +66,9 @@ export default class Credentials {
                 password: btoa(password)
             }
         )
+        console.log(`Response: ${response}`)
         const result = await response
-        console.log(result)
+        console.log(`Result: ${result.message}`)
 
         if (result.message === "New user created successfully!") return this.login(email, password)
         return this
