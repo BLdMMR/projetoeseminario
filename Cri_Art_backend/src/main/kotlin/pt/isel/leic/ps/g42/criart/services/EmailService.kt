@@ -18,7 +18,7 @@ class EmailService(private val mailSender: JavaMailSender) {
 
     val log = LoggerFactory.getLogger(EmailService::class.java.name)
     companion object {
-        private const val REGISTRATION_URI_TEMPLATE = "/api/auth/confirm-signup?token="
+        private const val REGISTRATION_URI_TEMPLATE = "/signup-confirmation?token="
         private const val REGISTRATION_CONFIRMATION_EMAIL_SUBJECT = "Registration confirmation"
         private const val REGISTRATION_CONFIRMATION_EMAIL_MESSAGE_TEMPLATE =
             "<br>  To complete the registration of your Cri Art account please click <a href=\"%s\">here</a> "
