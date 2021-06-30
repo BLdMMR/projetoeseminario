@@ -1,6 +1,6 @@
 export class Api {
-    //private readonly API_BASE_URL = 'https://cri-art-backend.herokuapp.com/api'
-    private readonly API_BASE_URL = 'http://localhost:8080/api'
+    private readonly API_BASE_URL = 'https://cri-art-backend.herokuapp.com/api'
+    //private readonly API_BASE_URL = 'http://localhost:8080/api'
 
     async fetchFromAPI<T>(method?: string, path?: string, headers?: Headers, body?: T) : Promise<any>{
         const meth = method? method : 'GET'
