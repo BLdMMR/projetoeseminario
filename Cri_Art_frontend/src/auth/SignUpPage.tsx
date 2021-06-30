@@ -45,9 +45,9 @@ function SignUpPage(props: SignUpProps) {
     return (
         <div className={'signup-form'}>
 						<label className="form-label">Username</label>
-					  <input type="text" className="form-control" id="exampleFormControlInput1" ref={usernameRef} placeholder="Ex.: Example123"/>
+					  <input type="text" className="form-control" id="email-address-login" ref={usernameRef} placeholder="Ex.: Example123"/>
 						<label className="form-label">Email address</label>
-						<input type="email" className="form-control" id="exampleFormControlInput1" ref={emailRef} placeholder="Ex.: name@example.com"/>
+						<input type="email" className="form-control" id="password-login" ref={emailRef} placeholder="Ex.: name@example.com"/>
 						<label className="form-label">Password</label>
 						<input type="password" className="form-control" id="Password" ref={passwordRef} placeholder="***********"/>
             <div className={"radio-btns"}>
@@ -55,7 +55,7 @@ function SignUpPage(props: SignUpProps) {
                     <input type="radio" value="Artist" name="type" onClick={artistOnclick} ref={optionArtistRef}/> Artist
                 </label>
                 <label htmlFor="" className={'client-label'}>
-                    <input type="radio" value="Client" name="type" onClick={clientOnclick} ref={optionClientRef} /> Client
+                    <input type="radio" value="Client" name="type" onClick={clientOnclick} ref={optionClientRef} /> Customer
                 </label>                
             </div>
 						<button type="button" id='signup-button' className="btn btn-primary" onClick={handleSignUp}>Sign Up</button>

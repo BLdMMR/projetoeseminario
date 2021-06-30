@@ -2,6 +2,7 @@ import { useRef } from "react"
 import UserCredentials from '../auth/UserCredentials'
 import './HomePage.css'
 import { Api } from '../api/Api'
+import Feed from "./Feed"
 
 export interface HomeProps {
       creds: UserCredentials
@@ -16,19 +17,20 @@ function HomePage(props: HomeProps) {
             console.log(toSearchBy)
             const searchResponse = await props.api.fetchFromAPI(
                   'GET',
-              `/home/search?nameToSearchBy=${toSearchBy}&token=${props.creds.token?.token}`
+              `/public/home/search?nameToSearchBy=${toSearchBy}&token=${props.creds.token?.token}`
             )
 
             const searchResult = await searchResponse
             console.log(`Search Response: ${searchResponse}`)
             console.log(`Search Result: ${searchResult}`)
-
+            console.log(searchResult)
+            
             //Fetch from backend the search results
       }
 
       return props.creds.hasToken() ? (
             <div>
-                  <h1>FEED</h1>
+                  <h1>Feed</h1>
             </div>
       ) : 
       (

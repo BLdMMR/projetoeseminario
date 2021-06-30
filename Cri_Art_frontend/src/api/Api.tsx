@@ -8,12 +8,13 @@ export class Api {
         const reqInfo = { 
             method: meth,
             headers: {
+                /* 'Access-Control-Allow-Origin': 'http://locallhost:3000', */
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(body)
         };
         
-        console.log(`${meth} ${pth}\n`)
+        console.log(`Request: ${meth} ${pth}\n`)
         console.log("Headers: ")
         headers?.forEach(console.log)
         console.log(`Body: ${JSON.stringify(body)}`)

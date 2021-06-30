@@ -2,26 +2,29 @@ package pt.isel.leic.ps.g42.criart.controllers
 
 import org.springframework.web.bind.annotation.*
 import pt.isel.leic.ps.g42.criart.models.Tag
+import pt.isel.leic.ps.g42.criart.models.User
 import pt.isel.leic.ps.g42.criart.services.HomeServices
 
+@CrossOrigin(origins = ["http://localhost:3000"])
+//@CrossOrigin("https://cri-art.herokuapp.com")
+//@CrossOrigin(origins = ["http://localhost:3000", "https://cri-art.herokuapp.com"])
 @RestController
-@RequestMapping("/home")
 class HomeController (private val services: HomeServices){
 
-    @GetMapping("/search")
-    fun searchByName(@RequestParam nameToSearchBy: String): HomeServices.Searchlist {
+    @GetMapping("public/home/search")
+    fun searchByName(@RequestParam nameToSearchBy: String, @RequestAttribute user: User?): HomeServices.Searchlist {
         println(nameToSearchBy)
         return services.searchByName(nameToSearchBy);
     }
 
-    @GetMapping("/tags")
+    @GetMapping("public/home/tags")
     fun searchByTag(@RequestParam tagToSearchBy: String): HomeServices.Searchlist {
         val tag = tagToSearchBy.replace('-', ' ')
         return services.searchByTag(Tag(tag))
     }
 
-    @GetMapping
-    fun getFeed(@RequestParam token: String) {
+    @GetMapping("/home")
+    fun getFeed(@RequestAttribute user :User) {
 
     }
 }

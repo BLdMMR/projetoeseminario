@@ -1,5 +1,6 @@
 package pt.isel.leic.ps.g42.criart.services
 
+import org.elasticsearch.ElasticsearchException
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -40,8 +41,13 @@ class AuthService(
 
     fun signupUser(name: String, emailAddress: String, password: String) {
         val hashPassEncoded = digestPassword(password)
-        val existingUser: User? = this.userRepository.findByEmail(emailAddress, Pageable.unpaged())
-            .get().findAny().orElse(null)
+        var existingUser: User? = null
+        try{
+            existingUser = this.userRepository.findByEmail(emailAddress, Pageable.unpaged())
+                .get().findAny().orElse(null)
+        } catch (exception: ElasticsearchException) {
+            log.info("Elasticsearch index not found")
+        }
         if (existingUser != null) {
             throw UserEmailAlreadyExistsException(emailAddress)
         }
@@ -52,8 +58,10 @@ class AuthService(
 
 
         try{
+            println("${this.javaClass.canonicalName}: $emailAddress")
             this.emailService.sendRegistrationMail(emailAddress)
         } catch (exception: Exception){
+            println("${this.javaClass.canonicalName}: ${exception.message} - ${exception.javaClass.name}")
             this.userRepository.delete(newUser)
         }
     }

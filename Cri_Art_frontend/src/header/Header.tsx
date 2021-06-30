@@ -1,31 +1,42 @@
 import { useRef } from "react"
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import logo from '../icons/new_logo.svg';
 import Credentials from '../auth/UserCredentials'
 import './Header.css'
 import minilogo from '../icons/logo_mini.svg'
 import { Api } from '../api/Api';
+import SearchResult from "../search/SearchResult";
 
 interface HeaderProps {
   creds: Credentials
-  api: Api
+  params: SearchResult
 }
 
 export function Header(props: HeaderProps) {
   const searchRef = useRef<HTMLInputElement>(null)
+  const history = useHistory()
 
-  async function handleSearch() {
+  async function HandleSearch() {
         const toSearchBy = searchRef.current?.value
         console.log(toSearchBy)
-        const searchResponse = await props.api.fetchFromAPI(
+        //props.params.setResults(toSearchBy)
+
+        
+
+        const searchResponse = await props.creds.api?.fetchFromAPI(
               'GET',
-          `/home/search?nameToSearchBy=${toSearchBy}&token=${props.creds.token?.token}`
+          `/public/home/search?nameToSearchBy=${toSearchBy}&token=${props.creds.token?.token}`,
+          undefined,
+          undefined
         )
 
         const searchResult = await searchResponse
         console.log(`Search Response: ${searchResponse}`)
         console.log(`Search Result: ${searchResult}`)
-
+        console.log(searchResult)
+        props.params.setResults(searchResult.artistlist, searchResult.worklist)
+        /* props.params.artistlist = searchResult.artistlist
+        props.params.worklist = searchResult.worklist */
         //Fetch from backend the search results
   }
 
@@ -41,7 +52,7 @@ export function Header(props: HeaderProps) {
           </div>
           <div className={'search-section'}>
             <input type="text" className="form-control" id="header-search-bar" ref={searchRef} />
-            <button type="button" id='header_search_button' className="btn btn-primary" onClick={handleSearch}>Search</button>
+            <button type="button" id='header_search_button' className="btn btn-primary" onClick={HandleSearch}>Search</button>
           </div>
           <div className={'auth-section'}>
             <form action="/login">

@@ -8,7 +8,7 @@ data class LoginRequest (
 )
 
 data class LoginResponse(
-    val token: UUID
+    val token: UUID?
 )
 
 data class SignUpResponse(

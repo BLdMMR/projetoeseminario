@@ -10,6 +10,7 @@ import pt.isel.leic.ps.g42.criart.services.ArtistServices
 import java.util.*
 
 @CrossOrigin("http://localhost:3000", "https://cri-art.herokuapp.com")
+//@CrossOrigin(origins = ["http://localhost:3000", "https://cri-art.herokuapp.com"])
 @RestController
 @RequestMapping("/artist")
 class ArtistController (private val services : ArtistServices){

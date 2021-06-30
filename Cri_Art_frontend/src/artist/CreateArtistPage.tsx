@@ -4,7 +4,6 @@ import UserCredentials from "../auth/UserCredentials"
 
 export interface CreateArtistPageProps {
     creds: UserCredentials,
-    api: Api
 }
 
 function CreateArtistPage(props: CreateArtistPageProps) {
@@ -32,14 +31,14 @@ function CreateArtistPage(props: CreateArtistPageProps) {
         return undefined
     }
 
-    function renderTags(tag: string) {
+    /* function renderTags(tag: string) {
         //console.log(`<label htmlFor="">\n<input type="checkbox" name=${tag} id="tag_option" />${tag}\n</label>`)
         return (
             <label htmlFor="">
             <input type="button" onChange={handleTagChange(tag)} name={tag.toString()} id={tag.concat("_tag_option")}/>{tag}
             </label>
         )
-    }
+    } */
 
     function handleSubmit() {
         const aName = artistNameRef.current?.value
@@ -56,9 +55,9 @@ function CreateArtistPage(props: CreateArtistPageProps) {
         const headers = new Headers()
         headers.append('Content-Type', 'application/json')
 
-        props.api.fetchFromAPI(
+        props.creds.api?.fetchFromAPI(
             'POST',
-            '/artist',
+            `/artist?token=${props.creds.token?.token}`,
             headers,
             {
                 username: aName,

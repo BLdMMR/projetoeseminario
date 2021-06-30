@@ -8,7 +8,7 @@ export default class Credentials {
     private email?: string
     private password?: string
     public token?: Token
-    private api?: Api
+    public api?: Api
 
     setApi(api: Api) {
         this.api = api

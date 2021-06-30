@@ -7,13 +7,11 @@ import java.util.*
 @Document(indexName = "artist")
 data class Artist(
     val username: String,
-    val email: String,
     val description: String,
     @Id
     val artist_id: UUID = UUID.randomUUID(),
     val reviews: Float = 0.0f,
     var tags: LinkedList<Tag> = LinkedList(),
-    val works: LinkedList<Work> = LinkedList()
 ) {
-    constructor() : this("", "", "", UUID(0L, 0L),)
+    constructor() : this("", "", UUID(0L, 0L))
 }

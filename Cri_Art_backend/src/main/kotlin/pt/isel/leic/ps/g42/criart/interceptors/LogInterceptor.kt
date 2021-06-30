@@ -13,11 +13,13 @@ class LogInterceptor : HandlerInterceptor {
     val log = LoggerFactory.getLogger(this::class.java.name)
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
-        log.info("${request.method} ${request.contextPath} arrived the API")
+        log.info("${request.method} ${request.requestURL} arrived the API")
         return true
     }
 
     override fun postHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any, modelAndView: ModelAndView?) {
-        log.info("Status: $response.status - Request: ${request.method} ${request.contextPath}")
+        log.info("Status: ${response.status} - Request: ${request.method} ${request.requestURL}")
+        log.info("${response.headerNames.toString()}")
+
     }
 }

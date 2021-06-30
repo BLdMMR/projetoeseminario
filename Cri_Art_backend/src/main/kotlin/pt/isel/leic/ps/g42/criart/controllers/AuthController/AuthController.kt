@@ -7,10 +7,13 @@ import pt.isel.leic.ps.g42.criart.controllers.AuthController.model.LoginRequest
 import pt.isel.leic.ps.g42.criart.controllers.AuthController.model.LoginResponse
 import pt.isel.leic.ps.g42.criart.controllers.AuthController.model.SignupRequest
 import pt.isel.leic.ps.g42.criart.services.AuthService
+import java.util.*
 import java.util.logging.Logger
 import org.springframework.http.ResponseEntity as ResponseEntity
 
-@CrossOrigin("http://localhost:3000", "https://cri-art.herokuapp.com")
+@CrossOrigin("http://localhost:3000")
+//@CrossOrigin("https://cri-art.herokuapp.com")
+//@CrossOrigin(origins = ["http://localhost:3000", "https://cri-art.herokuapp.com"])
 @RestController
 @RequestMapping("/auth")
 class AuthController(
@@ -23,7 +26,14 @@ class AuthController(
         consumes = [MediaType.APPLICATION_JSON_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE])
     fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<LoginResponse> {
-        val token = this.authService.loginUser(loginRequest.email, loginRequest.password)
+        var token :UUID? = null
+        try{
+             token = this.authService.loginUser(loginRequest.email, loginRequest.password)
+            println(token)
+        } catch (exception: Exception) {
+            println("${exception.message} - ${exception.javaClass.name}")
+        }
+        if (token == null) return ResponseEntity(LoginResponse(token), HttpStatus.NOT_FOUND)
         return ResponseEntity(LoginResponse(token), HttpStatus.CREATED)
     }
 

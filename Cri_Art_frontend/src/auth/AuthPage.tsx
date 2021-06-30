@@ -29,7 +29,11 @@ async function handleSubmit() {
       props.session?.login(username!!, password!!)
       .then(async (creds) => {
             history.push(`home?token=${creds.token!!.token}`)
-                  })
+                  }
+      )
+      .catch((err) => {
+            console.log(err)
+      })
                   
 
                   /* const headers = new Headers()
@@ -48,7 +52,7 @@ async function handleSubmit() {
                   
       }
             
-      return props.session?.hasToken()
+      return props.session?.token
         ? <Redirect to='/'/>
         :   <div className={"login-page"}>
                   <div className="mb-3">

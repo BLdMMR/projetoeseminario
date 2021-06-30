@@ -21,3 +21,14 @@ margin-left: 8px;
 
   transform: translateX(-50%);
 }
+
+h1 {
+  display: flex;
+  justify-content: center;
+  position:fixed;
+  width: 50vw;
+  top: 30vh;
+  left: 50vw;
+
+  transform: translateX(-50%);
+}
