@@ -46,10 +46,14 @@ class AuthService(
             throw UserEmailAlreadyExistsException(emailAddress)
         }
 
-        val newUser = User(id = UUID.randomUUID(), name = name, emailAddress = emailAddress, password = hashPassEncoded)
+        val newUser = User(id = UUID.randomUUID(), name = name, emailAddress = emailAddress,
+            password = hashPassEncoded, enabled = false)
         this.userRepository.save(newUser)
 
-        this.emailService.sendRegistrationMail(emailAddress)
+        val token = Token(userId = newUser.id, token = UUID.randomUUID(), type = TokenType.SIGNUP)
+        this.tokenRepository.save(token)
+
+        this.emailService.sendRegistrationMail(emailAddress, token.token)
     }
 
     fun loginUser(email: String?, password: String?): UUID {
@@ -83,7 +87,7 @@ class AuthService(
             throw MalformedTokenException()
         }
         val tokenEnt: Token? = this.tokenRepository.findByIdOrNull(parsedToken)
-        if (tokenEnt != null) {
+        if (tokenEnt?.type == TokenType.LOGIN) {
             this.tokenRepository.deleteById(parsedToken)
         } else {
             throw TokenNotFoundException()
@@ -105,5 +109,35 @@ class AuthService(
             log.warning("User with id ${tokenEnt.userId} not found from token: ${tokenEnt.token}")
         }
         return user
+    }
+
+    fun confirmSignup(token: String): Boolean {
+        val parsedToken: UUID
+        try {
+            parsedToken = UUID.fromString(token)
+        } catch (exception: IllegalArgumentException) {
+            throw MalformedTokenException()
+        }
+
+        val tokenEnt: Token? = this.tokenRepository.findByIdOrNull(parsedToken)
+
+        if (tokenEnt == null) {
+            this.log.warning("Token not found in the database: $token")
+            throw TokenNotFoundException()
+        }
+
+        if (tokenEnt.type != TokenType.SIGNUP) {
+            this.log.warning("Token of wrong type found: ${tokenEnt.type} instead of ${TokenType.SIGNUP}")
+            throw TokenNotFoundException()
+        }
+        val user = this.userRepository.findByIdOrNull(tokenEnt.userId)
+        if (user == null || user.enabled) {
+            log.warning("Disabled user with id ${tokenEnt.userId} not found from token: ${tokenEnt.token}")
+            return false
+        }
+        user.enabled = true
+        this.userRepository.save(user)
+
+        return true
     }
 }

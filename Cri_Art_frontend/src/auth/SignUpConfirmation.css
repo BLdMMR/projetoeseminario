@@ -1,0 +1,10 @@
+
+.confirmation-message {
+  display: inline;
+  font-size: 20px;
+
+  position: relative;
+  top: 25vh;
+  left: 40vw;
+  transform: translateX(-50%);
+}

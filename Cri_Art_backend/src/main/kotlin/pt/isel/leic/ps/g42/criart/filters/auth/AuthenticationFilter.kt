@@ -31,11 +31,14 @@ class AuthenticationFilter(private val authService: AuthService) : OncePerReques
 
         val user = this.authService.getLoggedInUser(token)
 
-        if (user != null) {
+        if (user?.enabled == true) {
             request.setAttribute("user", user)
             chain.doFilter(request, response)
         } else {
             log.warning("Error while getting the user for token: $token")
+            if (user != null && !user.enabled) {
+                log.warning("The following user has been disabled: ${user.id}")
+            }
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED)
         }
     }

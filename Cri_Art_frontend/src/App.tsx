@@ -5,6 +5,7 @@ import HomePage from './home/HomePage'
 import HelloPage from './HelloPage'
 import AuthPage from './auth/AuthPage';
 import SignUpPage from './auth/SignUpPage';
+import SignUpConfirmation from './auth/SignUpConfirmation';
 import UserCredentials from './auth/UserCredentials'
 import { Api } from './api/Api'
 
@@ -52,6 +53,10 @@ function AppRouter() {
         <Route exact path='/createartist'>
           <Header creds={session}/>
           <CreateArtistPage/>
+        </Route>
+        <Route exact path='/signup-confirmation'>
+          <Header creds={session}/>
+          <SignUpConfirmation/>
         </Route>
       </Switch>
       {/*Debug*/}<button onClick={printSession}>Print Session</button>

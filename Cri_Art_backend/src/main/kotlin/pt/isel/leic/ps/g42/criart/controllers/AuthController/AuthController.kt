@@ -29,16 +29,25 @@ class AuthController(
     }
 
     @DeleteMapping("/logout")
-    fun logout(@RequestParam token: String): ResponseEntity<String> {
+    fun logout(@RequestParam token: String): ResponseEntity<Any> {
         this.authService.logoutUser(token)
-        return ResponseEntity("User logged out successfully!", HttpStatus.OK)
+        return ResponseEntity(HttpStatus.OK)
     }
 
     @PostMapping("/signup",
         consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun signup(@RequestBody signupRequest: SignupRequest): ResponseEntity<String> {
+    fun signup(@RequestBody signupRequest: SignupRequest): ResponseEntity<Any> {
         this.authService.signupUser(signupRequest.name, signupRequest.email, signupRequest.password)
-        return ResponseEntity("New user created successfully!", HttpStatus.OK)
+
+        return ResponseEntity(HttpStatus.OK)
+    }
+
+    @PostMapping("/confirm-signup")
+    fun confirmSignup(@RequestParam token: String): ResponseEntity<Any> {
+
+        return if (authService.confirmSignup(token))
+                    ResponseEntity(HttpStatus.OK)
+            else ResponseEntity(HttpStatus.UNAUTHORIZED)
     }
 
 }
