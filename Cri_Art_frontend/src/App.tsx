@@ -5,6 +5,7 @@ import HomePage from './home/HomePage'
 import HelloPage from './HelloPage'
 import AuthPage from './auth/AuthPage';
 import SignUpPage from './auth/SignUpPage';
+import SignUpConfirmation from './auth/SignUpConfirmation';
 import UserCredentials from './auth/UserCredentials'
 import { Api } from './api/Api'
 import SearchPage from './search/SearchPage'
@@ -57,6 +58,10 @@ function AppRouter() {
         <Route path="/search">
           <Header creds = {session} params={searchParams}/>
           <SearchPage creds = {session} params={searchParams}/>
+        </Route>
+        <Route exact path='/signup-confirmation'>
+          <Header creds={session} params={searchParams}/>
+          <SignUpConfirmation/>
         </Route>
       </Switch>
       {/*Debug*/}<button onClick={printSession}>Print Session</button>
