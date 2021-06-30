@@ -12,8 +12,8 @@ import java.util.logging.Logger
 import org.springframework.http.ResponseEntity as ResponseEntity
 
 //@CrossOrigin("http://localhost:3000")
-@CrossOrigin("https://cri-art.herokuapp.com")
-//@CrossOrigin(origins = ["http://localhost:3000", "https://cri-art.herokuapp.com"])
+//@CrossOrigin("https://cri-art.herokuapp.com")
+@CrossOrigin(origins = ["http://localhost:3000", "https://cri-art.herokuapp.com"])
 @RestController
 @RequestMapping("/auth")
 class AuthController(

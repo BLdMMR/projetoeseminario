@@ -11,6 +11,7 @@ export interface SearchPageProps {
 function SearchPage(props: SearchPageProps) {
     const searchParams = useLocation().search
     const name = new URLSearchParams(searchParams).get('nameToSearchBy');
+    console.log(`Parameter: ${name}`)
 
     /* props.creds.api?.fetchFromAPI(
         'GET',
