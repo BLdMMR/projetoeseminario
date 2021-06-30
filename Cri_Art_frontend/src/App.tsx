@@ -64,8 +64,8 @@ function AppRouter() {
           <SignUpConfirmation/>
         </Route>
       </Switch>
-      {/*Debug*/}<button onClick={printSession}>Print Session</button>
-      {/*Debug*/}<button onClick={printParams}>Print Params</button>
+      {/*Debug<button onClick={printSession}>Print Session</button>*/}
+      {/*Debug<button onClick={printParams}>Print Params</button>*/}
     </Router>
   );
 }

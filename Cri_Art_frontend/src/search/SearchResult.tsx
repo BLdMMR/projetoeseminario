@@ -1,10 +1,10 @@
 export class SearchResult {
-    public artistlist?: Array<object>
-    public worklist?: Array<object>
+    public artistList?: Array<object>
+    public workList?: Array<object>
 
     setResults(artistlist?: Array<object>, worklist?: Array<object>) {
-        this.artistlist = artistlist
-        this.worklist = worklist
+        this.artistList = artistlist
+        this.workList = worklist
     }
 
 }
