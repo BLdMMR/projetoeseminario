@@ -1,5 +1,6 @@
 package pt.isel.leic.ps.g42.criart.services
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import pt.isel.leic.ps.g42.criart.models.Artist
 import pt.isel.leic.ps.g42.criart.models.Tag
@@ -35,4 +36,8 @@ class ArtistServices(private val repository: ArtistRepository) {
         return repository.removeTagFromArtist(artistId, tag)
     }
 
+
+
 }
+
+

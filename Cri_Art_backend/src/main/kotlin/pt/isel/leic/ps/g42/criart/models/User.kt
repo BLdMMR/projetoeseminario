@@ -7,7 +7,15 @@ import java.util.*
 enum class UserType {
     ARTIST,
     CLIENT,
-    MODERATOR
+    MODERATOR;
+    fun parse(type: String) : UserType? {
+        when(type){
+            "CLIENT" -> return CLIENT
+            "ARTIST" -> return ARTIST
+            "MODERATOR" -> return MODERATOR
+            else -> return null
+        }
+    }
 }
 
 @Document(indexName = "user")

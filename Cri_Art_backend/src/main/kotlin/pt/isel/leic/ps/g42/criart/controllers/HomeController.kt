@@ -1,6 +1,9 @@
 package pt.isel.leic.ps.g42.criart.controllers
 
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import pt.isel.leic.ps.g42.criart.models.Artist
 import pt.isel.leic.ps.g42.criart.models.Tag
 import pt.isel.leic.ps.g42.criart.models.User
 import pt.isel.leic.ps.g42.criart.services.HomeServices
@@ -27,4 +30,11 @@ class HomeController (private val services: HomeServices){
     fun getFeed(@RequestAttribute user :User) {
 
     }
+
+    @GetMapping("/public/tags")
+    fun getAllTags() : ResponseEntity<List<String>> {
+        val tags =services.getAllTags()
+        return ResponseEntity<List<String>>(tags, HttpStatus.OK)
+    }
+
 }

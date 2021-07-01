@@ -15,3 +15,11 @@ class ArtistInputModel @JsonCreator constructor(
     }
 }
 
+class ArtistOutputModel (
+        val username: String,
+        val description: String,
+        val id: String,
+        val reviews: Float,
+        val tags: List<String>
+)
+

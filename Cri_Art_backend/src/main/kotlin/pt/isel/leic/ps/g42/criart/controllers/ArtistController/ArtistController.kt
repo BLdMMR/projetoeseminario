@@ -1,6 +1,8 @@
 package pt.isel.leic.ps.g42.criart.controllers.ArtistController
 
+import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import pt.isel.leic.ps.g42.criart.models.Artist
 import pt.isel.leic.ps.g42.criart.models.Tag

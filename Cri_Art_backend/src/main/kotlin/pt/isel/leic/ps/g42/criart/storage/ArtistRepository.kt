@@ -9,7 +9,6 @@ import pt.isel.leic.ps.g42.criart.storage.irepositories.IArtistRepository
 import java.io.File
 import java.util.*
 
-
 /**
 * To run elasticsearch: docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.12.1
 * **/
@@ -65,5 +64,65 @@ class ArtistRepository (private val es_repository : IArtistRepository){
         return filtered
     }
 
+    private val tags = listOf(
+            "Digital Drawing", "Vector Drawing", "Logo Design", "Drawing in paper",
+            "Architectural Design", "Fashion Design", "Web Design", "Interior Design",
+            "Image Editing", "Photography", "Filming", "Video Editing", "Visual FX",
+            "Video Correction", "Creative Writing - BD", "Creative Writing - Poetry",
+            "Creative Writing - Fiction", "Storytelling", "Copy writing", "Sculpting",
+            "3D Modeling", "Music - Composition", "Lyric Writing", "Ad Music Composition",
+            "Singing", "Voice-over", "Narration", "Acting", "Film Director", "Producer",
+            "Magic & Illusion", "Arts & Crafts"
+    )
 
+    fun getAllTags(): List<String> {
+        return tags
+    }
+
+    /*
+    *
+    * Tags_ Disponíveis (Tanto para perfil como para trabalho)
+ - Desenho
+      - Desenho digital
+      - Desenho vetorial
+      - Desenho de logotipos
+      - Desenho em papel
+      - Desenho arquitetónico
+ - Design
+      - Design de moda
+      - Web design
+      - Design de interiores
+ - Imagem
+      - Edição de imagem
+      - Fotografia
+ - Video
+      - Filmagem
+      - Edição de video
+      - Efeitos especiais
+      - Correção de videos
+ - Escrita
+      - Escrita creativa
+         - BD
+         - Poesia
+         - Romances
+      - _Storytelling_
+      - Cópia de documentos
+ - Escultura
+      - Escultura em pedra
+      - Escultura em gesso
+      - Escultura em madeira
+      - Modelação 3D
+ - Música
+      - Composição
+      - Escrita de música publicitária
+ - Voz
+      - Canto
+      - _Voice-overs_
+      - Narração
+ - Teatro/Cinema
+      - Ator
+      - Realizador
+      - Produtor
+      - Ilusionismo
+    * */
 }

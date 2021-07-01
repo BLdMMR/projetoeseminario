@@ -1,5 +1,7 @@
 package pt.isel.leic.ps.g42.criart.controllers.ArtistTagController
 
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import pt.isel.leic.ps.g42.criart.models.Artist
 import pt.isel.leic.ps.g42.criart.models.Tag
@@ -25,5 +27,7 @@ class ArtistTagController(private val services :ArtistServices) {
         val tag = Tag(tagToRemove)
         return services.removeTagFromArtist(UUID.fromString(artist_id), tag)
     }
+
+
 
 }

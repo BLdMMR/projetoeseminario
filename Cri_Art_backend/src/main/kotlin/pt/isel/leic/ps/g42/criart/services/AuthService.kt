@@ -9,6 +9,7 @@ import pt.isel.leic.ps.g42.criart.controllers.AuthController.exceptions.*
 import pt.isel.leic.ps.g42.criart.models.Token
 import pt.isel.leic.ps.g42.criart.models.TokenType
 import pt.isel.leic.ps.g42.criart.models.User
+import pt.isel.leic.ps.g42.criart.models.UserType
 import pt.isel.leic.ps.g42.criart.storage.irepositories.ITokenRepository
 import pt.isel.leic.ps.g42.criart.storage.irepositories.IUserRepository
 import java.security.MessageDigest
@@ -39,7 +40,7 @@ class AuthService(
 
     private val log = Logger.getLogger(AuthService::class.java.name)
 
-    fun signupUser(name: String, emailAddress: String, password: String) {
+    fun signupUser(name: String, emailAddress: String, password: String, userType: String) {
         val hashPassEncoded = digestPassword(password)
         var existingUser: User? = null
         try{
@@ -52,9 +53,13 @@ class AuthService(
             throw UserEmailAlreadyExistsException(emailAddress)
         }
 
+        val type = UserType.valueOf(userType.toUpperCase())
+
+        if (type != UserType.ARTIST && type != UserType.CLIENT && type != UserType.MODERATOR)
+            throw InvalidUserTypeException()
 
         val newUser = User(id = UUID.randomUUID(), name = name, emailAddress = emailAddress,
-            password = hashPassEncoded, enabled = false)
+            password = hashPassEncoded, type = type , enabled = false)
         this.userRepository.save(newUser)
 
         val token = Token(userId = newUser.id, token = UUID.randomUUID(), type = TokenType.SIGNUP)

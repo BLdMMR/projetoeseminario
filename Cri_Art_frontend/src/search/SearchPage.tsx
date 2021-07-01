@@ -1,5 +1,5 @@
 import UserCredentials from '../auth/UserCredentials'
-import SearchResult from './SearchResult'
+import {SearchResult, Artist} from './SearchResult'
 import { useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import React from 'react'
@@ -12,7 +12,6 @@ export interface SearchPageProps {
 
 function SearchPage(props: SearchPageProps) {
     const [content, setContent] = useState<SearchResult>(new SearchResult())
-    const [initState, setInitState] = useState<any>({})
     const [done, setDone] = useState<Boolean>(true)
     const searchParams = useLocation().search
     const name = new URLSearchParams(searchParams).get('nameToSearchBy');
@@ -20,39 +19,53 @@ function SearchPage(props: SearchPageProps) {
 
     useEffect(()=> {
         if (done) {
+            setDone(false)
             props.creds.api?.fetchFromAPI(
                 'GET',
                 `/public/home/search?nameToSearchBy=${name}&token=${props.creds.token?.token}`,
                 undefined,
                 undefined
-            ).then(jsonResponse => setInitState(jsonResponse))
-            /* .then(data => {
-                setInitState()
-                console.log(data)
-                setContent(data)
-            })  */
+                ).then(data => {
+                    console.log(`Data fetched: ${data}`)
+                    setContent(data)
+                    setDone(true)
+                }) 
+                /* ).then(jsonResponse => setInitState(jsonResponse)) */
             console.log(content)
-            setDone(false)
-        } else {
-            setDone(true)
-        }
+            
+        } 
     }, [content, setContent])
 
 
 
 
-    function renderArtists(artist: object) {
+    function renderArtists(artist: Artist) {
+        const href = `/artist/${artist.artist_id}`
         return(
-            <h1>{artist}</h1>
+            <div className="card">
+                <div className="card-header">
+                    Artist
+                </div>
+                <div className="card-body">
+                    <h5 className="card-title">{artist.username}</h5>
+                    <p className="card-text">{artist.description}</p>
+                    <a href={href} className="btn btn-primary">Go To Artist</a>
+                </div>
+            </div>
         )
     }
 
 
-    return (
+    return done ? (
         <div>
-            { initState.length > 0 && initState.map((e: any) => {console.log("e:" + e);<h1>{e}</h1>}) }
+            <div>
+                <h3>Search results</h3>
+            </div>
+            <div>
+                {content.artistList?.map(renderArtists)}
+            </div>
         </div>
-    )
+    ) : ( <h1>Loading</h1> )
 }
 
 export default SearchPage
