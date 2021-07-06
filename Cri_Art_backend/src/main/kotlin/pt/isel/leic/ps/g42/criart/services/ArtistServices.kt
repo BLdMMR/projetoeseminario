@@ -10,8 +10,14 @@ import java.util.*
 @Component
 class ArtistServices(private val repository: ArtistRepository) {
 
-    fun createArtist(artist: Artist): Artist {
-        return repository.addArtist(artist)
+    fun createArtist(artist: Artist): Boolean {
+        return try {
+            repository.addArtist(artist)
+            true
+        } catch (e: Exception) {
+            println(e.message)
+            false
+        }
     }
 
     fun getArtistsByTag(tag: Tag): List<Artist> {
@@ -24,7 +30,7 @@ class ArtistServices(private val repository: ArtistRepository) {
         return repository.getAllArtists()
     }
 
-    fun addTagToArtist(artist_id : UUID, tag: Tag): Artist? {
+    fun addTagToArtist(artist_id : UUID, tag: String): Artist? {
         return repository.addTagToArtist(artist_id, tag)
     }
 

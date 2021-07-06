@@ -18,7 +18,7 @@ class ArtistTagController(private val services :ArtistServices) {
     fun addTagToArtist(@PathVariable("aid") artist_id: String, @RequestBody addTaginput :TagInputModel, @RequestAttribute user : User): Artist? {
         if (user.type != UserType.ARTIST) return null
         val tag = addTaginput.toTag()
-        return services.addTagToArtist(UUID.fromString(artist_id), tag)
+        return services.addTagToArtist(UUID.fromString(artist_id), tag.tag_name)
     }
 
     @PatchMapping("/{tag}")

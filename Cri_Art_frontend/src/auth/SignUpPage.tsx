@@ -15,10 +15,11 @@ async function getTags(props: SignUpProps) {
 
 function SignUpPage(props: SignUpProps) {
     const history = useHistory()
-    const [type, setType] = useState<String>("CLIENT")
+    const [type, setType] = useState<string>("CLIENT")
     let tags = Array<string>()
     
     useEffect(()=>{
+        console.log("effect")
         getTags(props)
         .then(data => {
             tags = data
@@ -29,11 +30,9 @@ function SignUpPage(props: SignUpProps) {
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
     let accountType = ""
-    const optionArtistRef = useRef<HTMLInputElement>(null)
-    const optionClientRef = useRef<HTMLInputElement>(null)
 
     async function handleSignUp() {
-        props.session?.signUp(usernameRef.current!!.value, passwordRef.current!!.value, emailRef.current!!.value)
+        props.session?.signUp(usernameRef.current!!.value, passwordRef.current!!.value, emailRef.current!!.value, type)
             .then((creds) => {
                 if (accountType == "Client")
                 history.push(`home?token=${creds.token!!.token}`)
@@ -58,24 +57,26 @@ function SignUpPage(props: SignUpProps) {
         setType("ARTIST")
     }
 
-    function renderTags(tag: string) {
+    /* function renderTags(tag: string) {
         console.log(`rendering tag: ${tag}`)
         return (
+            <div>
             <label htmlFor={tag}>{tag}
             <input type="checkbox" name="tags" id={tag} />
             </label>
+            </div>
         )
-    }
+    } */
 
-    if(type === "CLIENT") {
+    /* if(type === "CLIENT") { */
         return (
         <div className={'signup-form'}>
             <div className={"radio-btns"}>
                 <label htmlFor="">
-                    <input type="radio" value="Artist" name="type" onClick={artistOnclick} ref={optionArtistRef}/> Artist
+                    <input type="radio" value="Artist" name="type" onClick={artistOnclick}/> Artist
                 </label>
                 <label htmlFor="" className={'client-label'}>
-                    <input type="radio" value="Client" name="type" onClick={clientOnclick} ref={optionClientRef} default-checked="true"/> Customer
+                    <input type="radio" value="Client" name="type" onClick={clientOnclick} default-checked="true"/> Customer
                 </label>                
             </div>
                 <label className="form-label">Username</label>
@@ -87,17 +88,17 @@ function SignUpPage(props: SignUpProps) {
                 <button type="button" id='signup-button' className="btn btn-primary" onClick={handleSignUp}>Sign Up</button>
         </div>
         )
-    }
-    else if (type === "ARTIST") {
+    /* }
+     else if (type === "ARTIST") {
         return (
         
         <div className={'signup-form'}>
             <div className={"radio-btns"}>
                 <label htmlFor="">
-                    <input type="radio" value="Artist" name="type" onClick={artistOnclick} ref={optionArtistRef} default-checked="true"/> Artist
+                    <input type="radio" value="Artist" name="type" onClick={artistOnclick} default-checked="true"/> Artist
                 </label>
                 <label htmlFor="" className={'client-label'}>
-                    <input type="radio" value="Client" name="type" onClick={clientOnclick} ref={optionClientRef} /> Customer
+                    <input type="radio" value="Client" name="type" onClick={clientOnclick}/> Customer
                 </label>                
             </div>
                 <label className="form-label">Username</label>
@@ -106,13 +107,37 @@ function SignUpPage(props: SignUpProps) {
                 <input type="email" className="form-control" id="password-login" ref={emailRef} placeholder="Ex.: name@example.com"/>
                 <label className="form-label">Password</label>
                 <input type="password" className="form-control" id="Password" ref={passwordRef} placeholder="***********"/>
+                <p>Tags</p>
+                <Tags {...tags}/>
                 {tags.map(renderTags)}
                 <button type="button" id='signup-button' className="btn btn-primary" onClick={handleSignUp}>Sign Up</button>
         </div>
         
         )
     }
-    else return <div/>
+    else return <div/> */
 }
 
 export default SignUpPage
+
+
+/* function Tags(props :Array<string>) {
+    const tagsElems = Array<JSX.Element>()
+    const tags :Array<string> = props
+    props.map(pushElem)
+
+    
+
+    function pushElem(tag: string) {
+        tagsElems.push(
+            <label htmlFor={tag}>{tag}
+            <input type="checkbox" name="tags" id={tag} />
+            </label>
+        )
+    }
+    return (
+        <div>
+            {tagsElems}
+        </div>
+    )
+} */

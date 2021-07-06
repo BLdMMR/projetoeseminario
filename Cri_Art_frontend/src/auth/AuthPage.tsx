@@ -26,7 +26,7 @@ async function handleSubmit() {
       console.log(`Email: ${username}`)
       console.log(`Password: ${password}`)
       console.log('Slam Banana')
-      props.session?.login(username!!, password!!)
+      props.session?.login(username!!, password!!, true)
       .then(async (creds) => {
             history.push(`home?token=${creds.token!!.token}`)
                   }

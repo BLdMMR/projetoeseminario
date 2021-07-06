@@ -60,6 +60,7 @@ class AuthService(
 
         val newUser = User(id = UUID.randomUUID(), name = name, emailAddress = emailAddress,
             password = hashPassEncoded, type = type , enabled = false)
+        println("User: \nId: ${newUser.id}\nName: ${newUser.name}\nEmail: ${newUser.emailAddress}\nPassword: ${newUser.password}\nType: ${newUser.type}\nEnabled: ${newUser.enabled}")
         this.userRepository.save(newUser)
 
         val token = Token(userId = newUser.id, token = UUID.randomUUID(), type = TokenType.SIGNUP)
@@ -123,7 +124,7 @@ class AuthService(
         return user
     }
 
-    fun confirmSignup(token: String): Boolean {
+    fun confirmSignup(token: String): User? {
         val parsedToken: UUID
         try {
             parsedToken = UUID.fromString(token)
@@ -145,11 +146,11 @@ class AuthService(
         val user = this.userRepository.findByIdOrNull(tokenEnt.userId)
         if (user == null || user.enabled) {
             log.warning("Disabled user with id ${tokenEnt.userId} not found from token: ${tokenEnt.token}")
-            return false
+            return null
         }
         user.enabled = true
         this.userRepository.save(user)
 
-        return true
+        return user
     }
 }

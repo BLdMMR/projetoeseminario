@@ -46,6 +46,7 @@ class AuthController(
     @PostMapping("/signup",
         consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun signup(@RequestBody signupRequest: SignupRequest): ResponseEntity<Any> {
+        println("Email: ${signupRequest.email}\nUsername: ${signupRequest.name}\nPassword: ${signupRequest.password}\nUser Type: ${signupRequest.userType}")
         this.authService.signupUser(signupRequest.name, signupRequest.email, signupRequest.password, signupRequest.userType)
 
         return ResponseEntity(HttpStatus.OK)
@@ -54,9 +55,15 @@ class AuthController(
     @PostMapping("/confirm-signup")
     fun confirmSignup(@RequestParam token: String): ResponseEntity<Any> {
 
-        return if (authService.confirmSignup(token))
-                    ResponseEntity(HttpStatus.OK)
-            else ResponseEntity(HttpStatus.UNAUTHORIZED)
+        val user = authService.confirmSignup(token)
+        return if (user == null) {
+            ResponseEntity(HttpStatus.UNAUTHORIZED)
+        } else {
+            ResponseEntity.ok().body(user)
+        }
+//        return if (this.authService.confirmSignup(token) != null) {
+//            ResponseEntity.ok().body(token)
+//        } else ResponseEntity(HttpStatus.UNAUTHORIZED)
     }
 
     data class SignUpResponse(val message: String)

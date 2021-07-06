@@ -8,3 +8,20 @@
   left: 40vw;
   transform: translateX(-50%);
 }
+
+#description-input {
+  width: 25vw;
+  height: 33vh;
+  /* transform: translateX(-); */
+}
+
+.artist-signup-form {
+  display: inline-flex;
+  flex-direction: column;
+  width: 25vw;
+  position: relative;
+  top: 15vh;
+  left: 50vw;
+  transform: translate(-50%, -25%);
+  
+}

@@ -18,9 +18,10 @@ class ArtistRepository (private val es_repository : IArtistRepository){
 
     private val logger = LoggerFactory.getLogger("Artist Repository Logger")
 
-    fun addArtist(artist: Artist): Artist {
+    fun addArtist(artist: Artist): Boolean {
         File("$STORAGE_LOCATION\\${artist.artist_id}").mkdir()
-        return es_repository.save(artist)
+        es_repository.save(artist)
+        return true
     }
 
     fun getAllArtistsByTag(tag :Tag): List<Artist> {
@@ -32,11 +33,11 @@ class ArtistRepository (private val es_repository : IArtistRepository){
         return es_repository.findAll().toList();
     }
 
-    fun addTagToArtist(artist_id: UUID, tag: Tag): Artist? {
+    fun addTagToArtist(artist_id: UUID, tag: String): Artist? {
         val artist : Artist? = getArtistById(artist_id)
         if (artist != null) {
             es_repository.delete(artist)
-            if(artist.tags == null) artist.tags = LinkedList<Tag>()
+            if(artist.tags == null) artist.tags = LinkedList<String>()
             artist.tags.add(tag)
             es_repository.save(artist)
         }
@@ -69,7 +70,7 @@ class ArtistRepository (private val es_repository : IArtistRepository){
             "Architectural Design", "Fashion Design", "Web Design", "Interior Design",
             "Image Editing", "Photography", "Filming", "Video Editing", "Visual FX",
             "Video Correction", "Creative Writing - BD", "Creative Writing - Poetry",
-            "Creative Writing - Fiction", "Storytelling", "Copy writing", "Sculpting",
+            "Creative Writing - Fiction", "Storytelling", "Document writing", "Sculpting",
             "3D Modeling", "Music - Composition", "Lyric Writing", "Ad Music Composition",
             "Singing", "Voice-over", "Narration", "Acting", "Film Director", "Producer",
             "Magic & Illusion", "Arts & Crafts"

@@ -5,13 +5,13 @@ import pt.isel.leic.ps.g42.criart.models.Artist
 import java.util.*
 
 class ArtistInputModel @JsonCreator constructor(
-        private val username :String,
-        private val description :String,
-        private val tags: List<String>
+        val username :String,
+        val description :String,
+        val tags: List<String>
 ) {
 
     fun toArtist(id: UUID):Artist{
-        return Artist(username, description, id)
+        return Artist(username, description, id, tags = LinkedList(tags))
     }
 }
 

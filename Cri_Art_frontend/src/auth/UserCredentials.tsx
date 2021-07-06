@@ -14,10 +14,10 @@ export default class Credentials {
         this.api = api
     }
 
-    async login(email: string, password: string) {
+    async login(email: string, password: string, encode: boolean) {
         console.log("banana")
         this.email = email
-        this.password = btoa(password)
+        this.password = encode? btoa(password) : password
 
         const headers = new Headers()
         headers.append('Content-Type', 'application/json')
@@ -52,7 +52,7 @@ export default class Credentials {
         this.token = undefined
     }
 
-    async signUp(username: string, password :string, email :string) {
+    async signUp(username: string, password :string, email :string, type: string) {
         console.log(`From UserSession Studios:\nEmail: ${email} \nPassword: ${password} \nUsername: ${username}`)
         const headers = new Headers()
         headers.append('Content-Type', 'application/json')
@@ -63,14 +63,15 @@ export default class Credentials {
             {
                 name: username,
                 email: email,
-                password: btoa(password)
+                password: btoa(password),
+                userType: type
             }
         )
         console.log(`Response: ${response}`)
         const result = await response
         console.log(`Result: ${result.message}`)
 
-        if (result.message === "New user created successfully!") return this.login(email, password)
+        if (result.message === "New user created successfully!") return this.login(email, password, true)
         return this
         
 

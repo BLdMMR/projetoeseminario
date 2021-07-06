@@ -61,7 +61,7 @@ function AppRouter() {
         </Route>
         <Route exact path='/signup-confirmation'>
           <Header creds={session} params={searchParams}/>
-          <SignUpConfirmation/>
+          <SignUpConfirmation creds={session}/>
         </Route>
       </Switch>
       {/*Debug<button onClick={printSession}>Print Session</button>*/}

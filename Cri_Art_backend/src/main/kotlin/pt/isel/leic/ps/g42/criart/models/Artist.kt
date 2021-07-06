@@ -12,13 +12,13 @@ data class Artist(
     @Id
     val artist_id: UUID = UUID.randomUUID(),
     val reviews: Float = 0.0f,
-    var tags: LinkedList<Tag> = LinkedList()
+    var tags: LinkedList<String> = LinkedList()
 ) {
     constructor() : this("", "", UUID(0L, 0L))
 
     fun toOutputModel(): ArtistOutputModel {
         val stringTags : LinkedList<String> = LinkedList()
-        tags.forEach {  stringTags.add(it.tag_name)}
+        tags.forEach {  stringTags.add(it)}
         return ArtistOutputModel(
                 username,
                 description,
