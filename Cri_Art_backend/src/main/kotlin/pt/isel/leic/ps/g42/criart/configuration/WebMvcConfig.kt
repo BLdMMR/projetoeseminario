@@ -14,6 +14,12 @@ class WebMvcConfig : WebMvcConfigurer {
         registry.addInterceptor(LogInterceptor())
     }
 
+
+//    override fun addCorsMappings(registry: CorsRegistry) {
+//        registry.addMapping("/**")
+//    }
+
+
 //    override fun addCorsMappings(registry: CorsRegistry) {
 //        registry.addMapping("http://localhost:3000")
 //        registry.addMapping("https://cri-art.herokuapp.com")

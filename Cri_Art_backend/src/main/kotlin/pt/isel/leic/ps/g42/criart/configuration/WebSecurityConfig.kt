@@ -6,15 +6,18 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
-//
-//
-//@Configuration
-//@EnableWebSecurity
-//class WebSecurityConfig : WebSecurityConfigurerAdapter() {
-//
-//    override fun configure(http: HttpSecurity) {
-//        http.cors()
-//        .and().csrf().disable()
+
+
+@Configuration
+@EnableWebSecurity
+class WebSecurityConfig : WebSecurityConfigurerAdapter() {
+
+    override fun configure(http: HttpSecurity) {
+        http.cors()
+            .and()
+            .csrf()
+            .disable()
+
 //            .permitAll()
 //            .anyRequest()
 //            .authorizeRequests()
@@ -22,7 +25,7 @@ import org.springframework.web.cors.CorsConfigurationSource
 //            .authenticated()
 //                .and().csrf()
 //                .disable()
-//    }
-//
-//}
-//
+    }
+
+}
+
