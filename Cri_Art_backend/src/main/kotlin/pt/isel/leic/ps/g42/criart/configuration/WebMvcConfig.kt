@@ -15,7 +15,7 @@ class WebMvcConfig : WebMvcConfigurer {
     }
 
 //    override fun addCorsMappings(registry: CorsRegistry) {
-//        registry.addMapping("http://localhost:3000")
-//        registry.addMapping("https://cri-art.herokuapp.com")
+//        registry.addMapping("/api/**").allowedOrigins("http://localhost:3000")
+//        //registry.addMapping("https://cri-art.herokuapp.com")
 //    }
 }

@@ -26,6 +26,7 @@ class AuthController(
         consumes = [MediaType.APPLICATION_JSON_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE])
     fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<LoginResponse> {
+        log.info("Login banana")
         var token :UUID? = null
         try{
              token = this.authService.loginUser(loginRequest.email, loginRequest.password)

@@ -31,9 +31,11 @@ class ArtistController (private val services : ArtistServices){
         return services.getArtistsByTag(tag);
     }
 
-    @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE],
+    @PostMapping(
+            consumes = [MediaType.APPLICATION_JSON_VALUE],
             produces = [MediaType.APPLICATION_JSON_VALUE])
     fun createArtist(@RequestBody artistIM: ArtistInputModel, @RequestAttribute user :User): ResponseEntity<Boolean> {
+        println("Banana")
         log.info("Request from user ${user.name} to create an artist arrived the handler")
         log.info("${artistIM.username}\n${artistIM.description}")
         val artist = artistIM.toArtist(user.id)

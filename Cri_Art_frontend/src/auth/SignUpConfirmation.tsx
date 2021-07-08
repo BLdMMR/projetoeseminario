@@ -62,7 +62,7 @@ function SignUpConfirmation(props : SignUpConfirmationProps) {
   }
   
   function handleSubmit() {
-    const username = user?.username
+    const username = user?.name
     const description = descRef.current?.value
     const currTags = new Array<String>()
     tagStatus.forEach((value, key) => {
@@ -77,11 +77,13 @@ function SignUpConfirmation(props : SignUpConfirmationProps) {
             `/artist?token=${loginToken}`, 
             new Headers(),
             {
-              username: username,
+              name: username,
               description: description,
               tags: currTags
             } 
-          )
+          ).catch(err => {
+            console.log(err)
+          })
         })
         .catch(err => {
           console.log(err)
@@ -144,13 +146,13 @@ export class Token {
   }
 }
 class User{
-  public username :string;
+  public name :string;
   public emailAddress : string;
   public type : string;
   public password: string;
-  constructor(username: string, emailAddress: string, password: string, userType: string) {
+  constructor(name: string, emailAddress: string, password: string, userType: string) {
     this.emailAddress = emailAddress;
-    this.username = username;
+    this.name = name;
     this.password = password;
     this.type = userType
   }
