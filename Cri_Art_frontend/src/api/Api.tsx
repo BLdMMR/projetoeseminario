@@ -1,13 +1,12 @@
 export class Api {
-    //private readonly API_BASE_URL = 'https://cri-art.herokuapp.com/api'
-    private readonly API_BASE_URL = 'http://localhost:8080/api'
+    private readonly API_BASE_URL = 'https://cri-art.herokuapp.com/api'
+    //private readonly API_BASE_URL = 'http://localhost:8080/api'
 
     async fetchFromAPI<T>(method?: string, path?: string, headers?: Headers, body?: T) : Promise<any>{
         const meth = method? method : 'GET'
         const pth = path? this.API_BASE_URL.concat(path) : this.API_BASE_URL
         headers = headers? headers:new Headers()
         headers.append('Content-Type', 'application/json')
-        //headers.append('Access-Control-Allow-Origin', "http://localhost:8080")
         /* headers!!.append('Content-Type', 'application/json')
         headers!!.append('Content-Type', 'application/json')
         headers!!.append('Content-Type', 'application/json')
@@ -17,7 +16,6 @@ export class Api {
             method: meth,
             headers: {
                 'Content-Type': 'application/json'
-                //'Access-Control-Allow-Origin': "http://localhost:8080"
             },
             body: JSON.stringify(body)
         };

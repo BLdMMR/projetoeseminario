@@ -28,6 +28,4 @@ class ArtistTagController(private val services :ArtistServices) {
         return services.removeTagFromArtist(UUID.fromString(artist_id), tag)
     }
 
-
-
 }

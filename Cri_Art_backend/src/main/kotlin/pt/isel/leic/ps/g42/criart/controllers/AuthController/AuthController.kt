@@ -11,9 +11,7 @@ import java.util.*
 import java.util.logging.Logger
 import org.springframework.http.ResponseEntity as ResponseEntity
 
-//@CrossOrigin("http://localhost:3000")
-//@CrossOrigin("https://cri-art.herokuapp.com")
-//@CrossOrigin(origins = ["http://localhost:3000", "https://cri-art.herokuapp.com"])
+
 @RestController
 @RequestMapping("/auth")
 class AuthController(
@@ -62,9 +60,6 @@ class AuthController(
         } else {
             ResponseEntity.ok().body(user)
         }
-//        return if (this.authService.confirmSignup(token) != null) {
-//            ResponseEntity.ok().body(token)
-//        } else ResponseEntity(HttpStatus.UNAUTHORIZED)
     }
 
     data class SignUpResponse(val message: String)

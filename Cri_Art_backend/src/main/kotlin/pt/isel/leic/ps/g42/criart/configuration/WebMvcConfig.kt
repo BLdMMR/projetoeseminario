@@ -10,18 +10,8 @@ import pt.isel.leic.ps.g42.criart.interceptors.LogInterceptor
 @Configuration
 @EnableWebMvc
 class WebMvcConfig : WebMvcConfigurer {
+
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(LogInterceptor())
     }
-
-
-//    override fun addCorsMappings(registry: CorsRegistry) {
-//        registry.addMapping("/**")
-//    }
-
-
-//    override fun addCorsMappings(registry: CorsRegistry) {
-//        registry.addMapping("/api/**").allowedOrigins("http://localhost:3000")
-//        //registry.addMapping("https://cri-art.herokuapp.com")
-//    }
 }
