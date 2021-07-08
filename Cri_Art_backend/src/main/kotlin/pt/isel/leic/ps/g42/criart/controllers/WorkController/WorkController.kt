@@ -13,9 +13,9 @@ import java.util.*
 
 @RestController
 @RequestMapping("artist/{aid}/worksofart")
-class WorkController (private val services : WorkServices){
+class WorkController (private val services : WorkServices) {
 
-    val log = LoggerFactory.getLogger("WorkControllerLogger")
+    private val log = LoggerFactory.getLogger("WorkControllerLogger")
 
     @GetMapping
     fun getAllWorks(@PathVariable("aid") artist_id: String) {
