@@ -28,9 +28,9 @@ async function handleSubmit() {
       console.log('Slam Banana')
       props.session?.login(username!!, password!!, true)
       .then(async (creds) => {
+            if (creds.hasToken())
             history.push(`home?token=${creds.token!!.token}`)
-                  }
-      )
+      })
       .catch((err) => {
             console.log(err)
       })

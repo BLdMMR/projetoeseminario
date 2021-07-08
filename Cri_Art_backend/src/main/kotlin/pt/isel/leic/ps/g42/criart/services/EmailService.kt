@@ -3,15 +3,12 @@ package pt.isel.leic.ps.g42.criart.services
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.mail.MailException
-import org.springframework.mail.MailSender
-import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.MimeMessageHelper
 import org.springframework.stereotype.Service
 import pt.isel.leic.ps.g42.criart.controllers.AuthController.exceptions.SendEmailException
 
 import java.util.*
-import javax.mail.internet.MimeMessage
 
 @Service
 class EmailService(private val mailSender: JavaMailSender) {
@@ -39,9 +36,9 @@ class EmailService(private val mailSender: JavaMailSender) {
         messagehelper.setSubject(REGISTRATION_CONFIRMATION_EMAIL_SUBJECT)
 
 
-        val token = "${this.baseUri}$REGISTRATION_URI_TEMPLATE$token"
+        val tkn = "${this.baseUri}$REGISTRATION_URI_TEMPLATE$token"
 
-        messagehelper.setText(REGISTRATION_CONFIRMATION_EMAIL_MESSAGE_TEMPLATE.format(token), true)
+        messagehelper.setText(REGISTRATION_CONFIRMATION_EMAIL_MESSAGE_TEMPLATE.format(tkn), true)
 
         try {
             this.mailSender.send(mailMessage)

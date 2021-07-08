@@ -9,12 +9,13 @@ import java.util.*
 data class Artist(
     val username: String,
     val description: String,
+    val email: String,
     @Id
     val artist_id: UUID = UUID.randomUUID(),
     val reviews: Float = 0.0f,
-    var tags: LinkedList<String> = LinkedList()
+    var tags: LinkedList<String>
 ) {
-    constructor() : this("", "", UUID(0L, 0L))
+    constructor() : this("", "", "", UUID(0L, 0L), 0.0f, LinkedList<String>())
 
     fun toOutputModel(): ArtistOutputModel {
         val stringTags : LinkedList<String> = LinkedList()

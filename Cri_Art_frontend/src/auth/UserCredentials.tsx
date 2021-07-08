@@ -43,7 +43,8 @@ export default class Credentials {
     }
 
     hasToken() {
-        return this.token? true:false
+        if (this.token?.token != null && this.token?.token != undefined) return true
+        return false
     }
 
     async logout() {

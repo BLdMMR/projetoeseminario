@@ -12,7 +12,6 @@ import SearchPage from './search/SearchPage'
 import SearchResult from './search/SearchResult';
 
 import './App.css';
-import CreateArtistPage from './artist/CreateArtistPage';
 import { useState } from 'react';
 
 const session = new UserCredentials()
@@ -51,10 +50,6 @@ function AppRouter() {
           <Header creds={session} params={searchParams}/> 
           <SignUpPage session={session}/>
         </Route>
-        <Route exact path='/createartist'>
-          <Header creds={session} params={searchParams}/>
-          <CreateArtistPage creds={session} />
-        </Route>
         <Route path="/search">
           <Header creds = {session} params={searchParams}/>
           <SearchPage creds = {session} params={searchParams}/>
@@ -64,7 +59,7 @@ function AppRouter() {
           <SignUpConfirmation creds={session}/>
         </Route>
       </Switch>
-      {/*Debug<button onClick={printSession}>Print Session</button>*/}
+      Debug<button onClick={printSession}>Print Session</button>
       {/*Debug<button onClick={printParams}>Print Params</button>*/}
     </Router>
   );

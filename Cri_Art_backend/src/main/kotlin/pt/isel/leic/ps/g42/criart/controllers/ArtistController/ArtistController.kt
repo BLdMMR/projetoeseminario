@@ -37,10 +37,12 @@ class ArtistController (private val services : ArtistServices){
     fun createArtist(@RequestBody artistIM: ArtistInputModel, @RequestAttribute user :User): ResponseEntity<Boolean> {
         println("Banana")
         log.info("Request from user ${user.name} to create an artist arrived the handler")
-        log.info("${artistIM.username}\n${artistIM.description}")
-        val artist = artistIM.toArtist(user.id)
+        log.info("${artistIM.username}\n${artistIM.description}\n${artistIM.tags}")
+        val artist = artistIM.toArtist(user.id, user.emailAddress)
+        println("Slam Banana")
         val status = services.createArtist(artist)
         return if (status) {
+            println("Super Slam Banana")
             ResponseEntity(true, HttpStatus.OK)
         } else {
             ResponseEntity(false, HttpStatus.BAD_REQUEST)

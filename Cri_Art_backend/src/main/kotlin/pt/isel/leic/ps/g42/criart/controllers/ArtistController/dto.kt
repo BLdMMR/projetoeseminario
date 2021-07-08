@@ -10,8 +10,10 @@ class ArtistInputModel @JsonCreator constructor(
         val tags: List<String>
 ) {
 
-    fun toArtist(id: UUID):Artist{
-        return Artist(username, description, id, tags = LinkedList(tags))
+    fun toArtist(id: UUID, email: String):Artist{
+        val taglist = LinkedList<String>()
+        tags.forEach{ taglist.add(it) }
+        return Artist(username, description, email, id, tags = taglist)
     }
 }
 

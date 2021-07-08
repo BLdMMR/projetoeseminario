@@ -19,7 +19,7 @@ class ArtistRepository (private val es_repository : IArtistRepository){
     private val logger = LoggerFactory.getLogger("Artist Repository Logger")
 
     fun addArtist(artist: Artist): Boolean {
-        File("$STORAGE_LOCATION\\${artist.artist_id}").mkdir()
+        println(artist)
         es_repository.save(artist)
         return true
     }
@@ -50,9 +50,9 @@ class ArtistRepository (private val es_repository : IArtistRepository){
 
     fun removeTagFromArtist(artistId: UUID, tag: Tag): Artist? {
         val artist = getArtistById(artistId)
-        if (artist?.tags != null && !artist.tags!!.isEmpty()) {
+        if (artist?.tags != null && !artist.tags.isEmpty()) {
             es_repository.delete(artist)
-            artist.tags!!.remove(tag)
+            artist.tags.remove(tag)
             es_repository.save(artist)
         }
         return artist

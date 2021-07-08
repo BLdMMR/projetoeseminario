@@ -1,6 +1,6 @@
 export class Api {
-    //private readonly API_BASE_URL = 'https://cri-art-backend.herokuapp.com/api'
-    private readonly API_BASE_URL = 'http://localhost:8080/api'
+    private readonly API_BASE_URL = 'https://cri-art.herokuapp.com/api'
+    //private readonly API_BASE_URL = 'http://localhost:8080/api'
 
     async fetchFromAPI<T>(method?: string, path?: string, headers?: Headers, body?: T) : Promise<any>{
         const meth = method? method : 'GET'
@@ -27,9 +27,7 @@ export class Api {
         headers?.forEach(console.log)
         console.log(`Body: ${JSON.stringify(body)}`)
         try {
-            const response = await fetch(pth, reqInfo) 
-            console.log("Response:")
-            console.log(response)   
+            const response = await fetch(pth, reqInfo)   
             return await response.json()
         } catch (error) {
             console.log("Error:")

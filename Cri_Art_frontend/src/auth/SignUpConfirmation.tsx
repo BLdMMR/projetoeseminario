@@ -1,6 +1,6 @@
 
 import './SignUpConfirmation.css'
-import { useLocation, Redirect } from 'react-router-dom'
+import { useLocation, Redirect, useHistory } from 'react-router-dom'
 import React, { ReactElement, useEffect, useRef, useState } from 'react'
 //import { URLSearchParams } from 'url';
 import { Api } from '../api/Api'
@@ -12,6 +12,8 @@ export interface SignUpConfirmationProps {
 }
 
 function SignUpConfirmation(props : SignUpConfirmationProps) {
+  const history = useHistory()
+
   const descRef = useRef<HTMLTextAreaElement>(null)
   const confirmPassRef = useRef<HTMLInputElement>(null)
   
@@ -77,13 +79,15 @@ function SignUpConfirmation(props : SignUpConfirmationProps) {
             `/artist?token=${loginToken}`, 
             new Headers(),
             {
-              name: username,
+              username: username,
               description: description,
               tags: currTags
-            } 
+            }
+
           ).catch(err => {
             console.log(err)
           })
+          history.push(`/home?token=${props.creds.token}`)
         })
         .catch(err => {
           console.log(err)

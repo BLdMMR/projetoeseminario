@@ -6,7 +6,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 
 
 @SpringBootApplication
-@EnableWebSecurity
 class CriArtApplication
 
 fun main(args: Array<String>) {

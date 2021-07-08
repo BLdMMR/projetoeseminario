@@ -15,7 +15,8 @@ class ArtistServices(private val repository: ArtistRepository) {
             repository.addArtist(artist)
             true
         } catch (e: Exception) {
-            println(e.message)
+            println("Artist Services Exception Catch: ${e.message}")
+            e.printStackTrace()
             false
         }
     }

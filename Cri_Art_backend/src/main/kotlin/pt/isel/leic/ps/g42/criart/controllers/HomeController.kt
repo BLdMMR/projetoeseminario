@@ -8,9 +8,9 @@ import pt.isel.leic.ps.g42.criart.models.Tag
 import pt.isel.leic.ps.g42.criart.models.User
 import pt.isel.leic.ps.g42.criart.services.HomeServices
 
-@CrossOrigin(origins = ["http://localhost:3000"])
+//@CrossOrigin(origins = ["http://localhost:3000"])
 //@CrossOrigin("https://cri-art.herokuapp.com")
-//@CrossOrigin(origins = ["http://localhost:3000", "https://cri-art.herokuapp.com"])
+@CrossOrigin(origins = ["http://localhost:3000", "https://cri-art.herokuapp.com"])
 @RestController
 class HomeController (private val services: HomeServices){
 
@@ -26,7 +26,7 @@ class HomeController (private val services: HomeServices){
         return services.searchByTag(Tag(tag))
     }
 
-    @GetMapping("/home")
+    @GetMapping("/feed")
     fun getFeed(@RequestAttribute user :User) {
 
     }

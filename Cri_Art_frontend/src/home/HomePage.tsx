@@ -1,8 +1,7 @@
-import { useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import UserCredentials from '../auth/UserCredentials'
 import './HomePage.css'
 import { Api } from '../api/Api'
-import Feed from "./Feed"
 
 export interface HomeProps {
       creds: UserCredentials
@@ -10,7 +9,21 @@ export interface HomeProps {
 }
 
 function HomePage(props: HomeProps) {
+      const [hasFeed, setHasFeed] = useState<Boolean>(false)
+
       const searchRef = useRef<HTMLInputElement>(null)
+
+      useEffect(()=> {
+            if (hasFeed == false) {
+                  props.creds.api?.fetchFromAPI(
+                        'GET',
+                        `/feed?token=${props.creds.token?.token}`,
+                        new Headers(),
+                        {}
+                  )
+                  setHasFeed(true)
+            }
+      },[hasFeed, setHasFeed])
 
       async function handleSearch() {
             const toSearchBy = searchRef.current?.value
@@ -28,7 +41,7 @@ function HomePage(props: HomeProps) {
             //Fetch from backend the search results
       }
 
-      return props.creds.hasToken() ? (
+      return props.creds.hasToken()&& hasFeed ? (
             <div>
                   <h1>Feed</h1>
             </div>
