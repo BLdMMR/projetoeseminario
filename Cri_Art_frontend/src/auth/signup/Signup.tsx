@@ -1,15 +1,15 @@
 import { Session } from 'inspector'
 import { useEffect, useRef, useState } from 'react'
-import Credentials from './UserCredentials'
+import Credentials from '../UserCredentials'
 import { Redirect, useHistory } from 'react-router-dom'
-import './SignUpPage.css'
+import './Signup.css'
 
 
 export interface SignUpProps {
     session?: Credentials
 }
 
-function SignUpPage(props: SignUpProps) {
+function Signup(props: SignUpProps) {
     const history = useHistory()
     const [type, setType] = useState<string>("CLIENT")
     const [signedUp, setSignedUp] = useState<Boolean>(false)
@@ -77,5 +77,5 @@ function SignUpPage(props: SignUpProps) {
     
 }
 
-export default SignUpPage
+export default Signup
 

@@ -7,11 +7,6 @@ export class Api {
         const pth = path? this.API_BASE_URL.concat(path) : this.API_BASE_URL
         headers = headers? headers:new Headers()
         headers.append('Content-Type', 'application/json')
-        /* headers!!.append('Content-Type', 'application/json')
-        headers!!.append('Content-Type', 'application/json')
-        headers!!.append('Content-Type', 'application/json')
-        headers!!.append('Content-Type', 'application/json')
-        headers!!.append('Content-Type', 'application/json') */
         const reqInfo = { 
             method: meth,
             headers: {
@@ -28,10 +23,8 @@ export class Api {
             const response = await fetch(pth, reqInfo)   
             return await response.json()
         } catch (error) {
-            console.log("Error:")
-            console.log(error)
+            console.log("Error:" + error)
         }
-        
         return null
     }
 }

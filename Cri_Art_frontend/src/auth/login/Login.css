@@ -2,7 +2,7 @@
 .login-page {
   display: inline-flex;
   flex-direction: column;
-  width: 25vw;
+  width: 250px;
   position: relative;
   top: 15vh;
   left: 50vw;
@@ -15,13 +15,20 @@
 }
 
 .login-button {
-  width: 50%;
-  transform: translateX(100%);
+  float: right;
+}
+
+.login-message {
+  color: red;
+  vertical-align: center;
 }
 
 #login-btn-auth-page{
   background-color: #4686f2;
   border-color: #4686f2;
-  transform: translateX(100%);
+}
 
+.login-form-bottom {
+  display: inherit;
+  justify-content: space-between;
 }

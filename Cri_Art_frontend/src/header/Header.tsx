@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import {useEffect, useRef, useState} from "react"
 import {Link, useHistory} from 'react-router-dom'
 import logo from '../icons/new_logo.svg';
 import Credentials from '../auth/UserCredentials'
@@ -12,7 +12,17 @@ interface HeaderProps {
   params: SearchResult
 }
 
-export function Header(props: HeaderProps) {
+export default function Header(props: HeaderProps) {
+
+  const [state, setState] = useState({})
+
+  useEffect(() => {
+
+    return () => {
+
+    }
+  })
+
   const searchRef = useRef<HTMLInputElement>(null)
   const history = useHistory()
 
@@ -69,12 +79,13 @@ export function Header(props: HeaderProps) {
   /* <div className="App"> */
   return (
     <div>
-      <nav className={'navbar'}>
+      <div className={'navbar'}>
         <div className={'logo-section'}>
           <Link to="/home">
             <img src={logo} className="ui left mini image" alt="logo" id='logo'/>
           </Link>
         </div>
+
         <div className={'auth-section'}>
           <form action="/login">
             <button type="submit" id='login-btn' className="btn btn-outline-primary">Login</button>
@@ -87,12 +98,10 @@ export function Header(props: HeaderProps) {
             {/* <button className={'auth-button'} type="submit">Sign Up</button> */}
           </form>
         </div>
-      </nav>
+      </div>
       <div className={'behind-header'}>
       </div>
     </div>
   )
   /* </div> */
 }
-
-export default Header

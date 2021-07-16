@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import Header from './header/Header'
 import HomePage from './home/HomePage'
 import HelloPage from './HelloPage'
-import AuthPage from './auth/AuthPage';
-import SignUpPage from './auth/SignUpPage';
-import SignUpConfirmation from './auth/SignUpConfirmation';
+import Login from './auth/login/Login';
+import Signup from './auth/signup/Signup';
+import SignupConfirmation from './auth/signup/SignupConfirmation';
 import UserCredentials from './auth/UserCredentials'
 import { Api } from './api/Api'
 import SearchPage from './search/SearchPage'
@@ -44,11 +44,11 @@ function AppRouter() {
         </Route>
         <Route exact path='/login'>
           <Header creds={session} params={searchParams}/>
-          <AuthPage session={session} />
+          <Login session={session} />
         </Route>
         <Route exact path='/signup'>
           <Header creds={session} params={searchParams}/> 
-          <SignUpPage session={session}/>
+          <Signup session={session}/>
         </Route>
         <Route path="/search">
           <Header creds = {session} params={searchParams}/>
@@ -56,7 +56,7 @@ function AppRouter() {
         </Route>
         <Route exact path='/signup-confirmation'>
           <Header creds={session} params={searchParams}/>
-          <SignUpConfirmation creds={session}/>
+          <SignupConfirmation creds={session}/>
         </Route>
       </Switch>
       Debug<button onClick={printSession}>Print Session</button>

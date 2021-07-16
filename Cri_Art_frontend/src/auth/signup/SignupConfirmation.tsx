@@ -1,17 +1,17 @@
 
-import './SignUpConfirmation.css'
+import './SignupConfirmation.css'
 import { useLocation, Redirect, useHistory } from 'react-router-dom'
 import React, { ReactElement, useEffect, useRef, useState } from 'react'
 //import { URLSearchParams } from 'url';
-import { Api } from '../api/Api'
+import { Api } from '../../api/Api'
 import { JsxElement } from 'typescript';
-import UserCredentials from './UserCredentials'
+import UserCredentials from '../UserCredentials'
 
 export interface SignUpConfirmationProps {
   creds: UserCredentials
 }
 
-function SignUpConfirmation(props : SignUpConfirmationProps) {
+function SignupConfirmation(props : SignUpConfirmationProps) {
   const history = useHistory()
 
   const descRef = useRef<HTMLTextAreaElement>(null)
@@ -141,7 +141,7 @@ function SignUpConfirmation(props : SignUpConfirmationProps) {
   }
 };
 
-export default SignUpConfirmation
+export default SignupConfirmation
 
 export class Token {
   public value : string;
