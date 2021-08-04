@@ -40,7 +40,7 @@ class AuthService(
 
     private val log = Logger.getLogger(AuthService::class.java.name)
 
-    fun signupUser(name: String, emailAddress: String, password: String, userType: String) {
+    fun signupUser(name: String, emailAddress: String, password: String) {
         val hashPassEncoded = digestPassword(password)
         var existingUser: User? = null
         try{
@@ -53,14 +53,11 @@ class AuthService(
             throw UserEmailAlreadyExistsException(emailAddress)
         }
 
-        val type = UserType.valueOf(userType.toUpperCase())
-
-        if (type != UserType.ARTIST && type != UserType.CLIENT && type != UserType.MODERATOR)
-            throw InvalidUserTypeException()
-
         val newUser = User(id = UUID.randomUUID(), name = name, emailAddress = emailAddress,
-            password = hashPassEncoded, type = type , enabled = false)
+            password = hashPassEncoded, enabled = false)
+
         println("User: \nId: ${newUser.id}\nName: ${newUser.name}\nEmail: ${newUser.emailAddress}\nPassword: ${newUser.password}\nType: ${newUser.type}\nEnabled: ${newUser.enabled}")
+
         this.userRepository.save(newUser)
 
         val token = Token(userId = newUser.id, token = UUID.randomUUID(), type = TokenType.SIGNUP)

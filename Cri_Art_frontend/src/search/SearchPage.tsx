@@ -1,16 +1,10 @@
-import UserCredentials from '../auth/UserCredentials'
-import {SearchResult, Artist} from './SearchResult'
-import { useLocation } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import React from 'react'
-
-export interface SearchPageProps {
-    creds: UserCredentials,
-    params: SearchResult
-}
+import {Artist, SearchResult} from './SearchResult'
+import {useLocation} from 'react-router-dom'
+import React, {useEffect, useState} from 'react'
+import {Api, HTTP_METHOD} from "../api/Api";
 
 
-function SearchPage(props: SearchPageProps) {
+function SearchPage(props: any) {
     const [content, setContent] = useState<SearchResult>(new SearchResult())
     const [done, setDone] = useState<Boolean>(true)
     const searchParams = useLocation().search
@@ -20,8 +14,8 @@ function SearchPage(props: SearchPageProps) {
     useEffect(()=> {
         if (done) {
             setDone(false)
-            props.creds.api?.fetchFromAPI(
-                'GET',
+            Api?.fetchFromAPI(
+                HTTP_METHOD.GET,
                 `/public/home/search?nameToSearchBy=${name}&token=${props.creds.token?.token}`,
                 undefined,
                 undefined

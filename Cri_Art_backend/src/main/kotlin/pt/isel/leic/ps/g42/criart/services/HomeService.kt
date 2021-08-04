@@ -10,7 +10,7 @@ import pt.isel.leic.ps.g42.criart.storage.WorkRepository
 import java.util.*
 
 @Component
-class HomeServices (private val artistRepository: ArtistRepository, private val workRepository: WorkRepository){
+class HomeService (private val artistRepository: ArtistRepository, private val workRepository: WorkRepository){
     fun searchByName(nameToSearchBy: String): Searchlist {
         val artistList = artistRepository.searchArtist(nameToSearchBy)
         val aomlist: LinkedList<ArtistOutputModel> = LinkedList()

@@ -1,68 +1,65 @@
-import {useRef, useState} from "react"
-import UserCredentials from '../UserCredentials'
+import {useState} from "react"
 import './Login.css'
 
 
 import {Redirect, useHistory} from 'react-router-dom'
+import {AuthService} from "../../api/AuthService";
 
 
-export interface AuthPageProps {
-  session?: UserCredentials,
-}
-
-function Login(props: AuthPageProps) {
+function Login(props: any) {
   const history = useHistory()
-
-  const usernameRef = useRef<HTMLInputElement>(null)
-  const passwordRef = useRef<HTMLInputElement>(null)
-
   const [loginError, setLoginError] = useState('')
 
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
   async function handleSubmit() {
-    const username = usernameRef.current?.value
-    const password = passwordRef.current?.value
+    setLoginError('')
+    console.log(`Email: ${email}\nPassword: ${password}`)
 
-    console.log(`Email: ${username}`)
-    console.log(`Password: ${password}`)
-
-    if (!username || !password) {
+    if (!email || !password) {
       setLoginError('Missing credentials!')
       return
     }
 
-    props.session?.login(username!!, password!!, true)
-      .then(async (creds) => {
-        if (creds.hasToken())
-          history.push(`home?token=${creds.token!!.token}`)
+    AuthService.login(email!!, password!!)
+      .then(() => {
+        if (AuthService.getToken())
+          history.push(`home?token=${AuthService.getToken()}`)
         else setLoginError('Login failed!')
       })
       .catch((err) => {
         console.log('Error: ' + err)
+        setLoginError('Login failed!')
       })
   }
 
-  return props.session?.token
+  return AuthService.getToken()
     ? <Redirect to='/'/>
-    : <div className={"login-page"}>
-        <div className="mb-3">
-          <label className="form-label">Email address</label>
-          <input type="email" className="form-control" id="exampleFormControlInput1" ref={usernameRef}
-                 placeholder="name@example.com"/>
+    : <div className={"login-form"}>
+      <div className="mb-3">
+        <label className="form-label">Email address</label>
+        <input type="email" className="form-control"
+               onChange={event => setEmail(event.target.value)}
+               placeholder="name@example.com"/>
+      </div>
+      <div className="mb-3">
+        <label className="form-label">Password</label>
+        <input type="password" className="form-control"
+               onChange={event => setPassword(event.target.value)}
+               placeholder="*************"/>
+      </div>
+      <div className={"login-form-bottom"}>
+        <div className={"login-error-message"}>
+          {loginError && <span>{loginError}</span>}
         </div>
-        <div className="mb-3">
-          <label className="form-label">Password</label>
-          <input type="password" className="form-control" id="exampleFormControlInput1" ref={passwordRef}
-                 placeholder="*************"/>
-        </div>
-        <div className={"login-form-bottom"}>
-          <div className={"login-message"}>
-            { loginError && <span>{loginError}</span>}
-          </div>
-          <button type="button" className="btn btn-primary" id="login-button" onClick={handleSubmit}>
+        <div className={"login-button-wrapper"}>
+          <button type="button" className="btn btn-primary"onClick={handleSubmit}>
             Login
           </button>
         </div>
       </div>
+    </div>
 }
 
 export default Login

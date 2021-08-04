@@ -2,35 +2,30 @@
 .signup-form {
   display: inline-flex;
   flex-direction: column;
-  width: 25vw;
+  width: 250px;
   position: relative;
   top: 15vh;
   left: 50vw;
   transform: translateX(-50%);
 }
 
-.signup-text-input {
-  margin-bottom: 8px;
+.signup-form-bottom {
+  display: inherit;
+  justify-content: space-between;
 }
 
-.signup-button {
-  width: 50%;
-  transform: translateX(100%);
-  margin-top: 8px;
+.signup-error-message {
+  color: red;
+  font-family: Arial;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 8px;
+
+  white-space: pre-line;
 }
 
-#signup-button {
-  background-color: #4686f2;
-  border-color: #4686f2;
-  width: 50%;
-  transform: translateX(100%);
-  margin-top: 8px;
-}
-
-.client-label {
-  margin-left: 8px;
-}
-
-.radio-btns {
-  margin-top: 8px;
+.signup-button-wrapper {
+  float: right;
+  white-space: nowrap;
 }

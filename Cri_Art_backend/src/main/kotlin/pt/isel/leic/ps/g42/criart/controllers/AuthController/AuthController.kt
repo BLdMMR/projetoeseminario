@@ -45,9 +45,8 @@ class AuthController(
     @PostMapping("/signup",
         consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun signup(@RequestBody signupRequest: SignupRequest): ResponseEntity<Any> {
-        println("Email: ${signupRequest.email}\nUsername: ${signupRequest.name}\nPassword: ${signupRequest.password}\nUser Type: ${signupRequest.userType}")
-        this.authService.signupUser(signupRequest.name, signupRequest.email, signupRequest.password, signupRequest.userType)
 
+        this.authService.signupUser(signupRequest.username, signupRequest.email, signupRequest.password)
         return ResponseEntity(HttpStatus.OK)
     }
 
@@ -58,10 +57,8 @@ class AuthController(
         return if (user == null) {
             ResponseEntity(HttpStatus.UNAUTHORIZED)
         } else {
-            ResponseEntity.ok().body(user)
+            ResponseEntity(HttpStatus.OK)
         }
     }
-
-    data class SignUpResponse(val message: String)
 
 }

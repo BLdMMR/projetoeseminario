@@ -1,18 +1,14 @@
 import {useEffect, useRef, useState} from "react"
 import {Link, useHistory} from 'react-router-dom'
 import logo from '../icons/new_logo.svg';
-import Credentials from '../auth/UserCredentials'
 import './Header.css'
 import minilogo from '../icons/logo_mini.svg'
 import { Api } from '../api/Api';
 import SearchResult from "../search/SearchResult";
+import {AuthService} from "../api/AuthService";
 
-interface HeaderProps {
-  creds: Credentials
-  params: SearchResult
-}
 
-export default function Header(props: HeaderProps) {
+export default function Header(props: any) {
 
   const [state, setState] = useState({})
 
@@ -29,29 +25,10 @@ export default function Header(props: HeaderProps) {
   async function HandleSearch() {
         const toSearchBy = searchRef.current?.value
         console.log(toSearchBy)
-        //props.params.setResults(toSearchBy)
         history.push(`/search?nameToSearchBy=${toSearchBy}`)
-        
-
-        /* const searchResponse = await props.creds.api?.fetchFromAPI(
-              'GET',
-          `/public/home/search?nameToSearchBy=${toSearchBy}&token=${props.creds.token?.token}`,
-          undefined,
-          undefined
-        )
-
-        const searchResult = await searchResponse
-        console.log(`Search Response: ${searchResponse}`)
-        console.log(`Search Result: ${searchResult}`)
-        console.log(searchResult)
-        props.params.setResults(searchResult.artistlist, searchResult.worklist) */
-        /* props.params.artistlist = searchResult.artistlist
-        props.params.worklist = searchResult.worklist */
-        //Fetch from backend the search results
   }
 
-  console.log(props.creds.token != undefined)
-  if (props.creds.token != undefined){
+  if (AuthService.getToken()){
     return (
       <div className="App">
         <nav className={'navbar'}>

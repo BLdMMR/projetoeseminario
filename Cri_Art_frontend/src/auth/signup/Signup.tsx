@@ -1,80 +1,73 @@
-import { Session } from 'inspector'
-import { useEffect, useRef, useState } from 'react'
-import Credentials from '../UserCredentials'
-import { Redirect, useHistory } from 'react-router-dom'
+import {useState} from 'react'
 import './Signup.css'
+import {AuthService} from "../../api/AuthService";
 
+function Signup(props: any) {
+  const [signedUp, setSignedUp] = useState<boolean>(false)
+  const [signupError, setSignupError] = useState('')
 
-export interface SignUpProps {
-    session?: Credentials
-}
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [repeatPassword, setRepeatPassword] = useState('')
 
-function Signup(props: SignUpProps) {
-    const history = useHistory()
-    const [type, setType] = useState<string>("CLIENT")
-    const [signedUp, setSignedUp] = useState<Boolean>(false)
-    let tags = Array<string>()
-    
-    useEffect(()=>{
-        
-    }, [type, setType, signedUp, setSignedUp])
-
-    const usernameRef = useRef<HTMLInputElement>(null)
-    const emailRef = useRef<HTMLInputElement>(null)
-    const passwordRef = useRef<HTMLInputElement>(null)
-    let accountType = ""
-
-    async function handleSignUp() {
-        props.session?.signUp(usernameRef.current!!.value, passwordRef.current!!.value, emailRef.current!!.value, type)
-            .then((creds) => {
-                setSignedUp(true)
-                if (accountType == "Client")
-                history.push(`home?token=${creds.token!!.token}`)
-                if (accountType == "Artist")
-                history.push(`createartist?token=${creds.token!!.token}`)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-
+  async function handleSignUp() {
+    if (!username || !email || !password || !repeatPassword) {
+      setSignupError('Missing credentials!')
+    } else if (password !== repeatPassword) {
+      setSignupError('Passwords\n dont match!')
+    } else {
+      AuthService.signup(username, email, password)
+        .then(() => {
+          setSignedUp(true)
+        }).catch(error => {
+        // Check response code here
+        setSignupError('Signup failed!')
+      })
     }
 
-    
-    function clientOnclick() {
-        console.log("Type: CLIENT")
-        setType("CLIENT")
-    }
+  }
 
-    function artistOnclick() {
-        console.log("Type: ARTIST")
-        console.log(tags)
-        setType("ARTIST")
-    }
-
-    return signedUp ? (
-        <div>
-            <p>Please Check your email to confirm Sign Up</p>
+  return signedUp
+    ? <div>
+        <p>Please Check your email to confirm Sign Up</p>
+      </div>
+    : <div className={'signup-form'}>
+      <div className={"mb-3"}>
+        <label className="form-label">Username</label>
+        <input type="text" className="form-control" id="email-address-login"
+               onChange={event => setUsername(event.target.value)}
+               placeholder="Ex.: Example123"/>
+      </div>
+      <div className={"mb-3"}>
+        <label className="form-label">Email address</label>
+        <input type="email" className="form-control" id="password-login"
+               onChange={event => setEmail(event.target.value)}
+               placeholder="Ex.: name@example.com"/>
+      </div>
+      <div className={"mb-3"}>
+        <label className="form-label">Password</label>
+        <input type="password" className="form-control" id="Password"
+               onChange={event => setPassword(event.target.value)}
+               placeholder="***********"/>
+      </div>
+      <div className={"mb-3"}>
+        <label className="form-label">Repeat Password</label>
+        <input type="password" className="form-control" id="RepeatPassword"
+               onChange={event => setRepeatPassword(event.target.value)}
+               placeholder="***********"/>
+      </div>
+      <div className={"signup-form-bottom"}>
+        <div className={"signup-error-message"}>
+          {signupError && <span>{signupError}</span>}
         </div>
-    ) : (
-    <div className={'signup-form'}>
-        <div className={"radio-btns"}>
-            <label htmlFor="">
-                <input type="radio" value="Artist" name="type" onClick={artistOnclick}/> Artist
-            </label>
-            <label htmlFor="" className={'client-label'}>
-                <input type="radio" value="Client" name="type" onClick={clientOnclick} default-checked="true"/> Customer
-            </label>                
+        <div className={"signup-button-wrapper"}>
+          <button type="button" className="btn btn-primary" onClick={handleSignUp}>
+            Sign Up
+          </button>
         </div>
-            <label className="form-label">Username</label>
-            <input type="text" className="form-control" id="email-address-login" ref={usernameRef} placeholder="Ex.: Example123"/>
-            <label className="form-label">Email address</label>
-            <input type="email" className="form-control" id="password-login" ref={emailRef} placeholder="Ex.: name@example.com"/>
-            <label className="form-label">Password</label>
-            <input type="password" className="form-control" id="Password" ref={passwordRef} placeholder="***********"/>
-            <button type="button" id='signup-button' className="btn btn-primary" onClick={handleSignUp}>Sign Up</button>
+      </div>
     </div>
-    )
-    
 }
 
 export default Signup

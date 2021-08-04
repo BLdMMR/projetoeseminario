@@ -1,30 +1,36 @@
-export class Api {
-    private readonly API_BASE_URL = 'https://cri-art.herokuapp.com/api'
-    //private readonly API_BASE_URL = 'http://localhost:8080/api'
+export enum HTTP_METHOD {
+  POST = 'POST',
+  GET = 'GET',
+  PUT = 'PUT',
+  DELETE = 'DELETE'
+}
 
-    async fetchFromAPI<T>(method?: string, path?: string, headers?: Headers, body?: T) : Promise<any>{
-        const meth = method? method : 'GET'
-        const pth = path? this.API_BASE_URL.concat(path) : this.API_BASE_URL
-        headers = headers? headers:new Headers()
-        headers.append('Content-Type', 'application/json')
-        const reqInfo = { 
-            method: meth,
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-        };
-        
-        console.log(`Request: ${meth} ${pth}\n`)
-        console.log("Headers: ")
-        headers?.forEach(console.log)
-        console.log(`Body: ${JSON.stringify(body)}`)
-        try {
-            const response = await fetch(pth, reqInfo)   
-            return await response.json()
-        } catch (error) {
-            console.log("Error:" + error)
-        }
-        return null
+export class Api {
+  //private static readonly API_BASE_URL = 'https://cri-art.herokuapp.com/api'
+
+  private static readonly API_BASE_URL = 'http://localhost:8080/api'
+
+  public static fetchFromAPI<T>(method: HTTP_METHOD, path: string, headers: Headers = new Headers(), body?: T): Promise<any> {
+    path = path ? Api.API_BASE_URL.concat(path) : Api.API_BASE_URL
+    headers.set('Content-Type', 'application/json')
+
+    const request = {
+      method: method,
+      headers: headers,
+      body: JSON.stringify(body)
     }
+
+    console.log('Request: ' + JSON.stringify(request))
+
+    return fetch(path, request)
+      .then(response => {
+        console.log('Response: ' + JSON.stringify(response))
+        return response?.json()
+      })
+      .catch(error => {
+        console.log("Error:" + JSON.stringify(error))
+        throw(error)
+      })
+
+  }
 }

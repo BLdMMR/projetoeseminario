@@ -1,5 +1,5 @@
 
-.login-page {
+.login-form {
   display: inline-flex;
   flex-direction: column;
   width: 250px;
@@ -9,23 +9,16 @@
   transform: translateX(-50%);
 }
 
-.login-input {
-  margin-bottom: 8px;
-  
-}
-
-.login-button {
+.login-button-wrapper {
   float: right;
 }
 
-.login-message {
+.login-error-message {
   color: red;
-  vertical-align: center;
-}
-
-#login-btn-auth-page{
-  background-color: #4686f2;
-  border-color: #4686f2;
+  font-family: Arial;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .login-form-bottom {
