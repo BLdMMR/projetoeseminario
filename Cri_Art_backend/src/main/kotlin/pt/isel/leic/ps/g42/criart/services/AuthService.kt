@@ -46,6 +46,7 @@ class AuthService(
         try{
             existingUser = this.userRepository.findByEmail(emailAddress, Pageable.unpaged())
                 .get().findAny().orElse(null)
+            println(existingUser)
         } catch (exception: ElasticsearchException) {
             log.info("Elasticsearch index not found")
         }

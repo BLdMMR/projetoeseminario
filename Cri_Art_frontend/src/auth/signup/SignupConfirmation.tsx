@@ -1,6 +1,6 @@
 import './SignupConfirmation.css'
 import {useLocation} from 'react-router-dom'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {AuthService} from "../../api/AuthService";
 
 
@@ -13,7 +13,8 @@ export default function SignupConfirmation(props: any) {
   const search = useLocation().search
   const signupToken = new URLSearchParams(search).get('token') || ''
 
-  if (!(message!!)) {
+  useEffect(() => {
+    if (!(message!!)) {
     AuthService.confirmSignup(signupToken)
       .then(() => {
         setMessage(successMessage)
@@ -22,7 +23,8 @@ export default function SignupConfirmation(props: any) {
         console.log(error)
         setMessage(errorMessage)
       })
-  }
+    }
+  }, [message, setMessage])  
 
   const loadingMessage = 'Loading...'
 

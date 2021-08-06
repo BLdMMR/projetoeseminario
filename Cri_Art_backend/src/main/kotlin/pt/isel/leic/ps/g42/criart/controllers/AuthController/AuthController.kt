@@ -45,7 +45,7 @@ class AuthController(
     @PostMapping("/signup",
         consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun signup(@RequestBody signupRequest: SignupRequest): ResponseEntity<Any> {
-
+        println(signupRequest)
         this.authService.signupUser(signupRequest.username, signupRequest.email, signupRequest.password)
         return ResponseEntity(HttpStatus.OK)
     }

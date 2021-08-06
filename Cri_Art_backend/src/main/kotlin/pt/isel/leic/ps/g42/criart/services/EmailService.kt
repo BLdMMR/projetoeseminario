@@ -42,10 +42,10 @@ class EmailService(private val mailSender: JavaMailSender) {
 
         try {
             this.mailSender.send(mailMessage)
-            log.info("Super Mail Slam Banana")
+            log.info("Mail sent successfully!")
         } catch(exception: MailException) {
             println(exception.message)
-            log.info("Super Mail Slam Banana Catch")
+            log.info("Super Mail Slam Banana On Catch")
             throw SendEmailException()
         }
     }

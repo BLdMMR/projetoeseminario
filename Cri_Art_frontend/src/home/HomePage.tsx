@@ -1,7 +1,9 @@
 import {useEffect, useRef, useState} from "react"
+import { Redirect } from "react-router-dom";
 import './HomePage.css'
 import {Api, HTTP_METHOD} from "../api/Api";
 import {AuthService} from "../api/AuthService";
+import Feed from "./Feed"
 
 
 function HomePage(props: any) {
@@ -38,7 +40,7 @@ function HomePage(props: any) {
 
   return AuthService.getToken() && hasFeed ? (
       <div>
-        <h1>Feed</h1>
+        <Feed/>
       </div>
     ) :
     (
