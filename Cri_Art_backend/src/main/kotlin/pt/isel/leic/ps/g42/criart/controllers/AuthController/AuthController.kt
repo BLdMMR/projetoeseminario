@@ -30,7 +30,7 @@ class AuthController(
         var token: UUID? = null
         try {
             token = this.authService.loginUser(loginRequest.email, loginRequest.password)
-            println(token)
+            this.log.info(token.toString())
         } catch (exception: Exception) {
             println("${exception.message} - ${exception.javaClass.name}")
         }
@@ -47,12 +47,14 @@ class AuthController(
 
     @PostMapping(
         "/signup",
-        consumes = [MediaType.APPLICATION_JSON_VALUE]
+        consumes = [MediaType.APPLICATION_JSON_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     fun signup(@RequestBody signupRequest: SignupRequest): ResponseEntity<Any> {
         println(signupRequest)
         this.authService.signupUser(signupRequest.username, signupRequest.email, signupRequest.password)
-        return ResponseEntity(HttpStatus.OK)
+
+        return ResponseEntity.ok(HttpStatus.OK)
     }
 
     @PostMapping("/confirm-signup")
