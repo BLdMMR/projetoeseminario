@@ -10,7 +10,7 @@ export class AuthService {
 
   public static login(email: string, password: string): Promise<any> {
 
-    return Api?.fetchFromAPI(
+    return Api.fetchFromAPI(
       HTTP_METHOD.POST,
       '/auth/login',
       new Headers(),
@@ -27,7 +27,6 @@ export class AuthService {
   }
 
   public static signup(username: string, email: string, password: string): Promise<any> {
-    console.log(`Signup\nEmail: ${email} \nPassword: ${password} \nUsername: ${username}`)
 
     return Api.fetchFromAPI(
       HTTP_METHOD.POST,

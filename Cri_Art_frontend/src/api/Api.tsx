@@ -20,15 +20,14 @@ export class Api {
       body: JSON.stringify(body)
     }
 
+    console.log('Path: ' + path)
     console.log('Request: ' + JSON.stringify(request))
 
     return fetch(path, request)
-      .then(response => {
-        console.log('Response: ' + JSON.stringify(response))
-        return response?.json()
-      })
+      .then(response => response?.json())
+      .then(response => console.log('Response: ' + response))
       .catch(error => {
-        console.log("Error:" + JSON.stringify(error))
+        console.error(error)
         throw(error)
       })
 

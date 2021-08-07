@@ -18,21 +18,24 @@ class AuthController(
     private val authService: AuthService
 ) {
 
-    private val log =  Logger.getLogger(AuthController::class.java.name)
+    private val log = Logger.getLogger(AuthController::class.java.name)
 
-    @PostMapping("/login",
+    @PostMapping(
+        "/login",
         consumes = [MediaType.APPLICATION_JSON_VALUE],
-        produces = [MediaType.APPLICATION_JSON_VALUE])
+        produces = [MediaType.APPLICATION_JSON_VALUE]
+    )
     fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<LoginResponse> {
-        log.info("Login banana")
-        var token :UUID? = null
-        try{
-             token = this.authService.loginUser(loginRequest.email, loginRequest.password)
+
+        var token: UUID? = null
+        try {
+            token = this.authService.loginUser(loginRequest.email, loginRequest.password)
             println(token)
         } catch (exception: Exception) {
             println("${exception.message} - ${exception.javaClass.name}")
         }
-        if (token == null) return ResponseEntity(LoginResponse(token), HttpStatus.NOT_FOUND)
+        if (token == null)
+            return ResponseEntity(LoginResponse(token), HttpStatus.NOT_FOUND)
         return ResponseEntity(LoginResponse(token), HttpStatus.CREATED)
     }
 
@@ -42,8 +45,10 @@ class AuthController(
         return ResponseEntity(HttpStatus.OK)
     }
 
-    @PostMapping("/signup",
-        consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PostMapping(
+        "/signup",
+        consumes = [MediaType.APPLICATION_JSON_VALUE]
+    )
     fun signup(@RequestBody signupRequest: SignupRequest): ResponseEntity<Any> {
 
         this.authService.signupUser(signupRequest.username, signupRequest.email, signupRequest.password)
