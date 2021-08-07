@@ -3,6 +3,7 @@ package pt.isel.leic.ps.g42.criart.controllers.AuthController
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
+import pt.isel.leic.ps.g42.criart.controllers.AuthController.model.HasProfile
 import pt.isel.leic.ps.g42.criart.controllers.AuthController.model.LoginRequest
 import pt.isel.leic.ps.g42.criart.controllers.AuthController.model.LoginResponse
 import pt.isel.leic.ps.g42.criart.controllers.AuthController.model.SignupRequest
@@ -26,17 +27,17 @@ class AuthController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<LoginResponse> {
-
         var token: UUID? = null
+        var lgnRes :LoginResponse? = null
         try {
-            token = this.authService.loginUser(loginRequest.email, loginRequest.password)
+            lgnRes = this.authService.loginUser(loginRequest.email, loginRequest.password)
             this.log.info(token.toString())
         } catch (exception: Exception) {
             println("${exception.message} - ${exception.javaClass.name}")
         }
-        if (token == null)
+        if (lgnRes == null)
             return ResponseEntity(LoginResponse(token), HttpStatus.NOT_FOUND)
-        return ResponseEntity(LoginResponse(token), HttpStatus.CREATED)
+        return ResponseEntity(lgnRes, HttpStatus.CREATED)
     }
 
     @DeleteMapping("/logout")
@@ -52,7 +53,7 @@ class AuthController(
     )
     fun signup(@RequestBody signupRequest: SignupRequest): ResponseEntity<Any> {
         println(signupRequest)
-        this.authService.signupUser(signupRequest.username, signupRequest.email, signupRequest.password)
+        this.authService.signupUser(signupRequest.username, signupRequest.email, signupRequest.password, signupRequest.type)
 
         return ResponseEntity.ok(HttpStatus.OK)
     }
@@ -64,8 +65,14 @@ class AuthController(
         return if (user == null) {
             ResponseEntity(HttpStatus.UNAUTHORIZED)
         } else {
-            ResponseEntity(HttpStatus.OK)
+            ResponseEntity.ok(HttpStatus.OK)
         }
+    }
+
+    @GetMapping("profile-info")
+    fun hasProfile(@RequestParam token :String): ResponseEntity<HasProfile> {
+        val hasProfile = authService.hasProfile(UUID.fromString(token))
+        return ResponseEntity.ok(HasProfile(hasProfile!!))
     }
 
 }

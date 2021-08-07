@@ -3,9 +3,25 @@ import {Api, HTTP_METHOD} from '../api/Api'
 
 export class AuthService {
   private static token?: string
+  private static type?: string
 
   public static getToken(): string {
     return AuthService.token!!
+  }
+
+  public static getType(): string {
+      return AuthService.type!!
+  }
+
+  public static async hasProfile(): Promise<boolean> {
+      return await Api.fetchFromAPI(
+          HTTP_METHOD.GET,
+          `/auth/profile-info?token=${AuthService.getToken()}`,
+          new Headers()
+      ).then(result => {
+          console.log(result)
+          return result
+      })
   }
 
   public static login(email: string, password: string): Promise<any> {
@@ -18,7 +34,14 @@ export class AuthService {
         email: email,
         password: btoa(password)
       }
-    ).then(token => AuthService.token = token?.token)
+    ).then(loginResponse => {
+        AuthService.token = loginResponse?.token
+        AuthService.type = loginResponse?.type
+        //return loginResponse.type
+    }).catch(err => {
+        console.log("Error Occured")
+        console.log(err)
+    })
 
   }
 
@@ -26,7 +49,7 @@ export class AuthService {
 
   }
 
-  public static signup(username: string, email: string, password: string): Promise<any> {
+  public static signup(username: string, email: string, password: string, type: string): Promise<any> {
 
     return Api.fetchFromAPI(
       HTTP_METHOD.POST,
@@ -35,7 +58,8 @@ export class AuthService {
       {
         username: username,
         email: email,
-        password: btoa(password)
+        password: btoa(password),
+        type: type
       }
     )
   }

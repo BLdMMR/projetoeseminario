@@ -6,6 +6,7 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.util.Base64Utils
 import pt.isel.leic.ps.g42.criart.controllers.AuthController.exceptions.*
+import pt.isel.leic.ps.g42.criart.controllers.AuthController.model.LoginResponse
 import pt.isel.leic.ps.g42.criart.models.Token
 import pt.isel.leic.ps.g42.criart.models.TokenType
 import pt.isel.leic.ps.g42.criart.models.User
@@ -40,7 +41,7 @@ class AuthService(
 
     private val log = Logger.getLogger(AuthService::class.java.name)
 
-    fun signupUser(name: String, emailAddress: String, password: String) {
+    fun signupUser(name: String, emailAddress: String, password: String, type: String) {
         val hashPassEncoded = digestPassword(password)
         var existingUser: User? = null
         try{
@@ -55,7 +56,7 @@ class AuthService(
         }
 
         val newUser = User(id = UUID.randomUUID(), name = name, emailAddress = emailAddress,
-            password = hashPassEncoded, enabled = false)
+            password = hashPassEncoded, enabled = false, type = UserType.valueOf(type))
 
         println("User: \nId: ${newUser.id}\nName: ${newUser.name}\nEmail: ${newUser.emailAddress}\nPassword: ${newUser.password}\nType: ${newUser.type}\nEnabled: ${newUser.enabled}")
 
@@ -67,7 +68,7 @@ class AuthService(
         this.emailService.sendRegistrationMail(emailAddress, token.token)
     }
 
-    fun loginUser(email: String?, password: String?): UUID {
+    fun loginUser(email: String?, password: String?): LoginResponse {
         if (email == null || password == null) {
             throw LoginFailedException()
         }
@@ -87,7 +88,7 @@ class AuthService(
 
         val token = Token(userId = user.id, token = UUID.randomUUID(), type = TokenType.LOGIN)
         this.tokenRepository.save(token)
-        return token.token
+        return LoginResponse(token.token, user.type)
     }
 
     fun logoutUser(token: String) {
@@ -150,5 +151,10 @@ class AuthService(
         this.userRepository.save(user)
 
         return user
+    }
+
+    fun hasProfile(token: UUID) : Boolean? {
+        val user :User? = getLoggedInUser(token)
+        return user?.hasProfile
     }
 }

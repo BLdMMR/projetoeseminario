@@ -25,6 +25,7 @@ data class User(
     val name: String = "",
     val emailAddress: String = "",
     val password: String = "",
-    val type: UserType? = null,
+    val type: UserType,
+    val hasProfile: Boolean = false,
     var enabled: Boolean = false
 )

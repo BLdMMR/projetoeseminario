@@ -1,5 +1,5 @@
 import './SignupConfirmation.css'
-import {useLocation} from 'react-router-dom'
+import {useHistory, useLocation} from 'react-router-dom'
 import React, {useEffect, useState} from 'react'
 import {AuthService} from "../../api/AuthService";
 
@@ -11,6 +11,7 @@ export default function SignupConfirmation(props: any) {
   const errorMessage = 'Failed to register your account!'
 
   const search = useLocation().search
+  const history = useHistory()
   const signupToken = new URLSearchParams(search).get('token') || ''
 
   useEffect(() => {
@@ -24,13 +25,20 @@ export default function SignupConfirmation(props: any) {
         setMessage(errorMessage)
       })
     }
+    else {
+      setTimeout(() => {
+        history.push("/login")
+      }, 5000)
+      console.log("Redirecting...")
+    }
   }, [message, setMessage])  
 
   const loadingMessage = 'Loading...'
 
   return (
     <div className={'confirmation-message'}>
-      {message ?? {loadingMessage}}
+      <h1>{message ?? {loadingMessage}}</h1>
+      <h2>{message == successMessage?"Redirecting to login page...":""}</h2>
     </div>
   )
 }
