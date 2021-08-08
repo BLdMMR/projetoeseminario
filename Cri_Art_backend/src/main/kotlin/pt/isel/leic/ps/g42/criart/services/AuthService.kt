@@ -59,7 +59,7 @@ class AuthService(
             password = hashPassEncoded, enabled = false, type = UserType.valueOf(type))
 
         println("User: \nId: ${newUser.id}\nName: ${newUser.name}\nEmail: ${newUser.emailAddress}\nPassword: ${newUser.password}\nType: ${newUser.type}\nEnabled: ${newUser.enabled}")
-
+        println(newUser)
         this.userRepository.save(newUser)
 
         val token = Token(userId = newUser.id, token = UUID.randomUUID(), type = TokenType.SIGNUP)

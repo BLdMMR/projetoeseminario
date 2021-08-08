@@ -34,10 +34,9 @@ class ArtistController (private val services : ArtistServices){
             consumes = [MediaType.APPLICATION_JSON_VALUE],
             produces = [MediaType.APPLICATION_JSON_VALUE])
     fun createArtist(@RequestBody artistIM: ArtistInputModel, @RequestAttribute user :User): ResponseEntity<Boolean> {
-        println("Banana")
         log.info("Request from user ${user.name} to create an artist arrived the handler")
-        log.info("${artistIM.username}\n${artistIM.description}\n${artistIM.tags}")
-        val artist = artistIM.toArtist(user.id, user.emailAddress)
+        log.info("${artistIM.description}\n${artistIM.tags}")
+        val artist = artistIM.toArtist(user.id, user.emailAddress, user.name)
         println("Slam Banana")
         val status = services.createArtist(artist)
         return if (status) {

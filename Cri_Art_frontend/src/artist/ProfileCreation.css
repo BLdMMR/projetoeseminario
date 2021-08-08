@@ -7,7 +7,33 @@
     left: 50vw;
     transform: translateX(-50%);
 }
+.textarea {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    resize: both;
+    height: 140px;
+    line-height: 25px;
+}
+
+.textarea[contenteditable]:empty::before {
+    content: "Write the description here!";
+    color: gray;
+    margin-right: 3px;
+    margin-left: 3px;
+}
+
+
+
+.btn-primary {
+    margin-top: 10px;
+}
 
 .btn-group {
     margin-top: 15px;
+}
+
+.checkbox-optn {
+    margin-right: 2px;
+    margin-botton: 10px;
 }

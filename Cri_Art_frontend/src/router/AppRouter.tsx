@@ -11,27 +11,32 @@ export default function AppRouter() {
 
   return (
     <BrowserRouter>
-      <Header/>
       <Switch>
         <Route exact path='/'>
           <Redirect to='/home'/>
         </Route>
         <Route exact path='/home'>
+          <Header/>
           <HomePage/>
         </Route>
         <Route exact path='/login'>
+          <Header/>
           <Login/>
         </Route>
         <Route exact path='/signup'>
+          <Header/>
           <Signup/>
         </Route>
         <Route path="/search">
+          <Header/>
           <SearchPage/>
         </Route>
         <Route exact path='/signup-confirmation'>
+          <Header/>
           <SignupConfirmation/>
         </Route>
         <Route path="/create-profile">
+          <Header/>
           <ProfileCreation/>
         </Route>
       </Switch>

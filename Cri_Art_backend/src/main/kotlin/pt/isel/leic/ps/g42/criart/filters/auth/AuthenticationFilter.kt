@@ -49,7 +49,7 @@ class AuthenticationFilter(private val authService: AuthService) : OncePerReques
     private val filterExclusionUriMatcher = Regex("^(/api/auth/|/api/public/)")
 
     override fun shouldNotFilter(request: HttpServletRequest): Boolean {
-        log.info("${request.requestURI.contains(this.filterExclusionUriMatcher)}")
+        log.info("Filtered: ${request.requestURI.contains(this.filterExclusionUriMatcher)}")
         return request.requestURI.contains(this.filterExclusionUriMatcher)
     }
 
