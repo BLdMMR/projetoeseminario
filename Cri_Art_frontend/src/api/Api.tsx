@@ -28,11 +28,13 @@ export class Api {
     return fetch(path, request)
       .then(response => response.json())
       .then(response => {
+        console.log("Path in fetch " + path)
         console.log('Response:')
         console.log(response)
         return response
       })
       .catch(error => {
+        console.log("Error while fetching " + path)
         console.error(error)
         throw(error)
       })

@@ -14,10 +14,7 @@ export default function Header(props: any) {
 
   useEffect(() => {
 
-    return () => {
-
-    }
-  })
+  }, [state, setState])
 
   const searchRef = useRef<HTMLInputElement>(null)
   const history = useHistory()
@@ -26,6 +23,10 @@ export default function Header(props: any) {
         const toSearchBy = searchRef.current?.value
         console.log(toSearchBy)
         history.push(`/search?nameToSearchBy=${toSearchBy}`)
+  }
+
+  function handleLogout() {
+
   }
 
   if (AuthService.getToken()){
@@ -42,9 +43,7 @@ export default function Header(props: any) {
             <button type="button" id='header_search_button' className="btn btn-primary" onClick={HandleSearch}>Search</button>
           </div>
           <div className={'auth-section'}>
-            <form action="/login">
-              <button type="submit" id='login-btn' className="btn btn-outline-primary">Logout</button>
-            </form>
+              <button type="button" id='login-btn' className="btn btn-outline-primary" onClick={handleLogout}>Logout</button>
           </div>
         </nav>
         <div className={'behind-header'}>

@@ -5,6 +5,7 @@ import Login from "../auth/login/Login";
 import Signup from "../auth/signup/Signup";
 import SearchPage from "../search/SearchPage";
 import SignupConfirmation from "../auth/signup/SignupConfirmation";
+import ProfileCreation from "../artist/ProfileCreation"
 
 export default function AppRouter() {
 
@@ -29,6 +30,9 @@ export default function AppRouter() {
         </Route>
         <Route exact path='/signup-confirmation'>
           <SignupConfirmation/>
+        </Route>
+        <Route path="/create-profile">
+          <ProfileCreation/>
         </Route>
       </Switch>
     </BrowserRouter>

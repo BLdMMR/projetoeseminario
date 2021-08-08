@@ -20,7 +20,7 @@ export class AuthService {
           new Headers()
       ).then(result => {
           console.log(result)
-          return result
+          return result.hasProfile
       })
   }
 

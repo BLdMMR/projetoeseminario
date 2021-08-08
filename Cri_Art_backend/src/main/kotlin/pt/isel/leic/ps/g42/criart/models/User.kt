@@ -27,5 +27,6 @@ data class User(
     val password: String = "",
     val type: UserType,
     val hasProfile: Boolean = false,
+    val listOfFollows: List<Artist> = emptyList(),
     var enabled: Boolean = false
 )

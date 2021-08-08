@@ -2,6 +2,7 @@ import {Artist, SearchResult} from './SearchResult'
 import {useLocation} from 'react-router-dom'
 import React, {useEffect, useState} from 'react'
 import {Api, HTTP_METHOD} from "../api/Api";
+import {AuthService} from "../api/AuthService";
 
 
 function SearchPage(props: any) {
@@ -16,7 +17,7 @@ function SearchPage(props: any) {
             setDone(false)
             Api?.fetchFromAPI(
                 HTTP_METHOD.GET,
-                `/public/home/search?nameToSearchBy=${name}&token=${props.creds.token?.token}`,
+                `/public/home/search?nameToSearchBy=${name}&token=${AuthService.getToken()}`,
                 undefined,
                 undefined
                 ).then(data => {

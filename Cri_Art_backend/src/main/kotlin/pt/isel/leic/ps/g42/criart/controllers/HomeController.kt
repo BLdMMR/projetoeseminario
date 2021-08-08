@@ -26,13 +26,13 @@ class HomeController (private val service: HomeService){
     }
 
     @GetMapping("/feed")
-    fun getFeed(@RequestAttribute user :User) {
-
+    fun getFeed(@RequestAttribute user :User): ResponseEntity<HttpStatus> {
+        return ResponseEntity.ok(HttpStatus.OK)
     }
 
     @GetMapping("/public/tags")
     fun getAllTags() : ResponseEntity<List<String>> {
-        val tags =service.getAllTags()
+        val tags = service.getAllTags()
         return ResponseEntity<List<String>>(tags, HttpStatus.OK)
     }
 

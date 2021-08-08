@@ -1,0 +1,13 @@
+.profile-creation-form {
+    display: inline-flex;
+    flex-direction: column;
+    width: 50vw;
+    position: relative;
+    top: 15vh;
+    left: 50vw;
+    transform: translateX(-50%);
+}
+
+.btn-group {
+    margin-top: 15px;
+}
