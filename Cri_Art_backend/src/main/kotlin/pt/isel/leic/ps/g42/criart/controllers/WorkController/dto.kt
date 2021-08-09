@@ -6,14 +6,14 @@ import pt.isel.leic.ps.g42.criart.models.Work
 import java.util.*
 
 class WorkInputModel @JsonCreator constructor(
-    val name :String,
-    val content: MultipartFile,
+    val name :String?,
+    val content: MultipartFile?,
     val description: String?
 ) {
      fun toWork(ownerID: UUID): Work {
         return Work(
             content = content,
-            work_name = name,
+            work_name = name!!,
             owner = ownerID,
             description = description
         )

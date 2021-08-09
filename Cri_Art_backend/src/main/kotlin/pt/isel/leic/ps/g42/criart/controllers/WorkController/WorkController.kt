@@ -24,9 +24,11 @@ class WorkController (private val services : WorkServices) {
 
     @PostMapping
     fun addWork(@PathVariable("aid") artist_id :String, workInput :WorkInputModel, @RequestAttribute user: User): ResponseEntity<String> {
+        log.info("Work Name: ${workInput.name}, Description: ${workInput.description}")
+        println(workInput.content)
         if (user.type != UserType.ARTIST) return ResponseEntity("Request only available to Artists", HttpStatus.FORBIDDEN)
         val aid = UUID.fromString(artist_id)
-
+        if (!user.id.equals(aid)) return ResponseEntity("User ID and Artist ID do not match", HttpStatus.FORBIDDEN)
         services.addWork(aid, workInput.toWork(aid))
 
         log.info("Work Saved")

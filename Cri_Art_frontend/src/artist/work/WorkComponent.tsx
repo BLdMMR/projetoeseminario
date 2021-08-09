@@ -3,12 +3,45 @@ import mnlg from '../../icons/logo_mini.svg'
 import ollg from '../../icons/logo.svg'
 
 import './WorkComponent.css'
-import {useRef} from "react";
+import React, {useRef} from "react";
+import {AuthService} from '../../api/AuthService';
+import {Api, HTTP_METHOD} from "../../api/Api";
 
 export default function WorkComponent(props: any) {
+    const id = props.id
+    const descRef = useRef<HTMLTextAreaElement>(null)
+    console.log("Id: " + id)
+    let file: File | null = null
+
+    function handleFileSubmited(evt : React.ChangeEvent<HTMLInputElement>) {
+        console.log(evt.target.value)
+        file = evt.target.files!!.item(0)
+        console.log(file!!.name)
+        console.log(file)
 
 
-    return(
+    }
+
+    function handleSubmit() {
+        if (file){
+            console.log("ALALALLALAL")
+            const fdata = new FormData()
+            fdata.append('file', file)
+            Api.fetchFromAPI(
+                HTTP_METHOD.POST,
+                `/artist/${id}/worksofart?token=${AuthService.getToken()}`,
+                new Headers(),
+                {
+                    name: file.name,
+                    content: fdata,
+                    description: descRef.current!!.value
+
+                }
+            )
+        }
+    }
+
+    return id == AuthService.getId() ? (
         <div className={"work-panel"}>
             <h2>Works</h2>
             <img className={'work-image'} src={lg}/>
@@ -28,10 +61,19 @@ export default function WorkComponent(props: any) {
                 <div className="offcanvas-body small">
                     <div className="mb-3">
                         <label htmlFor="formFile" className="form-label">Default file input example</label>
-                        <input className="form-control" type="file" id="formFile"/>
+                        <input className="form-control" type="file" onChange={handleFileSubmited} id="formFile"/>
+                        <textarea ref={descRef} className={"textarea"} placeholder={"Write the description of the work"}/>
                     </div>
+                    <button type="button" className={"btn btn-primary"} onClick={handleSubmit}>Submit</button>
                 </div>
             </div>
+        </div>
+    ) : (
+        <div className={"work-panel"}>
+            <h2>Works</h2>
+            <img className={'work-image'} src={lg}/>
+            <img className={'work-image'} src={mnlg}/>
+            <img className={'work-image'} src={ollg}/>
         </div>
     )
 }

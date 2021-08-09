@@ -46,6 +46,7 @@ export default function ArtistProfile(props: any) {
         ): (
             <div className="artist-profile">
                 <div>
+                    <h4>Tags:</h4>
                     {data.tags.map((tag) => {
                         return <button className={"btn btn-outline-primary"}>{tag}</button>
                     })}
@@ -58,7 +59,7 @@ export default function ArtistProfile(props: any) {
 
                     <h4>You are the owner</h4>
                 </div>
-                    <WorkComponent/>
+                    <WorkComponent id={id}/>
                 </div>
             </div>
         )
