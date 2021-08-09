@@ -1,0 +1,14 @@
+.work-image {
+    height: 100px;
+    width: auto;
+}
+.work-panel {
+}
+
+#offcanvasBottom {
+    background-color: #4686f2;
+    justify-content: center;
+    position: fixed;
+
+    width: 25vw;
+}

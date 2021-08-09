@@ -4,6 +4,7 @@ import {Api, HTTP_METHOD} from '../api/Api'
 export class AuthService {
   private static token?: string
   private static type?: string
+  private static id?: string
 
   public static getToken(): string {
     return AuthService.token!!
@@ -11,6 +12,10 @@ export class AuthService {
 
   public static getType(): string {
       return AuthService.type!!
+  }
+
+  public static getId(): string {
+      return AuthService.id!!
   }
 
   public static async hasProfile(): Promise<boolean> {
@@ -25,7 +30,6 @@ export class AuthService {
   }
 
   public static login(email: string, password: string): Promise<any> {
-
     return Api.fetchFromAPI(
       HTTP_METHOD.POST,
       '/auth/login',
@@ -35,6 +39,7 @@ export class AuthService {
         password: btoa(password)
       }
     ).then(loginResponse => {
+        AuthService.id = loginResponse?.id
         AuthService.token = loginResponse?.token
         AuthService.type = loginResponse?.type
         //return loginResponse.type

@@ -1,0 +1,5 @@
+.artist-profile {
+    display: flex;
+    align-content: flex-start;
+    transform: translateY(50%);
+}

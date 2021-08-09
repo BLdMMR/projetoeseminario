@@ -1,16 +1,17 @@
 import {Artist, SearchResult} from './SearchResult'
-import {useLocation} from 'react-router-dom'
+import {useHistory, useLocation} from 'react-router-dom'
 import React, {useEffect, useState} from 'react'
 import {Api, HTTP_METHOD} from "../api/Api";
 import {AuthService} from "../api/AuthService";
 
 
 function SearchPage(props: any) {
+    const history = useHistory()
     const [content, setContent] = useState<SearchResult>(new SearchResult())
     const [done, setDone] = useState<Boolean>(true)
     const searchParams = useLocation().search
     const name = new URLSearchParams(searchParams).get('nameToSearchBy');
-    console.log(`Parameter: ${name}`)
+    console.log(`Token: ${AuthService.getToken()}`)
 
     useEffect(()=> {
         if (done) {
@@ -35,16 +36,19 @@ function SearchPage(props: any) {
 
 
     function renderArtists(artist: Artist) {
-        const href = `/artist/${artist.artist_id}`
+        const href = `/artist/${artist.id}`
+        console.log(artist)
         return(
             <div className="card">
                 <div className="card-header">
-                    Artist
+                    <h5 className="card-title">{artist.username}</h5>
                 </div>
                 <div className="card-body">
-                    <h5 className="card-title">{artist.username}</h5>
-                    <p className="card-text">{artist.description}</p>
-                    <a href={href} className="btn btn-primary">Go To Artist</a>
+                    <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" className="scrollspy-example">
+                        <p className="card-text">{artist.description}</p>
+                    </div>
+                    <button className="btn btn-primary" onClick={() => {history.push(href)}}>Go To Artist</button>
+                    {/*<a href={href} className="btn btn-primary">Go To Artist</a>*/}
                 </div>
             </div>
         )
@@ -56,7 +60,7 @@ function SearchPage(props: any) {
             <div>
                 <h3>Search results</h3>
             </div>
-            <div>
+            <div className={"search-results"}>
                 {content.artistList?.map(renderArtists)}
             </div>
         </div>

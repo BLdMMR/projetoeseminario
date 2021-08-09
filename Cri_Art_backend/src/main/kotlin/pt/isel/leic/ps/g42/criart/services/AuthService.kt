@@ -90,7 +90,7 @@ class AuthService(
 
         val token = Token(userId = user.id, token = UUID.randomUUID(), type = TokenType.LOGIN)
         this.tokenRepository.save(token)
-        return LoginResponse(token.token, user.type)
+        return LoginResponse(token.token, user.id, user.type)
     }
 
     fun logoutUser(token: String) {

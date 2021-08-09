@@ -7,6 +7,7 @@ import SearchPage from "../search/SearchPage";
 import SignupConfirmation from "../auth/signup/SignupConfirmation";
 import ProfileCreation from "../artist/ProfileCreation"
 import ArtistProfile from "../artist/ArtistProfile";
+import {AuthService} from "../api/AuthService";
 
 export default function AppRouter() {
 
@@ -41,9 +42,12 @@ export default function AppRouter() {
           <ProfileCreation/>
         </Route>
         <Route path={"/artist/:aid"}>
+          <Header/>
           <ArtistProfile/>
         </Route>
       </Switch>
+      {/*<h1>RANDOM</h1>*/}
+      {/*<button className={"search-bar-home"} onClick={() => console.log(AuthService.getRndm())}/>*/}
     </BrowserRouter>
   );
 }

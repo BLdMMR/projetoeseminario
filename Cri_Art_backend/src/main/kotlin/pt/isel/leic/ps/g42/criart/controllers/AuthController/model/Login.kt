@@ -10,6 +10,7 @@ data class LoginRequest (
 
 data class LoginResponse(
     val token: UUID?,
+    val id: UUID? = null,
     val type: UserType? = null
 )
 
