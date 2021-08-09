@@ -6,6 +6,7 @@ import Signup from "../auth/signup/Signup";
 import SearchPage from "../search/SearchPage";
 import SignupConfirmation from "../auth/signup/SignupConfirmation";
 import ProfileCreation from "../artist/ProfileCreation"
+import ArtistProfile from "../artist/ArtistProfile";
 
 export default function AppRouter() {
 
@@ -38,6 +39,9 @@ export default function AppRouter() {
         <Route path="/create-profile">
           <Header/>
           <ProfileCreation/>
+        </Route>
+        <Route path={"/artist/:aid"}>
+          <ArtistProfile/>
         </Route>
       </Switch>
     </BrowserRouter>

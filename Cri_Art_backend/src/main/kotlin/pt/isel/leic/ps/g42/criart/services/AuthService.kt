@@ -45,13 +45,15 @@ class AuthService(
         val hashPassEncoded = digestPassword(password)
         var existingUser: User? = null
         try{
+            println(emailAddress)
             existingUser = this.userRepository.findByEmail(emailAddress, Pageable.unpaged())
                 .get().findAny().orElse(null)
+            println("Existing User:")
             println(existingUser)
         } catch (exception: ElasticsearchException) {
             log.info("Elasticsearch index not found")
         }
-        if (existingUser != null) {
+        if (existingUser!!.emailAddress == emailAddress) {
             throw UserEmailAlreadyExistsException(emailAddress)
         }
 

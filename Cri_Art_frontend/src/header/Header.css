@@ -7,7 +7,19 @@
   align-items: center;
   justify-items: center;
   width: 100vw;
-  height: 80px;
+  height: 10vh;
+}
+
+.navbar-unauthenticated {
+  position: fixed;
+  background-color: #ffb164;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  justify-items: center;
+  width: 100vw;
+  height: 10vh;
 }
 
 #login_button {
@@ -22,6 +34,9 @@
 
 .logo-section {
   margin-left: 25px;
+}
+
+.logo-section-unauthenticated {
 }
 
 .search-section {

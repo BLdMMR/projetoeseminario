@@ -34,7 +34,7 @@ export default function Header(props: any) {
       <div className="App">
         <nav className={'navbar'}>
           <div className={'logo-section'}>
-            <Link to="/home">
+            <Link to={`/home?token=${AuthService.getToken()}`}>
               <img src={logo} className="ui left mini image" alt="logo" id='logo'/>
             </Link>
           </div>
@@ -55,10 +55,10 @@ export default function Header(props: any) {
   /* <div className="App"> */
   return (
     <div>
-      <div className={'navbar'}>
-        <div className={'logo-section'}>
+      <div className={'navbar-unauthenticated'}>
+        <div className={'logo-section-unauthenticated'}>
           <Link to="/home">
-            <img src={logo} className="ui left mini image" alt="logo" id='logo'/>
+            <img src={logo} className="img-fluid" alt="logo" id='logo'/>
           </Link>
         </div>
 
