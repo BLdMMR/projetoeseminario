@@ -20,24 +20,25 @@ class WorkController (private val services : WorkServices) {
     private val log = LoggerFactory.getLogger("WorkControllerLogger")
 
     @GetMapping
-    fun getAllWorks(@PathVariable("aid") artist_id: String) {
-
+    fun getAllWorks(@PathVariable("aid") artist_id: String) : ResponseEntity<List<WorkSaveModel>>{
+        val works = services.getAllWorks(UUID.fromString(artist_id))
+        return ResponseEntity.ok(works)
     }
 
     @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
-    //fun addWork(@PathVariable("aid") artist_id :String, @ModelAttribute wip :WorkInputModel, @RequestAttribute user: User): ResponseEntity<String> {
     fun addWork(@PathVariable("aid") artist_id :String, @RequestPart("content") content: MultipartFile, @RequestPart("name") name: String, @RequestPart("description") description: String, @RequestAttribute user: User): ResponseEntity<String> {
-    //fun addWork(@PathVariable("aid") artist_id :String, @RequestPart("content") file: MultipartFile, @RequestPart("jsonData") wip: WorkInpModel, @RequestAttribute user :User) :ResponseEntity<String>{
-        log.info("Arrived the method handler")
-        log.info("Work Name: ${name}, Description: ${description}")
-        println(content)
         val wip = WorkInputModel(name, content, description)
-        if (user.type != UserType.ARTIST) return ResponseEntity("Request only available to Artists", HttpStatus.FORBIDDEN)
+
+        if (user.type != UserType.ARTIST)
+            return ResponseEntity("Request only available to Artists", HttpStatus.FORBIDDEN)
+
         val aid = UUID.fromString(artist_id)
-        if (!user.id.equals(aid)) return ResponseEntity("User ID and Artist ID do not match", HttpStatus.FORBIDDEN)
+
+        if (!user.id.equals(aid))
+            return ResponseEntity("User ID and Artist ID do not match", HttpStatus.FORBIDDEN)
+
         services.addWork(aid, wip.toWork(aid))
 
-        //log.info("Work Saved")
         return ResponseEntity("Work Added to Portfolio", HttpStatus.CREATED)
     }
 

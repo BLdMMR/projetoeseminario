@@ -4,7 +4,7 @@ import {Api, HTTP_METHOD} from "../api/Api";
 import {AuthService} from "../api/AuthService";
 import {Artist} from "../search/SearchResult";
 import "./ArtistProfile.css"
-import WorkComponent from "./work/WorkComponent";
+import WorkManagement from "./work/WorkManagement";
 
 
 export default function ArtistProfile(props: any) {
@@ -59,7 +59,7 @@ export default function ArtistProfile(props: any) {
 
                     <h4>You are the owner</h4>
                 </div>
-                    <WorkComponent id={id}/>
+                    <WorkManagement id={id}/>
                 </div>
             </div>
         )
