@@ -10,9 +10,8 @@ export class Api {
 
   private static readonly API_BASE_URL = 'http://localhost:8080/api'
 
-  public static fetchFromAPI<T>(method: HTTP_METHOD, path: string, headers: Headers = new Headers(), body?: T): Promise<any> {
+  public static fetchFromAPI<T>(method: HTTP_METHOD, path: string, headers: Headers = new Headers() , body?: T): Promise<any> {
     path = path ? Api.API_BASE_URL.concat(path) : Api.API_BASE_URL
-    headers.set('Content-Type', 'application/json')
     headers.set('Access-Control-Allow-Origin', '*')
 
     const request = {
@@ -24,6 +23,8 @@ export class Api {
     console.log('Path: ' + path)
     console.log('Request:')
     console.log(request)
+    console.log("Body: ")
+    console.log(body)
 
     return fetch(path, request)
       .then(response => response.json())
@@ -36,7 +37,7 @@ export class Api {
       .catch(error => {
         console.log("Error while fetching " + path)
         console.error(error)
-        throw(error)
+        //throw(error)
       })
 
   }

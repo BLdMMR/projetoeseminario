@@ -16,28 +16,32 @@ export default function WorkComponent(props: any) {
     function handleFileSubmited(evt : React.ChangeEvent<HTMLInputElement>) {
         console.log(evt.target.value)
         file = evt.target.files!!.item(0)
-        console.log(file!!.name)
-        console.log(file)
-
-
     }
 
     function handleSubmit() {
         if (file){
-            console.log("ALALALLALAL")
             const fdata = new FormData()
-            fdata.append('file', file)
-            Api.fetchFromAPI(
-                HTTP_METHOD.POST,
-                `/artist/${id}/worksofart?token=${AuthService.getToken()}`,
-                new Headers(),
-                {
-                    name: file.name,
-                    content: fdata,
-                    description: descRef.current!!.value
+            fdata.append('content', file)
+            fdata.append('name', file.name)
+            fdata.append('description', descRef.current!!.value)
+            fdata.forEach(console.log)
+            fetch(`http://localhost:8080/api/artist/${id}/worksofart?token=${AuthService.getToken()}`, {
+                method: "POST",
+                headers: new Headers(),
+                body: fdata
+            }).then(response => {
+                console.log("success")
+            }).catch(err => {
+                console.log("error")
+            })
+            //TODO->Change this to be from the API service class
 
-                }
-            )
+            // Api.fetchFromAPI(
+            //     HTTP_METHOD.POST,
+            //     `/artist/${id}/worksofart?token=${AuthService.getToken()}`,
+            //     headers,
+            //     fdata
+            // )
         }
     }
 

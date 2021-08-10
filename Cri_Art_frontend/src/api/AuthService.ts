@@ -30,10 +30,12 @@ export class AuthService {
   }
 
   public static login(email: string, password: string): Promise<any> {
+      const headers = new Headers()
+      headers.set('Content-Type', 'application/json')
     return Api.fetchFromAPI(
       HTTP_METHOD.POST,
       '/auth/login',
-      new Headers(),
+      headers,
       {
         email: email,
         password: btoa(password)
