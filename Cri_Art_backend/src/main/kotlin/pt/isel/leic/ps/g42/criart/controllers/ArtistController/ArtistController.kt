@@ -52,4 +52,6 @@ class ArtistController (private val services : ArtistServices){
         if (user.type != UserType.MODERATOR) return emptyList()
         return services.getAllArtists()
     }
+
+    
 }

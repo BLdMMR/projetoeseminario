@@ -10,6 +10,7 @@ import WorkManagement from "./work/WorkManagement";
 export default function ArtistProfile(props: any) {
     const id = useLocation().pathname.split('/')[2]
     const [data, setData] = useState<Artist>()
+    const [follow, setFollow] = useState<string>("Follow")
 
      useEffect(() => {
          if (!data) {
@@ -31,9 +32,16 @@ export default function ArtistProfile(props: any) {
          }
      }, [data, setData])
 
+    function handleFollow() {
+        console.log("User wants to follow this artist")
+    }
+
     if (data) {
         return id != AuthService.getId() ? (
             <div className="artist-profile">
+                <input type={"checkbox"} className={"btn-check"} id={"btn-check-follow"} onClick={handleFollow}/>
+                <label className="btn btn-outline-primary" htmlFor={"btn-check-follow"} onClick={()=>{setFollow(follow == "Follow" ? "Following" : "Follow")}}>{follow}</label>
+
                 <div>
                     {data.tags.map((tag) => {
                         return <button className={"btn btn-outline-primary"}>{tag}</button>
@@ -42,6 +50,7 @@ export default function ArtistProfile(props: any) {
                 <h2>Profile of artist with id {id}</h2>
                 <h1>{data.username}</h1>
                 <p>{data.description}</p>
+                <WorkManagement id={id}/>
             </div>
         ): (
             <div className="artist-profile">

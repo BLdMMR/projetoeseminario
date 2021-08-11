@@ -72,6 +72,7 @@ export default function WorkManagement(props: any) {
             </div>
         )
     } else {
+        console.log("Not Owner")
         return (
             <div className={"work-panel"}>
                 <WorkList id={id}/>
