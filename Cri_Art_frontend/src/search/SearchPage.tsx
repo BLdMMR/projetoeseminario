@@ -16,9 +16,7 @@ function SearchPage(props: any) {
             setDone(false)
             Api?.fetchFromAPI(
                 HTTP_METHOD.GET,
-                `/public/home/search?nameToSearchBy=${name}&token=${props.creds.token?.token}`,
-                undefined,
-                undefined
+                `/public/home/search?nameToSearchBy=${name}&token=${props.creds.token?.token}`
                 ).then(data => {
                     console.log(`Data fetched: ${data}`)
                     setContent(data)

@@ -9,7 +9,6 @@ import pt.isel.leic.ps.g42.criart.controllers.AuthController.exceptions.*
 import pt.isel.leic.ps.g42.criart.models.Token
 import pt.isel.leic.ps.g42.criart.models.TokenType
 import pt.isel.leic.ps.g42.criart.models.User
-import pt.isel.leic.ps.g42.criart.models.UserType
 import pt.isel.leic.ps.g42.criart.storage.irepositories.ITokenRepository
 import pt.isel.leic.ps.g42.criart.storage.irepositories.IUserRepository
 import java.security.MessageDigest
@@ -40,24 +39,20 @@ class AuthService(
 
     private val log = Logger.getLogger(AuthService::class.java.name)
 
-    fun signupUser(name: String, emailAddress: String, password: String) {
+    fun signupUser(username: String, emailAddress: String, password: String) {
         val hashPassEncoded = digestPassword(password)
-        var existingUser: User? = null
-        try{
-            existingUser = this.userRepository.findByEmail(emailAddress, Pageable.unpaged())
-                .get().findAny().orElse(null)
-            println(existingUser)
-        } catch (exception: ElasticsearchException) {
-            log.info("Elasticsearch index not found")
-        }
-        if (existingUser != null) {
-            throw UserEmailAlreadyExistsException(emailAddress)
-        }
+        var existingUser: User? = this.userRepository.findByEmail(emailAddress, Pageable.unpaged())
+            .get().findAny().orElse(null)
 
-        val newUser = User(id = UUID.randomUUID(), name = name, emailAddress = emailAddress,
+        if (existingUser != null) throw UserEmailAddressAlreadyExistsException(emailAddress)
+
+        existingUser = this.userRepository.findByUsername(username, Pageable.unpaged())
+            .get().findAny().orElse(null)
+
+        if (existingUser != null) throw UsernameAlreadyExistsException(username)
+
+        val newUser = User(id = UUID.randomUUID(), username = username, emailAddress = emailAddress,
             password = hashPassEncoded, enabled = false)
-
-        println("User: \nId: ${newUser.id}\nName: ${newUser.name}\nEmail: ${newUser.emailAddress}\nPassword: ${newUser.password}\nType: ${newUser.type}\nEnabled: ${newUser.enabled}")
 
         this.userRepository.save(newUser)
 

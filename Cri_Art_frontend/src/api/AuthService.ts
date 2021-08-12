@@ -13,7 +13,6 @@ export class AuthService {
     return Api.fetchFromAPI(
       HTTP_METHOD.POST,
       '/auth/login',
-      new Headers(),
       {
         email: email,
         password: btoa(password)
@@ -31,7 +30,6 @@ export class AuthService {
     return Api.fetchFromAPI(
       HTTP_METHOD.POST,
       '/auth/signup',
-      new Headers(),
       {
         username: username,
         email: email,

@@ -9,11 +9,11 @@ enum class UserType {
     CLIENT,
     MODERATOR;
     fun parse(type: String) : UserType? {
-        when(type){
-            "CLIENT" -> return CLIENT
-            "ARTIST" -> return ARTIST
-            "MODERATOR" -> return MODERATOR
-            else -> return null
+        return when(type) {
+            "CLIENT" -> CLIENT
+            "ARTIST" -> ARTIST
+            "MODERATOR" -> MODERATOR
+            else -> null
         }
     }
 }
@@ -22,7 +22,7 @@ enum class UserType {
 data class User(
     @Id
     val id: UUID = UUID(0L, 0L),
-    val name: String = "",
+    val username: String = "",
     val emailAddress: String = "",
     val password: String = "",
     val type: UserType? = null,
