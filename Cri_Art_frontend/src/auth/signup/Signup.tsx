@@ -22,7 +22,6 @@ function Signup(props: any) {
         .then(() => {
           setSignedUp(true)
         }).catch(error => {
-          console.log()
           // Check response code here
           setSignupError('Signup failed!')
         })
