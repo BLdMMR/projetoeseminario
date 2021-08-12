@@ -90,10 +90,11 @@ class AuthService(
 
         val token = Token(userId = user.id, token = UUID.randomUUID(), type = TokenType.LOGIN)
         this.tokenRepository.save(token)
-        return LoginResponse(token.token, user.id, user.type)
+        return user.toLoginResponse(token.token)
+//        return user
     }
 
-    fun logoutUser(token: String) {
+    fun logoutUser(token: String) : Boolean{
         val parsedToken: UUID
         try {
             parsedToken = UUID.fromString(token)
@@ -103,6 +104,7 @@ class AuthService(
         val tokenEnt: Token? = this.tokenRepository.findByIdOrNull(parsedToken)
         if (tokenEnt?.type == TokenType.LOGIN) {
             this.tokenRepository.deleteById(parsedToken)
+            return true
         } else {
             throw TokenNotFoundException()
         }

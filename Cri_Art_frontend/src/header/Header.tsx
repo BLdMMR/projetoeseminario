@@ -2,11 +2,7 @@ import {useEffect, useRef, useState} from "react"
 import {Link, useHistory} from 'react-router-dom'
 import logo from '../icons/new_logo.svg';
 import './Header.css'
-import minilogo from '../icons/logo_mini.svg'
-import { Api } from '../api/Api';
-import SearchResult from "../search/SearchResult";
 import {AuthService} from "../api/AuthService";
-
 
 export default function Header(props: any) {
 
@@ -26,10 +22,17 @@ export default function Header(props: any) {
   }
 
   function handleLogout() {
-
+    AuthService.logout()
+        .then(response => {
+            if (response) {
+                console.log("Logging out")
+                AuthService.removeInfo()
+                history.push("/login")
+            }
+        })
   }
 
-  if (AuthService.getToken()){
+  if (AuthService.getToken() != undefined){
     return (
       <div className="App">
         <nav className={'navbar'}>

@@ -10,7 +10,8 @@ import WorkManagement from "./work/WorkManagement";
 export default function ArtistProfile(props: any) {
     const id = useLocation().pathname.split('/')[2]
     const [data, setData] = useState<Artist>()
-    const [follow, setFollow] = useState<string>("Follow")
+    const [follow, setFollow] = useState<string | undefined>(undefined)
+
 
      useEffect(() => {
          if (!data) {
@@ -30,17 +31,31 @@ export default function ArtistProfile(props: any) {
                 console.error(err)
             })
          }
-     }, [data, setData])
+         if (!follow) {
+             setFollow("Follow")
+             AuthService.getUser()?.listOfFollows.forEach((artist_id) => {
+                 if (artist_id === id) {
+                     setFollow("Following")
+                 }
+             })
+         }
+     }, [data, setData, follow, setFollow, id])
 
     function handleFollow() {
+        Api.fetchFromAPI(
+            HTTP_METHOD.PUT,
+            `/artist/${id}/follow?token=${AuthService.getToken()}`,
+            new Headers(),
+            null
+        )
         console.log("User wants to follow this artist")
     }
 
     if (data) {
-        return id != AuthService.getId() ? (
+        return id !== AuthService.getId() ? (
             <div className="artist-profile">
                 <input type={"checkbox"} className={"btn-check"} id={"btn-check-follow"} onClick={handleFollow}/>
-                <label className="btn btn-outline-primary" htmlFor={"btn-check-follow"} onClick={()=>{setFollow(follow == "Follow" ? "Following" : "Follow")}}>{follow}</label>
+                <label className="btn btn-outline-primary" htmlFor={"btn-check-follow"} onClick={()=>{setFollow(follow === "Follow" ? "Following" : "Follow")}} defaultChecked={follow != "Follow"}>{follow}</label>
 
                 <div>
                     {data.tags.map((tag) => {

@@ -10,13 +10,14 @@ import pt.isel.leic.ps.g42.criart.models.Tag
 import pt.isel.leic.ps.g42.criart.models.User
 import pt.isel.leic.ps.g42.criart.models.UserType
 import pt.isel.leic.ps.g42.criart.services.ArtistServices
+import pt.isel.leic.ps.g42.criart.services.UserService
 import java.util.*
 import kotlin.math.log
 
 
 @RestController
 @RequestMapping("/artist")
-class ArtistController (private val services : ArtistServices){
+class ArtistController (private val services : ArtistServices, private val userService: UserService){
     private val log = LoggerFactory.getLogger(this::class.java.name)
 
     @GetMapping("/{aid}")
@@ -51,6 +52,12 @@ class ArtistController (private val services : ArtistServices){
     fun getAllArtists(@RequestAttribute user : User): List<Artist> {
         if (user.type != UserType.MODERATOR) return emptyList()
         return services.getAllArtists()
+    }
+
+    @PutMapping("/{aid}/follow")
+    fun followArtist(@PathVariable("aid") artist_id: String, @RequestAttribute user: User) {
+        log.info("Trying to follow artist")
+        userService.followArtist(user, UUID.fromString(artist_id))
     }
 
     

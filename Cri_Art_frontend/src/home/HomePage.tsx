@@ -4,25 +4,12 @@ import './HomePage.css'
 import bg from './background.svg'
 import {Api, HTTP_METHOD} from "../api/Api";
 import {AuthService} from "../api/AuthService";
-import Feed from "./Feed"
+import FeedPage from "./FeedPage"
 
 
 function HomePage(props: any) {
-  const [hasFeed, setHasFeed] = useState<Boolean>(false)
-
   const history = useHistory()
   const searchRef = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    if (hasFeed == false) {
-      Api.fetchFromAPI(
-        HTTP_METHOD.GET,
-        `/feed?token=${AuthService.getToken()}`,
-        new Headers()
-      )
-      setHasFeed(true)
-    }
-  }, [hasFeed, setHasFeed])
 
   async function handleSearch() {
     const toSearchBy = searchRef.current?.value
@@ -41,9 +28,9 @@ function HomePage(props: any) {
     //Fetch from backend the search results
   }
 
-  return AuthService.getToken() && hasFeed ? (
+  return AuthService.getToken()? (
       <div>
-        <Feed/>
+        <FeedPage/>
       </div>
     ) :
     (

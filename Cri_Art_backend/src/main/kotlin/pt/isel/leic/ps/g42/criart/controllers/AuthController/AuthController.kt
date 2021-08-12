@@ -36,14 +36,18 @@ class AuthController(
             println("${exception.message} - ${exception.javaClass.name}")
         }
         if (lgnRes == null)
-            return ResponseEntity(LoginResponse(token), HttpStatus.NOT_FOUND)
+            return ResponseEntity(lgnRes, HttpStatus.NOT_FOUND)
         return ResponseEntity(lgnRes, HttpStatus.CREATED)
     }
 
     @DeleteMapping("/logout")
-    fun logout(@RequestParam token: String): ResponseEntity<Any> {
-        this.authService.logoutUser(token)
-        return ResponseEntity(HttpStatus.OK)
+    fun logout(@RequestParam token: String): ResponseEntity<Boolean> {
+        var status = false
+        status = this.authService.logoutUser(token)
+        if (status)
+            return ResponseEntity(status, HttpStatus.OK)
+        else
+            return ResponseEntity(status, HttpStatus.BAD_REQUEST)
     }
 
     @PostMapping(

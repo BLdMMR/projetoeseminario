@@ -49,3 +49,14 @@ h1 {
 
   transform: translateX(-50%);
 }
+
+.spinner-border text-primary {
+  display: flex;
+  justify-content: center;
+  position:fixed;
+  width: 50vw;
+  top: 30vh;
+  left: 50vw;
+
+  transform: translateX(-50%);
+}

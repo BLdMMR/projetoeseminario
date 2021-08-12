@@ -2,6 +2,8 @@ package pt.isel.leic.ps.g42.criart.models
 
 import org.springframework.data.elasticsearch.annotations.Document
 import org.springframework.web.multipart.MultipartFile
+import pt.isel.leic.ps.g42.criart.controllers.HomeController.FeedPost
+import pt.isel.leic.ps.g42.criart.controllers.HomeController.WorkFeedModel
 import java.util.*
 
 class Work(
@@ -39,5 +41,11 @@ data class WorkSaveModel(
         val fileExtension: String? = "",
         var comments: List<String>? = emptyList()
 ) {
+        fun toWorkPost(aid: UUID, aname: String): FeedPost {
+                return FeedPost(this.toFeedModel(), aid, aname)
+        }
+        fun toFeedModel(): WorkFeedModel {
+                return WorkFeedModel(id, work_name, description, content, fileExtension)
+        }
 
 }
