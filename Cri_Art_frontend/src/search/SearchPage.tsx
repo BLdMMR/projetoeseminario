@@ -3,6 +3,7 @@ import {useHistory, useLocation} from 'react-router-dom'
 import React, {useEffect, useState} from 'react'
 import {Api, HTTP_METHOD} from "../api/Api";
 import {AuthService} from "../api/AuthService";
+//import './SearchPage.css'
 
 
 function SearchPage(props: any) {

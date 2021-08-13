@@ -1,6 +1,7 @@
 package pt.isel.leic.ps.g42.criart.storage
 
 import org.slf4j.LoggerFactory
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 import pt.isel.leic.ps.g42.criart.STORAGE_LOCATION
 import pt.isel.leic.ps.g42.criart.models.Artist
@@ -45,7 +46,7 @@ class ArtistRepository (private val es_repository : IArtistRepository){
     }
 
     fun getArtistById(id: UUID): Artist? {
-        return es_repository.findById(id).get()
+        return es_repository.findByIdOrNull(id)
     }
 
     fun removeTagFromArtist(artistId: UUID, tag: Tag): Artist? {

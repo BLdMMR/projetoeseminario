@@ -53,7 +53,7 @@ class AuthService(
         } catch (exception: ElasticsearchException) {
             log.info("Elasticsearch index not found")
         }
-        if (existingUser!!.emailAddress == emailAddress) {
+        if (existingUser == null || existingUser!!.emailAddress == emailAddress) {
             throw UserEmailAlreadyExistsException(emailAddress)
         }
 

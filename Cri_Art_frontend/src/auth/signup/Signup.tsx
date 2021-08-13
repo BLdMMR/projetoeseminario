@@ -31,7 +31,7 @@ function Signup(props: any) {
 
   return signedUp
     ? <div>
-        <p>Please Check your email to confirm Sign Up</p>
+        <h1>Please Check your email to confirm Sign Up</h1>
       </div>
     : <div className={'signup-form'}>
       <div className={"mb-3"}>

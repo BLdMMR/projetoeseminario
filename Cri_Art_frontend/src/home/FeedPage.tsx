@@ -1,100 +1,54 @@
 import {useEffect, useState} from "react";
 import {Api, HTTP_METHOD} from "../api/Api";
 import {AuthService} from "../api/AuthService";
-import {Work} from "../artist/work/WorkList";
-import {Artist} from "../search/SearchResult";
-
+import './Feed.css'
 
 function FeedPage(props: any) {
-    let feed :Feed = new Feed(undefined)
-    const [hasContent, setHasContent] = useState<Boolean>(false)
-    //let feeed : Feed = new Feed(undefined)
+    const [feed, setFeed] = useState<Pub[]>()
 
-    //console.log("HasFeed = " + feed.pubList)
+    if (!feed) {
+        Api.fetchFromAPI(
+            HTTP_METHOD.GET,
+            `/feed?token=${AuthService.getToken()}`,
+            new Headers()
+        ).then((resFeed) => {
+            setFeed(resFeed)
 
-    useEffect(() => {
-        if (!hasContent) {
-            Api.fetchFromAPI(
-                HTTP_METHOD.GET,
-                `/feed?token=${AuthService.getToken()}`,
-                new Headers()
-            ).then((resFeed) => {
-                console.log(resFeed[0])
-                //resFeed.pubList?.forEach(idx => {console.log(idx.work.work_name)})
-                console.log("RESFEED-v")
-                console.log(resFeed)
-                feed.setList(resFeed.pubList!!)
-                console.log("FEED-v")
-                console.log(feed)
-                while(feed.pubList == undefined){
-                    setHasContent(false)
-                }
-                setHasContent(true)
+        }).catch(err => {
+            console.error(err)
+        })
+    }
 
-            }).catch(err => {
-                console.error(err)
-            })
-        }
-    }, [hasContent, setHasContent])
-
-    function renderFeed(work: Pub) {
+    function renderFeed(work: Pub) : JSX.Element{
         console.log("Printing " + work.work.work_name)
         return (
-            <div>
-                <h1>{work.work.work_name}</h1>
+            <div className="card">
+                <img src={`data:image/${work.work.fileExtension};base64,` + work.work.content} className="card-img-top" alt="..."/>
+                    <div className="card-body">
+                        <h5 className="card-title">{work.artist_name}</h5>
+                        <p className="card-text">{work.work.description}</p>
+                        <a href="#" className="btn btn-primary">Go somewhere</a>
+                    </div>
             </div>
         )
     }
 
-
-    if (hasContent){
-        console.log()
-        console.log(feed.pubList)
-        return (
-            <div>
-                <h1>Feed</h1>
-                {feed.pubList?.map(renderFeed)}
+    return feed ? (
+        <div className={'feed'}>
+            {feed!.map(renderFeed)}
+        </div>
+    ) : (
+        <div className={"loading-feed"}>
+            <h2>Loading Feed...</h2>
+            <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
             </div>
-        )
-    } else {
-        return (
-            <div>
-                <h1>Loading Feed...</h1>
-                <div className="spinner-border text-primary" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </div>
-            </div>
-        )
-    }
+        </div>
 
-    // return feed.pubList ? (
-    //       <div>
-    //           <h1>Feed</h1>
-    //           {/*{feed.map(renderFeed)}*/}
-    //       </div>
-    // ):(
-    //     <div>
-    //         <h1>Loading Feed...</h1>
-    //         <div className="spinner-border text-primary" role="status">
-    //             <span className="visually-hidden">Loading...</span>
-    //         </div>
-    //     </div>
-    // )
+    )
 }
 
 export default FeedPage
-
-export class Feed {
-    public pubList: Array<Pub> | undefined
-
-    constructor(pubList: Array<Pub> | undefined) {
-        this.pubList = pubList;
-
-    }
-    setList(list: Array<Pub>) {
-        this.pubList = list
-    }
-}
 
 class Pub {
     public work: WorkFeedModel;

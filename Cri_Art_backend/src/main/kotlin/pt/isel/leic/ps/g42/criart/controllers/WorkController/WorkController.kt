@@ -54,9 +54,17 @@ class WorkController (private val services : WorkServices) {
         val work = services
                 .addCommentToWork(
                     UUID.fromString(work_id),
-                    comment
+                    comment,
+                    user.id
                 )
         return ResponseEntity.ok().body(work)
+    }
+
+    @PutMapping("/{wid}")
+    fun upvoteAndDownvote(@PathVariable("wid") work_id: String, @RequestAttribute user: User):ResponseEntity<Boolean> {
+        log.info("Up or down vote toggled")
+        val status = services.upvoteAndDownvote(UUID.fromString(work_id), user.id)
+        return ResponseEntity.ok(status)
     }
 
 

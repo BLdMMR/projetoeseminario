@@ -17,7 +17,11 @@ class WorkServices (private val repository : WorkRepository){
         return repository.getAllWorks(aid)
     }
 
-    fun addCommentToWork(work_id: UUID, comment: String): WorkSaveModel {
-        return repository.addComment(work_id, comment)
+    fun addCommentToWork(work_id: UUID, comment: String, id: UUID): WorkSaveModel {
+        return repository.addComment(work_id, comment, id)
+    }
+
+    fun upvoteAndDownvote(work_id: UUID?, id: UUID): Boolean {
+        return repository.upvoteAndDownvote(work_id!!, id)
     }
 }

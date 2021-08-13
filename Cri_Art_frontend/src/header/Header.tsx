@@ -32,7 +32,16 @@ export default function Header(props: any) {
         })
   }
 
-  if (AuthService.getToken() != undefined){
+    function handleProfile() {
+        if(AuthService.getType()=="ARTIST"){
+            history.push(`/artist/${AuthService.getId()}?token=${AuthService.getToken()}`)
+        }
+        else {
+            history.push(`/settings?token=${AuthService.getToken()}`)
+        }
+    }
+
+    if (AuthService.getToken() != undefined){
     return (
       <div className="App">
         <nav className={'navbar'}>
@@ -45,9 +54,14 @@ export default function Header(props: any) {
             <input type="text" className="form-control" id="header-search-bar" ref={searchRef} />
             <button type="button" id='header_search_button' className="btn btn-primary" onClick={HandleSearch}>Search</button>
           </div>
+            <div>
+          <div className={'auth-section'}>
+              <button type="button" id='profile' className="btn btn-outline-primary" onClick={handleProfile}>{AuthService.getType()=="ARTIST"?"My Profile":"Settings"}</button>
+          </div>
           <div className={'auth-section'}>
               <button type="button" id='login-btn' className="btn btn-outline-primary" onClick={handleLogout}>Logout</button>
           </div>
+            </div>
         </nav>
         <div className={'behind-header'}>
         </div>

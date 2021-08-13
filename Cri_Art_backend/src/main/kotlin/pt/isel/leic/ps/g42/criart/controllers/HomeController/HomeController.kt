@@ -1,6 +1,7 @@
 package pt.isel.leic.ps.g42.criart.controllers.HomeController
 
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import pt.isel.leic.ps.g42.criart.models.Tag
@@ -26,12 +27,13 @@ class HomeController (private val service: HomeService){
         return service.searchByTag(Tag(tag))
     }
 
-    @GetMapping("/feed")
-    fun getFeed(@RequestAttribute user :User): ResponseEntity<Feed> {
-        val feed = service.getFeed(user.listOfFollows)
+    @GetMapping("/feed", produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun getFeed(@RequestAttribute user :User): ResponseEntity<List<FeedPost>> {
+        var feed = service.getFeed(user.listOfFollows)
         println("FEED: ")
-        println(feed::class.memberProperties)
-        return ResponseEntity.ok(Feed(feed))
+        println(feed)
+        feed = feed.sortedByDescending { it.work.timestamp }
+        return ResponseEntity.ok(feed)
     }
 
     @GetMapping("/public/tags")
