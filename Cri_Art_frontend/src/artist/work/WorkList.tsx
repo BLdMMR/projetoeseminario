@@ -31,33 +31,33 @@ export default function WorkList(props :any) {
 
     function renderWorks(work: Work) {
         return <WorkPost work={work}/>
-        function isVideo(fileExtension: string) {
-            videoFormats.forEach((idx) => {
-                if (fileExtension === idx) return true
-            })
-            return false
-        }
-        console.log("It's a Video")
-        return isVideo(work.fileExtension) ? (
-            <video width="320" height="240" controls>
-                <source src={`data:video/${work.fileExtension};base64,${work.content}`} type={`video/webm`}/>
-                <source src={`data:video/${work.fileExtension};base64,${work.content}`} type={`video/${work.fileExtension}`}/>
-            </video>
-        ) : (
-            <div className="card">
-                <img src={`data:image/${work.fileExtension};base64,` + work.content} alt={work.work_name}
-                     className={"work-image"}/>
-                    <div className="card-body">
-                        <h5 className="card-title">{work.description}</h5>
-                        <button className={"btn btn-primary"} id={'upvote'}>
-                            <img src={arrow} onClick={() => {arrow == arrow_up?setArrow(arrow_up_rev):setArrow(arrow_up)}}/>
-                        </button>
-                        <a href="#" className="btn btn-primary">Go somewhere</a>
-                    </div>
-            </div>
+        //
+        //function isVideo(fileExtension: string) {
+            //     videoFormats.forEach((idx) => {
+            //         if (fileExtension === idx) return true
+            //     })
+            //     return false
+            // }
+            // console.log("It's a Video")
+            // return isVideo(work.fileExtension) ? (
+            //     <video width="320" height="240" controls>
+            //         <source src={`data:video/${work.fileExtension};base64,${work.content}`} type={`video/webm`}/>
+            //         <source src={`data:video/${work.fileExtension};base64,${work.content}`} type={`video/${work.fileExtension}`}/>
+            //     </video>
+            // ) : (
+            //     <div className="card">
+            //         <img src={`data:image/${work.fileExtension};base64,` + work.content} alt={work.work_name}
+            //              className={"work-image"}/>
+            //             <div className="card-body">
+            //                 <h5 className="card-title">{work.description}</h5>
+            //                 <button className={"btn btn-primary"} id={'upvote'}>
+            //                     <img src={arrow} onClick={() => {arrow == arrow_up?setArrow(arrow_up_rev):setArrow(arrow_up)}}/>
+            //                 </button>
+            //                 <a href="#" className="btn btn-primary">Go somewhere</a>
+            //             </div>
+            //     </div>
 
-        )
-    }
+        }
 
     return !works ? (
         <div>
