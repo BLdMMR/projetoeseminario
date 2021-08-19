@@ -1,3 +1,5 @@
+
+
 export enum HTTP_METHOD {
   POST = 'POST',
   GET = 'GET',
@@ -5,6 +7,7 @@ export enum HTTP_METHOD {
   DELETE = 'DELETE',
   HEAD = 'HEAD'
 }
+
 
 export class Api {
   //private static readonly API_BASE_URL = 'https://cri-art.herokuapp.com/api'

@@ -1,24 +1,41 @@
 package pt.isel.leic.ps.g42.criart.controllers.WorkController
 
 import com.fasterxml.jackson.annotation.JsonCreator
+import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.multipart.MultipartFile
 import pt.isel.leic.ps.g42.criart.models.Work
 import java.util.*
 
 class WorkInputModel @JsonCreator constructor(
-    val name :String,
-    val content: MultipartFile,
+    val name :String?,
+    val content: MultipartFile?,
     val description: String?
 ) {
      fun toWork(ownerID: UUID): Work {
         return Work(
             content = content,
-            work_name = name,
+            work_name = name!!,
             owner = ownerID,
             description = description
         )
     }
 }
+
+
+class WorkInpModel @JsonCreator constructor(
+    val name :String?,
+    val description :String?
+) {
+    fun toWork(ownerID: UUID, content: MultipartFile?) :Work{
+        return Work(
+            content = content,
+            work_name = name!!,
+            owner = ownerID,
+            description = description
+        )
+    }
+}
+
 
 //class WorkOutputModel {
 //    val name :String

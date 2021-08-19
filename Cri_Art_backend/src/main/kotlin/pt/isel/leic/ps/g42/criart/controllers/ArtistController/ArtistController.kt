@@ -9,13 +9,15 @@ import pt.isel.leic.ps.g42.criart.models.Tag
 import pt.isel.leic.ps.g42.criart.models.User
 import pt.isel.leic.ps.g42.criart.models.UserType
 import pt.isel.leic.ps.g42.criart.services.ArtistServices
+import pt.isel.leic.ps.g42.criart.services.UserService
 import java.util.*
 import java.util.logging.Logger
 
 
 @RestController
 @RequestMapping("/artist")
-class ArtistController (private val services : ArtistServices){
+class ArtistController (private val services : ArtistServices, private val userService: UserService) {
+
     private val log = Logger.getLogger(this::class.java.name)
 
     @GetMapping("/{aid}")
@@ -33,9 +35,10 @@ class ArtistController (private val services : ArtistServices){
             consumes = [MediaType.APPLICATION_JSON_VALUE],
             produces = [MediaType.APPLICATION_JSON_VALUE])
     fun createArtist(@RequestBody artistIM: ArtistInputModel, @RequestAttribute user :User): ResponseEntity<Boolean> {
+
         log.info("Request from user ${user.username} to create an artist arrived the handler")
-        log.info("${artistIM.username}\n${artistIM.description}\n${artistIM.tags}")
-        val artist = artistIM.toArtist(user.id, user.emailAddress)
+        log.info("${artistIM.description}\n${artistIM.tags}")
+        val artist = artistIM.toArtist(user.id, user.emailAddress, user.username)
 
         val status = services.createArtist(artist)
         return if (status) {
@@ -50,4 +53,12 @@ class ArtistController (private val services : ArtistServices){
         if (user.type != UserType.MODERATOR) return emptyList()
         return services.getAllArtists()
     }
+
+    @PutMapping("/{aid}/follow")
+    fun followArtist(@PathVariable("aid") artist_id: String, @RequestAttribute user: User) {
+        log.info("Trying to follow artist")
+        userService.followArtist(user, UUID.fromString(artist_id))
+    }
+
+    
 }

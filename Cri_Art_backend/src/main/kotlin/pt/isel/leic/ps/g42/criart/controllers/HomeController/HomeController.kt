@@ -1,11 +1,13 @@
-package pt.isel.leic.ps.g42.criart.controllers
+package pt.isel.leic.ps.g42.criart.controllers.HomeController
 
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import pt.isel.leic.ps.g42.criart.models.Tag
 import pt.isel.leic.ps.g42.criart.models.User
 import pt.isel.leic.ps.g42.criart.services.HomeService
+import kotlin.reflect.full.memberProperties
 
 //@CrossOrigin(origins = ["http://localhost:3000"])
 //@CrossOrigin("https://cri-art.herokuapp.com")
@@ -25,14 +27,18 @@ class HomeController (private val service: HomeService){
         return service.searchByTag(Tag(tag))
     }
 
-    @GetMapping("/feed")
-    fun getFeed(@RequestAttribute user :User) {
-
+    @GetMapping("/feed", produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun getFeed(@RequestAttribute user :User): ResponseEntity<List<FeedPost>> {
+        var feed = service.getFeed(user.listOfFollows)
+        println("FEED: ")
+        println(feed)
+        feed = feed.sortedByDescending { it.work.timestamp }
+        return ResponseEntity.ok(feed)
     }
 
     @GetMapping("/public/tags")
     fun getAllTags() : ResponseEntity<List<String>> {
-        val tags =service.getAllTags()
+        val tags = service.getAllTags()
         return ResponseEntity<List<String>>(tags, HttpStatus.OK)
     }
 

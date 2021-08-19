@@ -6,9 +6,11 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.util.Base64Utils
 import pt.isel.leic.ps.g42.criart.controllers.AuthController.exceptions.*
+import pt.isel.leic.ps.g42.criart.controllers.AuthController.model.LoginResponse
 import pt.isel.leic.ps.g42.criart.models.Token
 import pt.isel.leic.ps.g42.criart.models.TokenType
 import pt.isel.leic.ps.g42.criart.models.User
+import pt.isel.leic.ps.g42.criart.models.UserType
 import pt.isel.leic.ps.g42.criart.storage.irepositories.ITokenRepository
 import pt.isel.leic.ps.g42.criart.storage.irepositories.IUserRepository
 import java.security.MessageDigest
@@ -39,20 +41,28 @@ class AuthService(
 
     private val log = Logger.getLogger(AuthService::class.java.name)
 
-    fun signupUser(username: String, emailAddress: String, password: String) {
+
+    fun signupUser(name: String, emailAddress: String, password: String, type: String) {
         val hashPassEncoded = digestPassword(password)
-        var existingUser: User? = this.userRepository.findByEmail(emailAddress, Pageable.unpaged())
-            .get().findAny().orElse(null)
+        var existingUser: User? = null
+        try{
+            println(emailAddress)
+            existingUser = this.userRepository.findByEmail(emailAddress, Pageable.unpaged())
+                .get().findAny().orElse(null)
+            println("Existing User:")
+            println(existingUser)
+        } catch (exception: ElasticsearchException) {
+            log.info("Elasticsearch index not found")
+        }
+        if (existingUser == null || existingUser!!.emailAddress == emailAddress) {
+            throw UserEmailAddressAlreadyExistsException(emailAddress)
+        }
 
-        if (existingUser != null) throw UserEmailAddressAlreadyExistsException(emailAddress)
+        val newUser = User(id = UUID.randomUUID(), username = name, emailAddress = emailAddress,
+            password = hashPassEncoded, enabled = false, type = UserType.valueOf(type))
 
-        existingUser = this.userRepository.findByUsername(username, Pageable.unpaged())
-            .get().findAny().orElse(null)
-
-        if (existingUser != null) throw UsernameAlreadyExistsException(username)
-
-        val newUser = User(id = UUID.randomUUID(), username = username, emailAddress = emailAddress,
-            password = hashPassEncoded, enabled = false)
+        println("User: \nId: ${newUser.id}\nName: ${newUser.username}\nEmail: ${newUser.emailAddress}\nPassword: ${newUser.password}\nType: ${newUser.type}\nEnabled: ${newUser.enabled}")
+        println(newUser)
 
         this.userRepository.save(newUser)
 
@@ -62,7 +72,7 @@ class AuthService(
         this.emailService.sendRegistrationMail(emailAddress, token.token)
     }
 
-    fun loginUser(email: String?, password: String?): UUID {
+    fun loginUser(email: String?, password: String?): LoginResponse {
         if (email == null || password == null) {
             throw LoginFailedException()
         }
@@ -82,10 +92,11 @@ class AuthService(
 
         val token = Token(userId = user.id, token = UUID.randomUUID(), type = TokenType.LOGIN)
         this.tokenRepository.save(token)
-        return token.token
+        return user.toLoginResponse(token.token)
+//        return user
     }
 
-    fun logoutUser(token: String) {
+    fun logoutUser(token: String) : Boolean{
         val parsedToken: UUID
         try {
             parsedToken = UUID.fromString(token)
@@ -95,6 +106,7 @@ class AuthService(
         val tokenEnt: Token? = this.tokenRepository.findByIdOrNull(parsedToken)
         if (tokenEnt?.type == TokenType.LOGIN) {
             this.tokenRepository.deleteById(parsedToken)
+            return true
         } else {
             throw TokenNotFoundException()
         }
@@ -145,5 +157,10 @@ class AuthService(
         this.userRepository.save(user)
 
         return user
+    }
+
+    fun hasProfile(token: UUID) : Boolean? {
+        val user :User? = getLoggedInUser(token)
+        return user?.hasProfile
     }
 }

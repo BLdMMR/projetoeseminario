@@ -3,6 +3,7 @@ package pt.isel.leic.ps.g42.criart.controllers.AuthController
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
+import pt.isel.leic.ps.g42.criart.controllers.AuthController.model.HasProfile
 import pt.isel.leic.ps.g42.criart.controllers.AuthController.model.LoginRequest
 import pt.isel.leic.ps.g42.criart.controllers.AuthController.model.LoginResponse
 import pt.isel.leic.ps.g42.criart.controllers.AuthController.model.SignupRequest
@@ -27,24 +28,28 @@ class AuthController(
     )
     fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<LoginResponse> {
 
-        var token: UUID?
-        token = this.authService.loginUser(loginRequest.email, loginRequest.password)
-        this.log.info(token.toString())
-
-        return if (token == null)
-            ResponseEntity(LoginResponse(token), HttpStatus.NOT_FOUND)
-        else ResponseEntity(LoginResponse(token), HttpStatus.CREATED)
-
+        var token: UUID? = null
+        var lgnRes :LoginResponse? = null
+        try {
+            lgnRes = this.authService.loginUser(loginRequest.email, loginRequest.password)
+            this.log.info(token.toString())
+        } catch (exception: Exception) {
+            println("${exception.message} - ${exception.javaClass.name}")
+        }
+        if (lgnRes == null)
+            return ResponseEntity(lgnRes, HttpStatus.NOT_FOUND)
+        return ResponseEntity(lgnRes, HttpStatus.CREATED)
     }
 
-    @DeleteMapping(
-        "/logout",
-        consumes = [MediaType.APPLICATION_JSON_VALUE],
-        produces = [MediaType.APPLICATION_JSON_VALUE]
-    )
-    fun logout(@RequestParam token: String): ResponseEntity<Any> {
-        this.authService.logoutUser(token)
-        return ResponseEntity.ok(HttpStatus.OK)
+    @DeleteMapping("/logout")
+    fun logout(@RequestParam token: String): ResponseEntity<Boolean> {
+        var status = false
+        status = this.authService.logoutUser(token)
+
+        if (status)
+            return ResponseEntity(status, HttpStatus.OK)
+        else
+            return ResponseEntity(status, HttpStatus.BAD_REQUEST)
     }
 
     @PostMapping(
@@ -53,8 +58,7 @@ class AuthController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     fun signup(@RequestBody signupRequest: SignupRequest): ResponseEntity<Any> {
-        this.authService.signupUser(signupRequest.username, signupRequest.email, signupRequest.password)
-
+        this.authService.signupUser(signupRequest.username, signupRequest.email, signupRequest.password, signupRequest.type)
         return ResponseEntity.ok(HttpStatus.OK)
     }
 
@@ -71,6 +75,12 @@ class AuthController(
         } else {
             ResponseEntity.ok(HttpStatus.OK)
         }
+    }
+
+    @GetMapping("profile-info")
+    fun hasProfile(@RequestParam token :String): ResponseEntity<HasProfile> {
+        val hasProfile = authService.hasProfile(UUID.fromString(token))
+        return ResponseEntity.ok(HasProfile(hasProfile!!))
     }
 
 }

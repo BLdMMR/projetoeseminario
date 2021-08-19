@@ -2,7 +2,7 @@ package pt.isel.leic.ps.g42.criart.services
 
 import org.springframework.stereotype.Component
 import pt.isel.leic.ps.g42.criart.controllers.ArtistController.ArtistOutputModel
-import pt.isel.leic.ps.g42.criart.models.Artist
+import pt.isel.leic.ps.g42.criart.controllers.HomeController.FeedPost
 import pt.isel.leic.ps.g42.criart.models.Tag
 import pt.isel.leic.ps.g42.criart.models.WorkSaveModel
 import pt.isel.leic.ps.g42.criart.storage.ArtistRepository
@@ -31,5 +31,16 @@ class HomeService (private val artistRepository: ArtistRepository, private val w
 
     fun getAllTags(): List<String> {
         return artistRepository.getAllTags()
+    }
+
+    fun getFeed(listOfFollows: List<UUID>): List<FeedPost> {
+        val list :LinkedList<FeedPost> = LinkedList()
+        for(id :UUID in listOfFollows){
+            val currArtist = artistRepository.getArtistById(id)
+            for(work: WorkSaveModel in workRepository.getAllWorks(id)){
+                list.add(work.toWorkPost(currArtist!!.artist_id, currArtist.username))
+            }
+        }
+        return list
     }
 }

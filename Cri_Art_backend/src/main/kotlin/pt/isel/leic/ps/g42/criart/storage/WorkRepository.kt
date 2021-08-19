@@ -1,6 +1,7 @@
 package pt.isel.leic.ps.g42.criart.storage
 
 import org.springframework.stereotype.Component
+import pt.isel.leic.ps.g42.criart.models.Comment
 import pt.isel.leic.ps.g42.criart.models.Tag
 import pt.isel.leic.ps.g42.criart.models.Work
 import pt.isel.leic.ps.g42.criart.models.WorkSaveModel
@@ -22,9 +23,9 @@ class WorkRepository (private val es_repository : IWorkRepository){
         return es_repository.findAll().filter { it.owner.equals(aid) }
     }
 
-    fun addComment(work_id: UUID, comment: String): WorkSaveModel {
+    fun addComment(work_id: UUID, comment: String, id: UUID): WorkSaveModel {
         var work = es_repository.findById(work_id).get()
-        work.comments = work.comments?.plus(comment)
+        work.comments = work.comments?.plus(Comment(comment, id, work_id))
         es_repository.deleteById(work_id)
         es_repository.save(work)
         return work
@@ -38,6 +39,20 @@ class WorkRepository (private val es_repository : IWorkRepository){
     fun getAllWorksByTag(tag: Tag): List<WorkSaveModel> {
         val all = es_repository.findAll()
         return all.filter { it.tags!!.contains(tag) }
+    }
+
+    fun upvoteAndDownvote(workId: UUID, id: UUID): Boolean {
+        var work = es_repository.findById(workId).get()
+        val ups = LinkedList(work.ups)
+        if(ups.indexOf(id) == -1) {
+            ups.add(id)
+        } else {
+            ups.remove(id)
+        }
+        work.ups = ups
+        es_repository.deleteById(workId)
+        es_repository.save(work)
+        return true
     }
 
 }

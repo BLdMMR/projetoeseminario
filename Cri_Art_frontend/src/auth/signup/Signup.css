@@ -12,6 +12,7 @@
 .signup-form-bottom {
   display: inherit;
   justify-content: space-between;
+  margin-top: 15px;
 }
 
 .signup-error-message {

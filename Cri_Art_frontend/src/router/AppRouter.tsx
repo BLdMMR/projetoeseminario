@@ -5,32 +5,49 @@ import Login from "../auth/login/Login";
 import Signup from "../auth/signup/Signup";
 import SearchPage from "../search/SearchPage";
 import SignupConfirmation from "../auth/signup/SignupConfirmation";
+import ProfileCreation from "../artist/ProfileCreation"
+import ArtistProfile from "../artist/ArtistProfile";
+import {AuthService} from "../api/AuthService";
 
 export default function AppRouter() {
 
   return (
     <BrowserRouter>
-      <Header/>
       <Switch>
         <Route exact path='/'>
           <Redirect to='/home'/>
         </Route>
         <Route exact path='/home'>
+          <Header/>
           <HomePage/>
         </Route>
         <Route exact path='/login'>
+          <Header/>
           <Login/>
         </Route>
         <Route exact path='/signup'>
+          <Header/>
           <Signup/>
         </Route>
         <Route path="/search">
+          <Header/>
           <SearchPage/>
         </Route>
         <Route exact path='/signup-confirmation'>
+          <Header/>
           <SignupConfirmation/>
         </Route>
+        <Route path="/create-profile">
+          <Header/>
+          <ProfileCreation/>
+        </Route>
+        <Route path={"/artist/:aid"}>
+          <Header/>
+          <ArtistProfile/>
+        </Route>
       </Switch>
+      {/*<h1>RANDOM</h1>*/}
+      {/*<button className={"search-bar-home"} onClick={() => console.log(AuthService.getRndm())}/>*/}
     </BrowserRouter>
   );
 }

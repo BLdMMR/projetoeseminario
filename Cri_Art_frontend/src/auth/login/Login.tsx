@@ -23,10 +23,17 @@ function Login(props: any) {
     }
 
     AuthService.login(email!!, password!!)
-      .then(() => {
-        if (AuthService.getToken())
-          history.push(`home?token=${AuthService.getToken()}`)
-        else setLoginError('Login failed!')
+      .then(async () => {
+          console.log(AuthService.getToken())
+          if (AuthService.getToken()) {
+              const hasProfile = await AuthService.hasProfile()
+              if (AuthService.getType() == "ARTIST" && !hasProfile) {
+                  console.log("Artist DOES NOT HAVE PROFILE!!!!!")
+                  history.push(`create-profile?token=${AuthService.getToken()}`)
+              } else history.push(`home?token=${AuthService.getToken()}`)
+          } else {
+              setLoginError('Login failed!')
+          }
       })
       .catch((err) => {
         console.log('Error: ' + err)

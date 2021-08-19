@@ -1,7 +1,13 @@
 package pt.isel.leic.ps.g42.criart.models
 
+import org.joda.time.DateTime
 import org.springframework.data.elasticsearch.annotations.Document
 import org.springframework.web.multipart.MultipartFile
+import pt.isel.leic.ps.g42.criart.controllers.HomeController.FeedPost
+import pt.isel.leic.ps.g42.criart.controllers.HomeController.WorkFeedModel
+import java.sql.Timestamp
+import java.time.Instant
+import java.time.temporal.TemporalField
 import java.util.*
 
 class Work(
@@ -28,7 +34,7 @@ class Work(
 }
 
 @Document(indexName = "works")
-data class WorkSaveModel(
+class WorkSaveModel(
         val id: UUID,
         val work_name: String,
         val owner: UUID,
@@ -37,7 +43,14 @@ data class WorkSaveModel(
         val tags: List<Tag>? = listOf(Tag()),
         val content: ByteArray? = ByteArray(0),
         val fileExtension: String? = "",
-        var comments: List<String>? = emptyList()
+        var comments: List<Comment>? = emptyList(),
+        var ups: List<UUID> = emptyList(),
+        val timestamp: Long = DateTime.now().millis
 ) {
-
+        fun toWorkPost(aid: UUID, aname: String): FeedPost {
+                return FeedPost(this.toFeedModel(), aid, aname)
+        }
+        fun toFeedModel(): WorkFeedModel {
+                return WorkFeedModel(id, work_name, description, content, fileExtension, timestamp, ups)
+        }
 }

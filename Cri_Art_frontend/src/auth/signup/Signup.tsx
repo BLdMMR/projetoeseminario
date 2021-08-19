@@ -9,6 +9,7 @@ function Signup(props: any) {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [type, setType] = useState("CLIENT")
   const [repeatPassword, setRepeatPassword] = useState('')
 
   async function handleSignUp() {
@@ -17,10 +18,11 @@ function Signup(props: any) {
     } else if (password !== repeatPassword) {
       setSignupError('Passwords\ndont match!')
     } else {
-      AuthService.signup(username, email, password)
+      AuthService.signup(username, email, password, type)
         .then(() => {
           setSignedUp(true)
         }).catch(error => {
+
           let errorMsg = error?.title ?? 'Signup failed!'
           setSignupError(errorMsg)
         })
@@ -30,7 +32,7 @@ function Signup(props: any) {
 
   return signedUp
     ? <div>
-        <p>Please Check your email to confirm Sign Up</p>
+        <h1>Please Check your email to confirm Sign Up</h1>
       </div>
     : <div className={'signup-form'}>
       <div className={"mb-3"}>
@@ -56,6 +58,13 @@ function Signup(props: any) {
         <input type="password" className="form-control" id="RepeatPassword"
                onChange={event => setRepeatPassword(event.target.value)}
                placeholder="***********"/>
+      </div>
+      <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
+          <input type="radio" className="btn-check" name="btnradio" id="btnradio1" autoComplete="off" onClick={()=>{setType("CLIENT")}} defaultChecked={true}/>
+              <label className="btn btn-outline-primary" htmlFor="btnradio1">Client</label>
+
+          <input type="radio" className="btn-check" name="btnradio" id="btnradio3" autoComplete="off" onClick={()=>{setType("ARTIST")}}/>
+              <label className="btn btn-outline-primary" htmlFor="btnradio3">Artist</label>
       </div>
       <div className={"signup-form-bottom"}>
         <div className={"signup-error-message"}>

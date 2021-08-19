@@ -1,0 +1,27 @@
+/*.work-image {
+    height: 100px;
+    width: auto;
+}*/
+.work-panel {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 50vw;
+    top: 20vh;
+    left: 50vw;
+    transform: translateX(-75%);
+}
+
+#offcanvasBottom {
+    background-color: #4686f2;
+    justify-content: center;
+    position: fixed;
+
+    width: 25vw;
+}
+
+#upvote {
+    background-color: white;
+    border-color: white;
+
+}
