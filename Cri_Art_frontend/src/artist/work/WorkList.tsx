@@ -22,7 +22,7 @@ export default function WorkList(props :any) {
     }, [])
 
     function renderWorks(work: Work) {
-        return <WorkPost key={work.id} work={work}/>
+        return <WorkPost work={work}/>
     }
 
     return works.length == 0 ? (
