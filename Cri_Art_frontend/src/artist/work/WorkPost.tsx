@@ -1,5 +1,5 @@
 import {Work} from "./WorkList";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {AuthService} from "../../api/AuthService";
 import {Api, HTTP_METHOD} from "../../api/Api";
 
@@ -14,7 +14,11 @@ export default function WorkPost(props: { work: Work }) {
     const [arrow, setArrow] = useState(arrow_up)
     const work = props.work
 
-    if (work.ups.find(AuthService.getId))  setArrow(arrow_up_rev)
+    useEffect(() => {
+        if (work.ups.find(AuthService.getId)) {
+            setArrow(arrow_up_rev)
+        }
+    }, [arrow])
 
     function isVideo(fileExtension: string) {
         videoFormats.forEach((idx) => {
@@ -52,7 +56,7 @@ export default function WorkPost(props: { work: Work }) {
                 <h5 className="card-title">{work.description}</h5>
                 <div className={'work-actions'}>
                     <button className={"btn btn-primary"} id={'upvote'}>
-                        <img src={arrow} onClick={handleUpvote}/>
+                        <img src={arrow} onClick={() => handleUpvote()}/>
                     </button>
                     <button className={"btn btn-primary"} id={'upvote'}>
                         <img src={comment_icon} onClick={handleComment}/>

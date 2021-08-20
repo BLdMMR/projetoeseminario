@@ -21,7 +21,7 @@ class WorkController (private val services : WorkServices) {
 
     @GetMapping
     fun getAllWorks(@PathVariable("aid") artist_id: String) : ResponseEntity<List<WorkSaveModel>>{
-        val works = services.getAllWorks(UUID.fromString(artist_id))
+        val works = services.getAllWorks(UUID.fromString(artist_id)).sortedByDescending { it.timestamp }
         return ResponseEntity.ok(works)
     }
 
