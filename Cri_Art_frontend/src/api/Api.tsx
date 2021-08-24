@@ -37,16 +37,23 @@ export class Api {
 
     return fetch(path, request)
       .then(async response => {
-        const result = response.json()
+        let result = {}
 
-        result.catch(error => console.error('Response Error: ' + error))
+        const textResult = await response.text()
+        try {
+          if (textResult) {
+            result = JSON.parse(textResult)
+          }
+        } catch(error) {
+          console.error('Failed to parse JSON: ' + textResult)
+        }
 
         if (response.status >= 200 && response.status < 300) {
-          result.then(res => console.log('API Response: ' + JSON.parse(res)))
+          console.log('API Response: ' + textResult)
           return Promise.resolve(result)
         } else {
-          result.then(res => console.log('API Error: ' + JSON.parse(res)))
-          return Promise.reject(await result)
+          console.error('API Error: ' + textResult)
+          return Promise.reject(result)
         }
       })
   }

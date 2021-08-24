@@ -38,7 +38,7 @@ class ArtistController (private val services : ArtistServices, private val userS
 
         log.info("Request from user ${user.username} to create an artist arrived the handler")
         log.info("${artistIM.description}\n${artistIM.tags}")
-        val artist = artistIM.toArtist(user.id, user.emailAddress, user.username)
+        val artist = artistIM.toArtist(user.id!!, user.emailAddress!!, user.username!!)
 
         val status = services.createArtist(artist)
         return if (status) {

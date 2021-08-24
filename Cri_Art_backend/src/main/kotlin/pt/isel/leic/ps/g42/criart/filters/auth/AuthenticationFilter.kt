@@ -16,9 +16,8 @@ class AuthenticationFilter(private val authService: AuthService) : OncePerReques
     private val log = java.util.logging.Logger.getLogger(AuthenticationFilter::class.java.name)
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
-        this.log.info("REQUEST: ${request.method} ${request.requestURI}")
         val tokenParam: String? = request.getParameter("token")
-        this.log.info("TOKEN: $tokenParam")
+        this.log.info("[REQUEST] Token: $tokenParam")
 
         var token: UUID
         try {
@@ -36,7 +35,7 @@ class AuthenticationFilter(private val authService: AuthService) : OncePerReques
             chain.doFilter(request, response)
         } else {
             log.warning("Error while getting the user for token: $token")
-            if (user != null && !user.enabled) {
+            if (user != null && !user.enabled!!) {
                 log.warning("The following user has been disabled: ${user.id}")
             }
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED)
@@ -49,7 +48,6 @@ class AuthenticationFilter(private val authService: AuthService) : OncePerReques
     private val filterExclusionUriMatcher = Regex("^(/api/auth/|/api/public/)")
 
     override fun shouldNotFilter(request: HttpServletRequest): Boolean {
-        log.info("Filtered: ${!request.requestURI.contains(this.filterExclusionUriMatcher)}")
         return request.requestURI.contains(this.filterExclusionUriMatcher)
     }
 

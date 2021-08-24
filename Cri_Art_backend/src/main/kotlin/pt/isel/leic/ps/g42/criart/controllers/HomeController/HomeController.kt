@@ -29,7 +29,7 @@ class HomeController (private val service: HomeService){
 
     @GetMapping("/feed", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getFeed(@RequestAttribute user :User): ResponseEntity<List<FeedPost>> {
-        var feed = service.getFeed(user.listOfFollows)
+        var feed = service.getFeed(user.listOfFollows!!)
         println("FEED: ")
         println(feed)
         feed = feed.sortedByDescending { it.work.timestamp }

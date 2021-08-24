@@ -10,15 +10,16 @@ data class LoginRequest (
 )
 
 data class LoginResponse(
-    val id: UUID = UUID(0L, 0L),
-    val name: String = "",
-    val emailAddress: String = "",
-    val type: UserType,
-    var hasProfile: Boolean = false,
-    var listOfFollows: List<UUID> = emptyList(),
-    var enabled: Boolean = false,
+    val id: UUID?,
+    val name: String?,
+    val emailAddress: String?,
+    val type: UserType?,
+    var hasProfile: Boolean?,
+    var listOfFollows: List<UUID>?,
+    var enabled: Boolean?,
     val token: UUID,
 )
+
 data class SignUpResponse(
     val message: String
 )
