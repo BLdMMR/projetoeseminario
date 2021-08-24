@@ -61,8 +61,7 @@ export default function ArtistProfile(props: any) {
                         return <button className={"btn btn-outline-primary"}>{tag}</button>
                     })}
                 </div>
-                <h2>Profile of artist with id {id}</h2>
-                <h1>{data.username}</h1>
+                <h2>{data.username}</h2>
                 <p>{data.description}</p>
                 <WorkManagement id={id}/>
             </div>
@@ -76,8 +75,7 @@ export default function ArtistProfile(props: any) {
                 </div>
                 <div>
                 <div >
-                    <h2>Profile of artist with id {id}</h2>
-                    <h1>{data.username}</h1>
+                    <h2>{data.username}</h2>
                     <p>{data.description}</p>
 
                     <h4>You are the owner</h4>
