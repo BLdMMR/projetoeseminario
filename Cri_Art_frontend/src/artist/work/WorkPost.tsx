@@ -30,8 +30,7 @@ export default function WorkPost(props: { work: Work }) {
     function handleUpvote() {
         Api.fetchFromAPI(
             HTTP_METHOD.PUT,
-            `/artist/${work.owner}/worksofart/${work.id}?token=${AuthService.getToken()}`,
-            new Headers(),
+            `/artist/${work.owner}/worksofart/${work.id}?token=${AuthService.getToken()}`
         ).then((status) => {
             arrow == arrow_up ? setArrow(arrow_up_rev) : setArrow(arrow_up)
         }).catch(err => {

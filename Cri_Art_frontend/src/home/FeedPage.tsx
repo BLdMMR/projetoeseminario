@@ -9,8 +9,7 @@ function FeedPage(props: any) {
     if (!feed) {
         Api.fetchFromAPI(
             HTTP_METHOD.GET,
-            `/feed?token=${AuthService.getToken()}`,
-            new Headers()
+            `/feed?token=${AuthService.getToken()}`
         ).then((resFeed) => {
             setFeed(resFeed)
 

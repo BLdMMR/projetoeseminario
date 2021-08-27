@@ -5,11 +5,6 @@
 .work-panel {
     display: flex;
     flex-direction: column;
-    position: absolute;
-    width: 50vw;
-    top: 20vh;
-    left: 50vw;
-    transform: translateX(-75%);
 }
 
 #offcanvasBottom {

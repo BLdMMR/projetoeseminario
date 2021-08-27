@@ -19,8 +19,7 @@ function ProfileCreation(props: any) {
         if (!taglist[0]) {
             Api.fetchFromAPI(
                 HTTP_METHOD.GET,
-                "/public/tags",
-                new Headers()
+                "/public/tags"
             ).then(tags => {
                 setTagList(tags)
                 tags.forEach((tag :string) => tagMap.set(tag, false))
