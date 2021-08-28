@@ -2,9 +2,11 @@ import {useEffect, useState} from "react";
 import {Api, HTTP_METHOD} from "../api/Api";
 import {AuthService} from "../api/AuthService";
 import './Feed.css'
+import {useHistory} from "react-router-dom";
 
 function FeedPage(props: any) {
     const [feed, setFeed] = useState<Pub[]>()
+    const history = useHistory()
 
     if (!feed) {
         Api.fetchFromAPI(
@@ -27,7 +29,7 @@ function FeedPage(props: any) {
                     <div className="card-body">
                         <h5 className="card-title">{work.artist_name}</h5>
                         <p className="card-text">{work.work.description}</p>
-                        <a href="#" className="btn btn-primary">Go somewhere</a>
+                        <button type={"button"} className={"btn btn-primary"} onClick={() => history.push(`/artist/${work.artist_id}&token=${AuthService.getToken()}`)}>Go To Profile</button>
                     </div>
             </div>
         )
