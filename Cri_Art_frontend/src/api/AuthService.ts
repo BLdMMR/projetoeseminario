@@ -2,9 +2,7 @@ import {Api, HTTP_METHOD} from '../api/Api'
 
 
 export class AuthService {
-  // private static token?: string
-  // private static type?: string
-  // private static id?: string
+
   private static user?: User
 
   public static getToken(): string | undefined{
@@ -26,8 +24,7 @@ export class AuthService {
   public static async hasProfile(): Promise<boolean> {
       return await Api.fetchFromAPI(
           HTTP_METHOD.GET,
-          `/auth/profile-info?token=${AuthService.getToken()}`,
-          new Headers()
+          `/auth/profile-info?token=${AuthService.getToken()}`
       ).then(result => {
           console.log(result)
           return result.hasProfile
@@ -35,12 +32,10 @@ export class AuthService {
   }
 
   public static login(email: string, password: string): Promise<any> {
-      const headers = new Headers()
-      headers.set('Content-Type', 'application/json')
+
     return Api.fetchFromAPI(
       HTTP_METHOD.POST,
       '/auth/login',
-      headers,
       {
         email: email,
         password: btoa(password)
@@ -61,20 +56,15 @@ export class AuthService {
   public static logout() {
       return Api.fetchFromAPI(
           HTTP_METHOD.DELETE,
-          `/auth/logout?token=${AuthService.getToken()}`,
-          new Headers(),
-          null
+          `/auth/logout?token=${AuthService.getToken()}`
       )
   }
 
   public static signup(username: string, email: string, password: string, type: string): Promise<any> {
-      const headers = new Headers()
-      headers.set("Content-Type", "application/json")
 
     return Api.fetchFromAPI(
       HTTP_METHOD.POST,
       '/auth/signup',
-      headers,
       {
         username: username,
         email: email,

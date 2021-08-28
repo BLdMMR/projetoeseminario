@@ -12,17 +12,17 @@ import java.util.*
 class ArtistServices(private val artistRepository: ArtistRepository, private val userRepository: IUserRepository) {
 
     fun createArtist(artist: Artist): Boolean {
-        try {
+        return try {
             artistRepository.addArtist(artist)
             var user = userRepository.findByEmail(artist.email, Pageable.unpaged()).get().findFirst().get()
             user.hasProfile = true
-            userRepository.deleteById(user.id)
+            userRepository.deleteById(user.id!!)
             userRepository.save(user)
-            return true
+            true
         } catch (e: Exception) {
             println("Artist Services Exception Catch: ${e.message}")
             e.printStackTrace()
-            return false
+            false
         }
     }
 

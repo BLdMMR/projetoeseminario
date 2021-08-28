@@ -19,8 +19,7 @@ function ProfileCreation(props: any) {
         if (!taglist[0]) {
             Api.fetchFromAPI(
                 HTTP_METHOD.GET,
-                "/public/tags",
-                new Headers()
+                "/public/tags"
             ).then(tags => {
                 setTagList(tags)
                 tags.forEach((tag :string) => tagMap.set(tag, false))
@@ -36,12 +35,10 @@ function ProfileCreation(props: any) {
     function handleCreateProfile() {
         const finalTags = taglist.filter(tag => tagMap.get(tag))
         const description = descRef.current?.value
-        const headers = new Headers()
-        headers.set("Content-Type", "application/json")
+
         Api.fetchFromAPI(
             HTTP_METHOD.POST,
             `/artist?token=${AuthService.getToken()}`,
-            headers,
             {
                 description: description,
                 tags: finalTags

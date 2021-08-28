@@ -16,14 +16,15 @@ function Signup(props: any) {
     if (!username || !email || !password || !repeatPassword) {
       setSignupError('Missing credentials!')
     } else if (password !== repeatPassword) {
-      setSignupError('Passwords\n dont match!')
+      setSignupError('Passwords\ndont match!')
     } else {
       AuthService.signup(username, email, password, type)
         .then(() => {
           setSignedUp(true)
         }).catch(error => {
-          // Check response code here
-          setSignupError('Signup failed!')
+
+          let errorMsg = error?.title ?? 'Signup failed!'
+          setSignupError(errorMsg)
         })
     }
 

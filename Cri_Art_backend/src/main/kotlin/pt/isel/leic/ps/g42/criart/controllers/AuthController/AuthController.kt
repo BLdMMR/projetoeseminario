@@ -27,6 +27,7 @@ class AuthController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<LoginResponse> {
+
         var token: UUID? = null
         var lgnRes :LoginResponse? = null
         try {
@@ -44,6 +45,7 @@ class AuthController(
     fun logout(@RequestParam token: String): ResponseEntity<Boolean> {
         var status = false
         status = this.authService.logoutUser(token)
+
         if (status)
             return ResponseEntity(status, HttpStatus.OK)
         else
@@ -56,18 +58,20 @@ class AuthController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     fun signup(@RequestBody signupRequest: SignupRequest): ResponseEntity<Any> {
-        println(signupRequest)
         this.authService.signupUser(signupRequest.username, signupRequest.email, signupRequest.password, signupRequest.type)
-
         return ResponseEntity.ok(HttpStatus.OK)
     }
 
-    @PostMapping("/confirm-signup")
+    @PostMapping(
+        "/confirm-signup",
+        consumes = [MediaType.APPLICATION_JSON_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE]
+    )
     fun confirmSignup(@RequestParam token: String): ResponseEntity<Any> {
 
         val user = authService.confirmSignup(token)
         return if (user == null) {
-            ResponseEntity(HttpStatus.UNAUTHORIZED)
+            ResponseEntity(HttpStatus.UNAUTHORIZED, HttpStatus.UNAUTHORIZED)
         } else {
             ResponseEntity.ok(HttpStatus.OK)
         }

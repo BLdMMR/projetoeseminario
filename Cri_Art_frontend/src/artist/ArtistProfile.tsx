@@ -17,8 +17,7 @@ export default function ArtistProfile(props: any) {
          if (!data) {
             Api.fetchFromAPI(
                 HTTP_METHOD.GET,
-                `/artist/${id}?token=${AuthService.getToken()}`,
-                new Headers()
+                `/artist/${id}?token=${AuthService.getToken()}`
             ).then(response => {
                 console.log("Response: ")
                  console.log(response)
@@ -44,9 +43,7 @@ export default function ArtistProfile(props: any) {
     function handleFollow() {
         Api.fetchFromAPI(
             HTTP_METHOD.PUT,
-            `/artist/${id}/follow?token=${AuthService.getToken()}`,
-            new Headers(),
-            null
+            `/artist/${id}/follow?token=${AuthService.getToken()}`
         )
         console.log("User wants to follow this artist")
     }
@@ -54,35 +51,36 @@ export default function ArtistProfile(props: any) {
     if (data) {
         return id !== AuthService.getId() ? (
             <div className="artist-profile">
-                <input type={"checkbox"} className={"btn-check"} id={"btn-check-follow"} onClick={handleFollow}/>
-                <label className="btn btn-outline-primary" htmlFor={"btn-check-follow"} onClick={()=>{setFollow(follow === "Follow" ? "Following" : "Follow")}} defaultChecked={follow != "Follow"}>{follow}</label>
-
-                <div>
-                    {data.tags.map((tag) => {
-                        return <button className={"btn btn-outline-primary"}>{tag}</button>
-                    })}
+                <div className={"artist-details"}>
+                    <input type={"checkbox"} className={"btn-check"} id={"btn-check-follow"} onClick={handleFollow}/>
+                    <label className="btn btn-outline-primary" htmlFor={"btn-check-follow"} onClick={()=>{setFollow(follow === "Follow" ? "Following" : "Follow")}} defaultChecked={follow != "Follow"}>{follow}</label>
+                    <div>
+                        {data.tags.map((tag) => {
+                            return <button className={"btn btn-outline-primary"}>{tag}</button>
+                        })}
+                    </div>
+                    <h2>{data.username}</h2>
+                    <p>{data.description}</p>
                 </div>
-                <h2>Profile of artist with id {id}</h2>
-                <h1>{data.username}</h1>
-                <p>{data.description}</p>
-                <WorkManagement id={id}/>
+                <div className={"artist-portfolio"}>
+                    <WorkManagement id={id}/>
+                </div>
             </div>
         ): (
             <div className="artist-profile">
-                <div>
-                    <h4>Tags:</h4>
-                    {data.tags.map((tag) => {
-                        return <button className={"btn btn-outline-primary"}>{tag}</button>
-                    })}
-                </div>
-                <div>
-                <div >
-                    <h2>Profile of artist with id {id}</h2>
-                    <h1>{data.username}</h1>
-                    <p>{data.description}</p>
-
+                <div className={"artist-details"}>
+                    <h2>{data.username}</h2>
+                    <p className={"artist-description"}>{data.description}</p>
                     <h4>You are the owner</h4>
+
+                    <h4>Tags:</h4>
+                    <div>
+                        {data.tags.map((tag) => {
+                            return <button className={"btn btn-outline-primary artist-tag"}>{tag}</button>
+                        })}
+                    </div>
                 </div>
+                <div className={"artist-portfolio"}>
                     <WorkManagement id={id}/>
                 </div>
             </div>

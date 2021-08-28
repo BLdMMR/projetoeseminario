@@ -41,33 +41,31 @@ class AuthService(
 
     private val log = Logger.getLogger(AuthService::class.java.name)
 
-    fun signupUser(name: String, emailAddress: String, password: String, type: String) {
+
+    fun signupUser(username: String, emailAddress: String, password: String, type: String) {
         val hashPassEncoded = digestPassword(password)
-        var existingUser: User? = null
-        try{
-            println(emailAddress)
-            existingUser = this.userRepository.findByEmail(emailAddress, Pageable.unpaged())
+        var existingUser: User? = this.userRepository.findByEmail(emailAddress, Pageable.unpaged())
                 .get().findAny().orElse(null)
-            println("Existing User:")
-            println(existingUser)
-        } catch (exception: ElasticsearchException) {
-            log.info("Elasticsearch index not found")
-        }
-        if (existingUser == null || existingUser!!.emailAddress == emailAddress) {
-            throw UserEmailAlreadyExistsException(emailAddress)
+
+        if (existingUser?.emailAddress == emailAddress) {
+            throw UserEmailAddressAlreadyExistsException(emailAddress)
         }
 
-        val newUser = User(id = UUID.randomUUID(), name = name, emailAddress = emailAddress,
+        val newUser = User(id = UUID.randomUUID(), username = username, emailAddress = emailAddress,
             password = hashPassEncoded, enabled = false, type = UserType.valueOf(type))
 
-        println("User: \nId: ${newUser.id}\nName: ${newUser.name}\nEmail: ${newUser.emailAddress}\nPassword: ${newUser.password}\nType: ${newUser.type}\nEnabled: ${newUser.enabled}")
-        println(newUser)
         this.userRepository.save(newUser)
 
-        val token = Token(userId = newUser.id, token = UUID.randomUUID(), type = TokenType.SIGNUP)
-        this.tokenRepository.save(token)
+        val registrationToken = Token(userId = newUser.id, token = UUID.randomUUID(), type = TokenType.SIGNUP)
+        this.tokenRepository.save(registrationToken)
 
-        this.emailService.sendRegistrationMail(emailAddress, token.token)
+        try {
+            this.emailService.sendRegistrationMail(emailAddress, registrationToken.token!!)
+        } catch (exception: RuntimeException) {
+            this.userRepository.delete(newUser)
+            this.tokenRepository.delete(registrationToken)
+            throw exception
+        }
     }
 
     fun loginUser(email: String?, password: String?): LoginResponse {
@@ -90,7 +88,7 @@ class AuthService(
 
         val token = Token(userId = user.id, token = UUID.randomUUID(), type = TokenType.LOGIN)
         this.tokenRepository.save(token)
-        return user.toLoginResponse(token.token)
+        return user.toLoginResponse(token.token!!)
 //        return user
     }
 
@@ -147,7 +145,7 @@ class AuthService(
             throw TokenNotFoundException()
         }
         val user = this.userRepository.findByIdOrNull(tokenEnt.userId)
-        if (user == null || user.enabled) {
+        if (user == null || user.enabled == true) {
             log.warning("Disabled user with id ${tokenEnt.userId} not found from token: ${tokenEnt.token}")
             return null
         }

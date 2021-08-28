@@ -14,14 +14,13 @@ function SearchPage(props: any) {
     const name = new URLSearchParams(searchParams).get('nameToSearchBy');
     console.log(`Token: ${AuthService.getToken()}`)
 
-    useEffect(()=> {
+    useEffect(() => {
         if (done) {
             setDone(false)
             Api?.fetchFromAPI(
                 HTTP_METHOD.GET,
-                `/public/home/search?nameToSearchBy=${name}&token=${AuthService.getToken()}`,
-                undefined,
-                undefined
+                `/public/home/search?nameToSearchBy=${name}&token=${AuthService.getToken()}`
+
                 ).then(data => {
                     console.log(`Data fetched: ${data}`)
                     setContent(data)

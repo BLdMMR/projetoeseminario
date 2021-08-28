@@ -21,7 +21,7 @@ class WorkController (private val services : WorkServices) {
 
     @GetMapping
     fun getAllWorks(@PathVariable("aid") artist_id: String) : ResponseEntity<List<WorkSaveModel>>{
-        val works = services.getAllWorks(UUID.fromString(artist_id))
+        val works = services.getAllWorks(UUID.fromString(artist_id)).sortedByDescending { it.timestamp }
         return ResponseEntity.ok(works)
     }
 
@@ -34,7 +34,7 @@ class WorkController (private val services : WorkServices) {
 
         val aid = UUID.fromString(artist_id)
 
-        if (!user.id.equals(aid))
+        if (user.id!! != aid)
             return ResponseEntity("User ID and Artist ID do not match", HttpStatus.FORBIDDEN)
 
         services.addWork(aid, wip.toWork(aid))
@@ -55,7 +55,7 @@ class WorkController (private val services : WorkServices) {
                 .addCommentToWork(
                     UUID.fromString(work_id),
                     comment,
-                    user.id
+                    user.id!!
                 )
         return ResponseEntity.ok().body(work)
     }
@@ -63,7 +63,7 @@ class WorkController (private val services : WorkServices) {
     @PutMapping("/{wid}")
     fun upvoteAndDownvote(@PathVariable("wid") work_id: String, @RequestAttribute user: User):ResponseEntity<Boolean> {
         log.info("Up or down vote toggled")
-        val status = services.upvoteAndDownvote(UUID.fromString(work_id), user.id)
+        val status = services.upvoteAndDownvote(UUID.fromString(work_id), user.id!!)
         return ResponseEntity.ok(status)
     }
 

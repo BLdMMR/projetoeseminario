@@ -1,65 +1,30 @@
 import {useEffect, useState} from "react";
 import {Api, HTTP_METHOD} from "../../api/Api";
 import {AuthService} from "../../api/AuthService";
-import arrow_up from "../../icons/arrow_up.svg"
-import arrow_up_rev from "../../icons/arrow_up_rev.svg"
 import WorkPost from './WorkPost'
-import {Link} from "react-router-dom";
-import logo from "../../icons/new_logo.svg";
-
-const videoFormats = ['mp4', 'mov', 'wmv']
 
 export default function WorkList(props :any) {
     const id = props.id
-    const [works, setWorks] = useState<Work[]>()
-    const [arrow, setArrow] = useState(arrow_up)
+    const [works, setWorks] = useState<Work[]>([])
 
     useEffect(()=> {
-        if(!works){
-            Api.fetchFromAPI(
-                HTTP_METHOD.GET,
-                `/artist/${id}/worksofart?token=${AuthService.getToken()}`,
-                new Headers()
-            ).then((listOfWorks) => {
-                console.log(listOfWorks)
-                setWorks(listOfWorks)
-                console.log(works)
-                console.log('Works Fetched')
-            })
-        }
-    }, [works, setWorks, arrow])
+/*
+        if(works.length == 0){
+*/
+        Api.fetchFromAPI(
+            HTTP_METHOD.GET,
+            `/artist/${id}/worksofart?token=${AuthService.getToken()}`
+        ).then((listOfWorks) => {
+            setWorks(listOfWorks)
+        })
+        /*}*/
+    }, [])
 
     function renderWorks(work: Work) {
         return <WorkPost work={work}/>
-        //
-        //function isVideo(fileExtension: string) {
-            //     videoFormats.forEach((idx) => {
-            //         if (fileExtension === idx) return true
-            //     })
-            //     return false
-            // }
-            // console.log("It's a Video")
-            // return isVideo(work.fileExtension) ? (
-            //     <video width="320" height="240" controls>
-            //         <source src={`data:video/${work.fileExtension};base64,${work.content}`} type={`video/webm`}/>
-            //         <source src={`data:video/${work.fileExtension};base64,${work.content}`} type={`video/${work.fileExtension}`}/>
-            //     </video>
-            // ) : (
-            //     <div className="card">
-            //         <img src={`data:image/${work.fileExtension};base64,` + work.content} alt={work.work_name}
-            //              className={"work-image"}/>
-            //             <div className="card-body">
-            //                 <h5 className="card-title">{work.description}</h5>
-            //                 <button className={"btn btn-primary"} id={'upvote'}>
-            //                     <img src={arrow} onClick={() => {arrow == arrow_up?setArrow(arrow_up_rev):setArrow(arrow_up)}}/>
-            //                 </button>
-            //                 <a href="#" className="btn btn-primary">Go somewhere</a>
-            //             </div>
-            //     </div>
+    }
 
-        }
-
-    return !works ? (
+    return works.length == 0 ? (
         <div>
             <h3>Loading works...</h3>
         </div>

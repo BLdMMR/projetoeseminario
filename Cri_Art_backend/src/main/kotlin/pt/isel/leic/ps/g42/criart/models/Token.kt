@@ -11,8 +11,8 @@ enum class TokenType {
 
 @Document(indexName = "token")
 data class Token constructor(
-    val userId: UUID = UUID(0L, 0L),
+    val userId: UUID?,
     @Id
-    val token: UUID = UUID(0L, 0L),
-    val type: TokenType? = null
+    val token: UUID?,
+    val type: TokenType?
 )

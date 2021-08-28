@@ -1,5 +1,6 @@
 package pt.isel.leic.ps.g42.criart.storage
 
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import pt.isel.leic.ps.g42.criart.models.Comment
 import pt.isel.leic.ps.g42.criart.models.Tag
@@ -11,6 +12,8 @@ import java.util.*
 
 @Component
 class WorkRepository (private val es_repository : IWorkRepository){
+
+    val log = LoggerFactory.getLogger(this::class.simpleName)
 
     fun addWork(aid: UUID, work: Work) {
 
