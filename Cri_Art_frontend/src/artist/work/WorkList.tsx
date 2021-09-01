@@ -13,8 +13,7 @@ export default function WorkList(props :any) {
 */
         Api.fetchFromAPI(
             HTTP_METHOD.GET,
-            `/artist/${id}/worksofart?token=${AuthService.getToken()}`,
-            new Headers()
+            `/artist/${id}/worksofart?token=${AuthService.getToken()}`
         ).then((listOfWorks) => {
             setWorks(listOfWorks)
         })

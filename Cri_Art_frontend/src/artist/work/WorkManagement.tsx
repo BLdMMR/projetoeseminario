@@ -49,8 +49,11 @@ export default function WorkManagement(props: any) {
     if (id == AuthService.getId()) {
         return (
             <div className={"work-panel"}>
+                <div className={"works"}>
                 <WorkList id={id}/>
-                <button className="btn btn-primary" type="button" data-bs-toggle="offcanvas"
+                </div>
+            <div className={"uploadwork"}>
+            <button className="btn btn-primary" type="button" data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
                     Add Work to Portfolio
                 </button>
@@ -69,6 +72,8 @@ export default function WorkManagement(props: any) {
                         <button type="button" className={"btn btn-primary"} onClick={handleSubmit}>Submit</button>
                     </div>
                 </div>
+            </div>
+                
             </div>
         )
     } else {

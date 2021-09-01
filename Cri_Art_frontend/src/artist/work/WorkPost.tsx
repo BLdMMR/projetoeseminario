@@ -6,6 +6,7 @@ import {Api, HTTP_METHOD} from "../../api/Api";
 import arrow_up from "../../icons/arrow_up.svg"
 import arrow_up_rev from "../../icons/arrow_up_rev.svg"
 import comment_icon from "../../icons/comment_icon.svg"
+import { SRLWrapper } from "simple-react-lightbox";
 
 const videoFormats = ['mp4', 'mov', 'wmv']
 
@@ -49,9 +50,13 @@ export default function WorkPost(props: { work: Work }) {
             <source src={`data:video/${work.fileExtension};base64,${work.content}`} type={`video/${work.fileExtension}`}/>
         </video>
     ) : (
+      
         <div className="card">
+              <SRLWrapper>
+                  <a href = {`data:image/${work.fileExtension};base64,` + work.content}></a>
             <img src={`data:image/${work.fileExtension};base64,` + work.content} alt={work.work_name}
                  className={"work-image"}/>
+                 </SRLWrapper>
             <div className="card-body">
                 <h5 className="card-title">{work.description}</h5>
                 <div className={'work-actions'}>
@@ -65,6 +70,7 @@ export default function WorkPost(props: { work: Work }) {
                 <input className="form-control" type="text" placeholder="Write a comment" aria-label="default input example"/>
             </div>
         </div>
+        
 
     )
 

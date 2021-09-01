@@ -24,8 +24,7 @@ export class AuthService {
   public static async hasProfile(): Promise<boolean> {
       return await Api.fetchFromAPI(
           HTTP_METHOD.GET,
-          `/auth/profile-info?token=${AuthService.getToken()}`,
-          new Headers()
+          `/auth/profile-info?token=${AuthService.getToken()}`
       ).then(result => {
           console.log(result)
           return result.hasProfile

@@ -1,23 +1,26 @@
-/*.work-image {
-    height: 100px;
+.work-image {
+    height: 250px;
     width: auto;
-}*/
-.work-panel {
+}
+.works {
     display: flex;
     flex-direction: column;
     position: absolute;
-    width: 50vw;
-    top: 20vh;
-    left: 50vw;
+    width: 31vw;
+    top: 10vh;
+    left: 60vw;
     transform: translateX(-75%);
 }
+.uploadwork{
+    display: flex;
+    flex-direction: column;
+}
+
 
 #offcanvasBottom {
     background-color: #4686f2;
     justify-content: center;
     position: fixed;
-
-    width: 25vw;
 }
 
 #upvote {
@@ -25,3 +28,4 @@
     border-color: white;
 
 }
+
