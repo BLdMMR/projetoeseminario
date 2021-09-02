@@ -49,12 +49,11 @@ export default function WorkManagement(props: any) {
     if (id == AuthService.getId()) {
         return (
             <div className={"work-panel"}>
-                <WorkList id={id}/>
                 <button className="btn btn-primary" type="button" data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
                     Add Work to Portfolio
                 </button>
-
+                <WorkList id={id}/>
                 <div className="offcanvas offcanvas-bottom" tabIndex={4} id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
                     <div className="offcanvas-header">
                         <h5 className="offcanvas-title" id="offcanvasBottomLabel">Add Work</h5>
@@ -62,7 +61,6 @@ export default function WorkManagement(props: any) {
                     </div>
                     <div className="offcanvas-body small">
                         <div className="mb-3">
-                            <label htmlFor="formFile" className="form-label">Default file input example</label>
                             <input className="form-control" type="file" onChange={handleFileSubmited} id="formFile"/>
                             <textarea ref={descRef} className={"textarea"} placeholder={"Write the description of the work"}/>
                         </div>

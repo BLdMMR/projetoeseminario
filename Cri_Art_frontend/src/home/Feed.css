@@ -3,10 +3,15 @@
     display: flex;
     flex-direction: column;
     position: absolute;
-    width: 50vw;
-    top: 30vh;
-    left: 50vw;
-    transform: translateX(-50%);
+    justify-content: space-around;
+    align-content: space-around;
+    /*width: 75vw;*/
+    /*top: 30vh;*/
+    /*left: 50vw;*/
+    margin-left: 12.5vw;
+    margin-right: 12.5vw;
+
+    transform: translateY(15vh);
 
 }
 
@@ -22,5 +27,6 @@
     position: relative;
     margin: auto;
     height: auto;
-    width: auto;
+    width: 75vw;
+    margin-bottom: 50px;
 }

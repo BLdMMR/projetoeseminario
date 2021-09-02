@@ -27,6 +27,9 @@ export default function WorkList(props :any) {
     return works.length == 0 ? (
         <div>
             <h3>Loading works...</h3>
+            <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
         </div>
     ) : (
         <div className={"work-panel"}>
