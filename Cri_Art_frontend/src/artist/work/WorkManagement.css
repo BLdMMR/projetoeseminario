@@ -1,12 +1,22 @@
-/*.work-image {
-    height: 100px;
+.work-image {
+    height: 500px;
     width: auto;
-}*/
-.work-panel {
+}
+.works {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 31vw;
+    top: 10vh;
+    left: 60vw;
+    transform: translateX(-75%);
+}
+.uploadwork{
     display: flex;
     width: 75vw;
     flex-direction: column;
 }
+
 
 #offcanvasBottom {
     background-color: #4686f2;
@@ -33,4 +43,33 @@
 
 .textarea{
     margin-top: 10px;
+}
+
+.modal fade{
+    z-index: 9000;
+
+}
+
+.modal-content{
+    height: 75vh;
+    width: 90vw;
+    transform: translateX(-32.5%);
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: row;
+    overflow: auto;
+}
+
+.scrollspy-example {
+    overflow: auto;
+    margin-left: 20px;
+    width: 500px;
+}
+
+.work-image-modal {
+    max-height: 50vh;
+    max-width: max-content;
+
 }

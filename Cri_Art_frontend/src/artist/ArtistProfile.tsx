@@ -71,7 +71,6 @@ export default function ArtistProfile(props: any) {
                 <div className={"artist-details"}>
                     <h2>{data.username}</h2>
                     <p className={"artist-description"}>{data.description}</p>
-                    <h4>You are the owner</h4>
 
                     <h4>Tags:</h4>
                     <div>
