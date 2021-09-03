@@ -24,6 +24,7 @@ dependencies {
 	implementation("org.springframework.data:spring-data-elasticsearch:4.2.0")
 	implementation("org.springframework.boot:spring-boot-starter-security:2.5.0")
 	implementation("org.springframework.boot:spring-boot-starter-mail:2.5.2")
+	implementation("org.springframework.boot:spring-boot-starter-websocket:2.5.2")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
