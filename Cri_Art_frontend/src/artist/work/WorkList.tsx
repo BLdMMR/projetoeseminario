@@ -48,10 +48,10 @@ export class Work {
     public tags: Array<string>
     public content: string
     public fileExtension: string
-    public comments: Array<string>;
+    public comments: Array<Comment>;
     public ups: Array<string>;
 
-    constructor(id: string, work_name: string, owner: string, description: string, reviews: number, tags: Array<string>, content: string, fileExtension: string, commments: Array<string>, ups: Array<string>) {
+    constructor(id: string, work_name: string, owner: string, description: string, reviews: number, tags: Array<string>, content: string, fileExtension: string, commments: Array<Comment>, ups: Array<string>) {
         this.id = id
         this.work_name = work_name
         this.owner = owner
@@ -64,4 +64,16 @@ export class Work {
         this.ups = ups
     }
 
+}
+
+class Comment{
+    public comment: string
+    public wid: string
+    public uid: string
+
+    constructor(comment: string, work_id: string, user_id: string) {
+        this.comment = comment
+        this.wid = work_id
+        this.uid = user_id
+    }
 }
