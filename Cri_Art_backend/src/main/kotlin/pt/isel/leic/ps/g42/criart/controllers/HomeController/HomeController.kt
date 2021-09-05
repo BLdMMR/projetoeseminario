@@ -7,13 +7,15 @@ import org.springframework.web.bind.annotation.*
 import pt.isel.leic.ps.g42.criart.models.Tag
 import pt.isel.leic.ps.g42.criart.models.User
 import pt.isel.leic.ps.g42.criart.services.HomeService
+import pt.isel.leic.ps.g42.criart.services.UserService
+import java.util.*
 import kotlin.reflect.full.memberProperties
 
 //@CrossOrigin(origins = ["http://localhost:3000"])
 //@CrossOrigin("https://cri-art.herokuapp.com")
 @CrossOrigin(origins = ["http://localhost:3000", "https://cri-art.herokuapp.com"])
 @RestController
-class HomeController (private val service: HomeService){
+class HomeController (private val service: HomeService, private val userService: UserService){
 
     @GetMapping("public/home/search")
     fun searchByName(@RequestParam nameToSearchBy: String, @RequestAttribute user: User?): HomeService.Searchlist {
@@ -40,6 +42,12 @@ class HomeController (private val service: HomeService){
     fun getAllTags() : ResponseEntity<List<String>> {
         val tags = service.getAllTags()
         return ResponseEntity<List<String>>(tags, HttpStatus.OK)
+    }
+
+    @GetMapping("/public/user-name")
+    fun getUserName(@RequestParam userId :String): ResponseEntity<String> {
+        val userName = userService.getUserName(UUID.fromString(userId))
+        return ResponseEntity.ok(userName)
     }
 
 }

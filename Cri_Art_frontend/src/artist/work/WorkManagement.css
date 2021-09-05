@@ -73,3 +73,11 @@
     max-width: max-content;
 
 }
+
+#comment-box {
+    content: 'Write Comment Here!';
+}
+
+.textarea{
+
+}

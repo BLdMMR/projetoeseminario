@@ -55,6 +55,7 @@ class WorkController (private val services : WorkServices) {
                 .addCommentToWork(
                     UUID.fromString(work_id),
                     comment,
+                    user.username!!,
                     user.id!!
                 )
         return ResponseEntity.ok().body(work)

@@ -10,9 +10,9 @@ export enum HTTP_METHOD {
 
 
 export class Api {
-  private static readonly API_BASE_URL = 'https://cri-art.herokuapp.com/api'
+  //private static readonly API_BASE_URL = 'https://cri-art.herokuapp.com/api'
 
-  //private static readonly API_BASE_URL = 'http://localhost:8080/api'
+  private static readonly API_BASE_URL = 'http://localhost:8080/api'
 
   public static fetchFromAPI(method: HTTP_METHOD, path: string, body?: any): Promise<any> {
     path = path ? Api.API_BASE_URL.concat(path) : Api.API_BASE_URL
@@ -56,5 +56,17 @@ export class Api {
           return Promise.reject(result)
         }
       })
+  }
+
+  static async getUserName(user_id: string) {
+    return await Api.fetchFromAPI(
+        HTTP_METHOD.GET,
+        `/public/user-name?userId=${user_id}`,
+        null
+    ).then(userName => {
+      return userName
+    }).catch(err => {
+      return null
+    })
   }
 }

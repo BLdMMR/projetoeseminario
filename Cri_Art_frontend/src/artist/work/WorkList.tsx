@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {Api, HTTP_METHOD} from "../../api/Api";
 import {AuthService} from "../../api/AuthService";
-import WorkPost from './WorkPost'
+import WorkPost, {Comment} from './WorkPost'
 
 export default function WorkList(props :any) {
     const id = props.id
@@ -50,10 +50,10 @@ export class Work {
     public tags: Array<string>
     public content: string
     public fileExtension: string
-    public comments: Array<string>;
+    public comments: Array<Comment>;
     public ups: Array<string>;
 
-    constructor(id: string, work_name: string, owner: string, description: string, reviews: number, tags: Array<string>, content: string, fileExtension: string, commments: Array<string>, ups: Array<string>) {
+    constructor(id: string, work_name: string, owner: string, description: string, reviews: number, tags: Array<string>, content: string, fileExtension: string, commments: Array<Comment>, ups: Array<string>) {
         this.id = id
         this.work_name = work_name
         this.owner = owner

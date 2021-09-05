@@ -83,4 +83,6 @@ class AuthController(
         return ResponseEntity.ok(HasProfile(hasProfile!!))
     }
 
+
+
 }
