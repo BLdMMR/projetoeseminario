@@ -7,7 +7,7 @@ import SearchPage from "../search/SearchPage";
 import SignupConfirmation from "../auth/signup/SignupConfirmation";
 import ProfileCreation from "../artist/ProfileCreation"
 import ArtistProfile from "../artist/ArtistProfile";
-import {AuthService} from "../api/AuthService";
+import Chat from "../chat/Chat";
 
 export default function AppRouter() {
 
@@ -19,6 +19,7 @@ export default function AppRouter() {
         </Route>
         <Route exact path='/home'>
           <Header/>
+          <Chat/>
           <HomePage/>
         </Route>
         <Route exact path='/login'>
@@ -31,6 +32,7 @@ export default function AppRouter() {
         </Route>
         <Route path="/search">
           <Header/>
+          <Chat/>
           <SearchPage/>
         </Route>
         <Route exact path='/signup-confirmation'>
@@ -43,6 +45,7 @@ export default function AppRouter() {
         </Route>
         <Route path={"/artist/:aid"}>
           <Header/>
+          <Chat/>
           <ArtistProfile/>
         </Route>
       </Switch>

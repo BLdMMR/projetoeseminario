@@ -32,6 +32,7 @@ class AuthenticationFilter(private val authService: AuthService) : OncePerReques
 
         if (user?.enabled == true) {
             request.setAttribute("user", user)
+            request.session.setAttribute("user", user)
             chain.doFilter(request, response)
         } else {
             log.warning("Error while getting the user for token: $token")
