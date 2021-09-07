@@ -57,7 +57,7 @@ function ProfileCreation(props: any) {
             <h4>Profile Creation: </h4>
             <div className="form-floating">
                 <h6>Please write de description that you want to be presented on your profile:</h6>
-                <textarea ref={descRef} className={"textarea"} placeholder={"Write the description here"}/>
+                <textarea ref={descRef} className={"textarea"} placeholder={"Write the description here!"}/>
             </div>
             <div>
                 <h4>Select the tags you identify your work with:</h4>
