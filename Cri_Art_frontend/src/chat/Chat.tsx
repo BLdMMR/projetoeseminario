@@ -1,6 +1,6 @@
 import './Chat.css'
 import {AuthService} from "../api/AuthService";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {MessageService} from "../api/MessageService";
 import {Subscription} from "rxjs";
 
@@ -8,23 +8,25 @@ import {Subscription} from "rxjs";
 export default function Chat(props: any) {
     const [open, setOpen] = useState(false)
     const [newMessage, setNewMessage] = useState<string>("")
-    const [messages, setMessages] = useState<Array<string>>([])
+    const [messages, setMessages] = useState<Array<string>>(["1", "two", "three"])
     const [typedMessage, setTypedMessage] = useState<string>("")
     const [messageSub, setMessageSub] = useState<Subscription>()
 
-    if (!messages.includes(newMessage)) {
-        messages.push(newMessage)
-    }
+    useEffect( () => {
+        const sub = MessageService.getMessageStream().subscribe(message => {
+            setNewMessage(message)
+            const newArray = messages.slice()
+            newArray.push(newMessage)
+            console.log("Messages: ", newArray)
+            setMessages(newArray)
+        })
+        setMessageSub(sub)
+        MessageService.initialize()
+    }, [])
 
     if (!AuthService.getToken()) {
         return null
     }
-
-    if (!messageSub) {
-        const sub = MessageService.getMessageStream().subscribe(message => setNewMessage(message))
-        setMessageSub(sub)
-    }
-
 
     return <div className={"chat-wrapper " + (open ? "chat-wrapper-open" : "chat-wrapper-closed")}>
         <div className={"chat-wrapper-header"}>
@@ -33,19 +35,19 @@ export default function Chat(props: any) {
                 {open
                     ? <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                            className="bi bi-chevron-down" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
+                        <path fillRule="evenodd"
                               d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                       </svg>
                     : <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                            className="bi bi-chevron-up" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
+                        <path fillRule="evenodd"
                               d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
                       </svg>}
             </div>
         </div>
         <div className={"chat-message-list-section"}>
             {
-                messages.map(message => <div className={"chat-message"}>{message}</div>)
+                messages.map((message, idx) => <div className={"chat-message"} key={idx}>{message}</div>)
             }
         </div>
         <div className={"chat-input-section"}>

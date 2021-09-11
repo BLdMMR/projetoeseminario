@@ -43,14 +43,12 @@ export class AuthService {
       }
     ).then(loginResponse => {
         AuthService.user = loginResponse
-        console.log("USER: ")
-        console.log(AuthService.user)
+        console.log("USER: ", AuthService.user)
         MessageService.initialize()
         return loginResponse.type
 
     }).catch(err => {
-        console.log("Error Occured")
-        console.log(err)
+        console.log("Error Occurred", err)
     })
 
   }
