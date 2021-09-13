@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {Api, HTTP_METHOD} from "../../api/Api";
 import {AuthService} from "../../api/AuthService";
-import WorkPost from './WorkPost'
+import WorkPost, {Comment} from './WorkPost'
 
 export default function WorkList(props :any) {
     const id = props.id
@@ -13,8 +13,7 @@ export default function WorkList(props :any) {
 */
         Api.fetchFromAPI(
             HTTP_METHOD.GET,
-            `/artist/${id}/worksofart?token=${AuthService.getToken()}`,
-            new Headers()
+            `/artist/${id}/worksofart?token=${AuthService.getToken()}`
         ).then((listOfWorks) => {
             setWorks(listOfWorks)
         })
@@ -28,6 +27,9 @@ export default function WorkList(props :any) {
     return works.length == 0 ? (
         <div>
             <h3>Loading works...</h3>
+            <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
         </div>
     ) : (
         <div className={"work-panel"}>
@@ -64,16 +66,4 @@ export class Work {
         this.ups = ups
     }
 
-}
-
-class Comment{
-    public comment: string
-    public wid: string
-    public uid: string
-
-    constructor(comment: string, work_id: string, user_id: string) {
-        this.comment = comment
-        this.wid = work_id
-        this.uid = user_id
-    }
 }

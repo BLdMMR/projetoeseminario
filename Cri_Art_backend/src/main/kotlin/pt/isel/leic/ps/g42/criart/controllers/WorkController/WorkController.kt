@@ -48,16 +48,18 @@ class WorkController (private val services : WorkServices) {
     }
 
     @PostMapping("/{wid}")
-    fun addCommentToWork(@PathVariable("wid") work_id: String, @RequestBody comment: String, @RequestAttribute user: User): ResponseEntity<WorkSaveModel> {
+    fun addCommentToWork(@PathVariable("wid") work_id: String, @RequestBody comment: String, @RequestAttribute user: User): ResponseEntity<Boolean> {
         if (user.type != UserType.ARTIST && user.type != UserType.CLIENT)
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null)
+        println(user.username)
         val work = services
                 .addCommentToWork(
                     UUID.fromString(work_id),
                     comment,
+                    user.username!!,
                     user.id!!
                 )
-        return ResponseEntity.ok().body(work)
+        return ResponseEntity.ok().body(true)
     }
 
     @PutMapping("/{wid}")

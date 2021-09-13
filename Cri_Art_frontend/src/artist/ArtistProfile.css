@@ -1,5 +1,33 @@
 .artist-profile {
+    position: relative;
+    top: 150px;
+
     display: flex;
-    align-content: flex-start;
-    transform: translateY(50%);
 }
+
+.artist-details {
+    flex: 50%;
+    display: flex;
+
+    flex-direction: column;
+
+    padding: 24px 24px 24px 36px;
+}
+
+.artist-portfolio {
+    display: flex;
+    flex-direction: column;
+    flex: 100%;
+
+    padding-top: 24px;
+    padding-right: 24px;
+}
+
+.artist-description {
+    word-break: break-all;
+}
+
+.artist-tag {
+    margin: 5px;
+}
+

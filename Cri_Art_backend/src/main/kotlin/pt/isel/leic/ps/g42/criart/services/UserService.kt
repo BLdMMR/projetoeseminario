@@ -26,4 +26,8 @@ class UserService (private val repository: IUserRepository) {
 
     }
 
+    fun getUserName(userId: UUID?): String? {
+        return repository.findById(userId!!).get().username
+    }
+
 }

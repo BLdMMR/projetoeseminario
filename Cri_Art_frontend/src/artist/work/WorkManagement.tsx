@@ -7,8 +7,10 @@ import React, {useEffect, useRef, useState} from "react";
 import {AuthService} from '../../api/AuthService';
 import {Api, HTTP_METHOD} from "../../api/Api";
 import WorkList from "./WorkList";
+import {useHistory} from "react-router-dom";
 
 export default function WorkManagement(props: any) {
+    const history = useHistory()
     const id = props.id
     const descRef = useRef<HTMLTextAreaElement>(null)
     console.log("Id: " + id)
@@ -32,6 +34,7 @@ export default function WorkManagement(props: any) {
                 body: fdata
             }).then(response => {
                 console.log(response)
+                history.push(`/artist/${id}?token=${AuthService.getToken()}`)
             }).catch(err => {
                 console.log("error")
             })
@@ -48,13 +51,8 @@ export default function WorkManagement(props: any) {
 
     if (id == AuthService.getId()) {
         return (
-            <div className={"work-panel"}>
+            <div className={"uploadwork"}>
                 <WorkList id={id}/>
-                <button className="btn btn-primary" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-                    Add Work to Portfolio
-                </button>
-
                 <div className="offcanvas offcanvas-bottom" tabIndex={4} id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
                     <div className="offcanvas-header">
                         <h5 className="offcanvas-title" id="offcanvasBottomLabel">Add Work</h5>
@@ -62,14 +60,18 @@ export default function WorkManagement(props: any) {
                     </div>
                     <div className="offcanvas-body small">
                         <div className="mb-3">
-                            <label htmlFor="formFile" className="form-label">Default file input example</label>
                             <input className="form-control" type="file" onChange={handleFileSubmited} id="formFile"/>
                             <textarea ref={descRef} className={"textarea"} placeholder={"Write the description of the work"}/>
                         </div>
                         <button type="button" className={"btn btn-primary"} onClick={handleSubmit}>Submit</button>
                     </div>
                 </div>
+            <button className="btn btn-primary" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                    Add Work to Portfolio
+            </button>
             </div>
+
         )
     } else {
         console.log("Not Owner")

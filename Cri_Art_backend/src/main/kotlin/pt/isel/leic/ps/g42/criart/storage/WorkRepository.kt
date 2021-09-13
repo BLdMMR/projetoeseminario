@@ -26,9 +26,9 @@ class WorkRepository (private val es_repository : IWorkRepository){
         return es_repository.findAll().filter { it.owner.equals(aid) }
     }
 
-    fun addComment(work_id: UUID, comment: String, id: UUID): WorkSaveModel {
+    fun addComment(work_id: UUID, comment: String, username: String, id: UUID): WorkSaveModel {
         var work = es_repository.findById(work_id).get()
-        work.comments = work.comments?.plus(Comment(comment, id, work_id))
+        work.comments = work.comments?.plus(Comment(comment, id, username, work_id))
         es_repository.deleteById(work_id)
         es_repository.save(work)
         return work

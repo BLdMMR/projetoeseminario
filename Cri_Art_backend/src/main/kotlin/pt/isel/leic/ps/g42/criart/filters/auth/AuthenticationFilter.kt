@@ -29,7 +29,8 @@ class AuthenticationFilter(private val authService: AuthService) : OncePerReques
         }
 
         val user = this.authService.getLoggedInUser(token)
-
+        println("User: ")
+        println(user)
         if (user?.enabled == true) {
             request.setAttribute("user", user)
             chain.doFilter(request, response)

@@ -23,14 +23,26 @@ function Login(props: any) {
     }
 
     AuthService.login(email!!, password!!)
-      .then(async () => {
+      .then(async res => {
           console.log(AuthService.getToken())
           if (AuthService.getToken()) {
+              console.log("Has Token")
               const hasProfile = await AuthService.hasProfile()
-              if (AuthService.getType() == "ARTIST" && !hasProfile) {
-                  console.log("Artist DOES NOT HAVE PROFILE!!!!!")
-                  history.push(`create-profile?token=${AuthService.getToken()}`)
-              } else history.push(`home?token=${AuthService.getToken()}`)
+              console.log(AuthService.getConfirmed())
+              if (!AuthService.getConfirmed()) {
+                  console.log("Not Confirmed")
+                  setLoginError('Account needs confirmation')
+              }
+              else {
+                  console.log("It's confirmed")
+                  if (AuthService.getType() == "ARTIST" && !hasProfile) {
+                      console.log("Artist DOES NOT HAVE PROFILE!!!!!")
+                      history.push(`create-profile?token=${AuthService.getToken()}`)
+                  } else {
+                      console.log("Artist HAS PROFILE!!!!!")
+                      history.push(`home?token=${AuthService.getToken()}`)
+                  }
+              }
           } else {
               setLoginError('Login failed!')
           }

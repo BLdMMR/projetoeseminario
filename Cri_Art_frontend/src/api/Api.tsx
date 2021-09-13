@@ -57,4 +57,16 @@ export class Api {
         }
       })
   }
+
+  static async getUserName(user_id: string) {
+    return await Api.fetchFromAPI(
+        HTTP_METHOD.GET,
+        `/public/user-name?userId=${user_id}`,
+        null
+    ).then(userName => {
+      return userName
+    }).catch(err => {
+      return null
+    })
+  }
 }

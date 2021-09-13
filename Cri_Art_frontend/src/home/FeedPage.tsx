@@ -11,8 +11,7 @@ function FeedPage(props: any) {
     if (!feed) {
         Api.fetchFromAPI(
             HTTP_METHOD.GET,
-            `/feed?token=${AuthService.getToken()}`,
-            new Headers()
+            `/feed?token=${AuthService.getToken()}`
         ).then((resFeed) => {
             setFeed(resFeed)
 
@@ -29,9 +28,8 @@ function FeedPage(props: any) {
                     <div className="card-body">
                         <h5 className="card-title">{work.artist_name}</h5>
                         <p className="card-text">{work.work.description}</p>
-                        <button type={"button"} className="btn btn-primary" onClick={() => {
-                            history.push(`artist/${work.artist_id}`)
-                        }}>Go to artist profile</button>
+
+                        <button type={"button"} className={"btn btn-primary"} onClick={() => history.push(`/artist/${work.artist_id}`)}>Go To Profile</button>
                     </div>
             </div>
         )

@@ -21,11 +21,14 @@ export class AuthService {
       return AuthService.user?.id
   }
 
+  public static getConfirmed() : boolean | undefined {
+      return AuthService.user?.enabled
+  }
+
   public static async hasProfile(): Promise<boolean> {
       return await Api.fetchFromAPI(
           HTTP_METHOD.GET,
-          `/auth/profile-info?token=${AuthService.getToken()}`,
-          new Headers()
+          `/auth/profile-info?token=${AuthService.getToken()}`
       ).then(result => {
           console.log(result)
           return result.hasProfile
@@ -45,7 +48,11 @@ export class AuthService {
         AuthService.user = loginResponse
         console.log("USER: ")
         console.log(AuthService.user)
-        return loginResponse.type
+        if (loginResponse.enabled){
+            return loginResponse.type
+        } else {
+            return "User Not Confirmed"
+        }
 
     }).catch(err => {
         console.log("Error Occured")

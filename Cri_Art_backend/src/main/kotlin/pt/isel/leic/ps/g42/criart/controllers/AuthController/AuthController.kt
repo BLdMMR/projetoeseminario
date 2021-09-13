@@ -58,6 +58,8 @@ class AuthController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     fun signup(@RequestBody signupRequest: SignupRequest): ResponseEntity<Any> {
+        println("signupRequest")
+        println(signupRequest.username)
         this.authService.signupUser(signupRequest.username, signupRequest.email, signupRequest.password, signupRequest.type)
         return ResponseEntity.ok(HttpStatus.OK)
     }
@@ -82,5 +84,7 @@ class AuthController(
         val hasProfile = authService.hasProfile(UUID.fromString(token))
         return ResponseEntity.ok(HasProfile(hasProfile!!))
     }
+
+
 
 }

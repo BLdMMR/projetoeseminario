@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import SimpleReactLightbox from 'simple-react-lightbox';
 
 ReactDOM.render(
   <React.StrictMode>
+    <SimpleReactLightbox>
     <App />
-  </React.StrictMode>,
+    </SimpleReactLightbox>
+    </React.StrictMode>,
   document.getElementById('root')
 );
 
