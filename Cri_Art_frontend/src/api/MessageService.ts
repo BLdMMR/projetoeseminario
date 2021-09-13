@@ -18,7 +18,7 @@ export class MessageService {
 
     public static initialize() {
 
-        if (this.websocket?.readyState !== WebSocket.CLOSED) {
+        if ((this.websocket == null || this.websocket.readyState === WebSocket.CLOSED) && AuthService.getToken()) {
             this.websocket = new WebSocket(this.WEBSOCKET_ADDRESS + "?token=" + AuthService.getToken())
             console.log("Opened websocket with token: " + AuthService.getToken())
             this.websocket.onopen = () => {
@@ -46,7 +46,10 @@ export class MessageService {
     }
 
     public static sendMessage(message: string) {
-        if (this.isInitialized) {
+        if (!message) {
+            console.log("Empty message!")
+            return
+        } else if (this.isInitialized) {
             console.log("Sending message: " + message)
             this.websocket.send(message)
         } else {

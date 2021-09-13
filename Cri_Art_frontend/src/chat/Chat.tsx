@@ -7,21 +7,22 @@ import {Subscription} from "rxjs";
 
 export default function Chat(props: any) {
     const [open, setOpen] = useState(false)
-    const [newMessage, setNewMessage] = useState<string>("")
-    const [messages, setMessages] = useState<Array<string>>(["1", "two", "three"])
+    const [messages, setMessages] = useState<Array<string>>([])
     const [typedMessage, setTypedMessage] = useState<string>("")
-    const [messageSub, setMessageSub] = useState<Subscription>()
 
     useEffect( () => {
         const sub = MessageService.getMessageStream().subscribe(message => {
-            setNewMessage(message)
-            const newArray = messages.slice()
-            newArray.push(newMessage)
-            console.log("Messages: ", newArray)
-            setMessages(newArray)
+            console.log("New message: " + message)
+
+            if (message) {
+                messages.push(message)
+                const newArray = messages.slice()
+                setMessages(newArray)
+            }
         })
-        setMessageSub(sub)
         MessageService.initialize()
+
+        return () => sub.unsubscribe()
     }, [])
 
     if (!AuthService.getToken()) {
@@ -47,17 +48,20 @@ export default function Chat(props: any) {
         </div>
         <div className={"chat-message-list-section"}>
             {
-                messages.map((message, idx) => <div className={"chat-message"} key={idx}>{message}</div>)
+                messages.map((message, idx) => <div className={"chat-message"} key={message + idx}>{message}</div>)
             }
         </div>
         <div className={"chat-input-section"}>
             <div className="input-group mb-3">
                 <input type="text" className="form-control" placeholder="Type message"
-                       aria-label="Recipient's username" aria-describedby="basic-addon2"
+                    value={typedMessage}
                     onChange={(e) => setTypedMessage(e.target.value)}/>
                 <div className="input-group-append">
                     <button className="btn btn-outline-secondary" type="button"
-                        onClick={() => MessageService.sendMessage(typedMessage)}>Send</button>
+                        onClick={() => {
+                            MessageService.sendMessage(typedMessage)
+                            setTypedMessage("")
+                        }}>Send</button>
                 </div>
             </div>
         </div>
