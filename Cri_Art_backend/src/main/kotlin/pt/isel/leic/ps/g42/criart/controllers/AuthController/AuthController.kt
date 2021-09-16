@@ -12,7 +12,7 @@ import java.util.*
 import java.util.logging.Logger
 import org.springframework.http.ResponseEntity as ResponseEntity
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/auth")
 class AuthController(
