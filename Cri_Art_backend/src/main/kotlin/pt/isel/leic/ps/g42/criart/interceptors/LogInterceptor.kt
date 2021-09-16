@@ -21,7 +21,6 @@ class LogInterceptor : HandlerInterceptor {
     override fun postHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any, modelAndView: ModelAndView?) {
         log.info("[RESPONSE] Status: ${response.status} to the [REQUEST] ${request.method} ${request.requestURL}")
         log.info("[RESPONSE] Headers: ${response.headerNames}")
-        response.addHeader("Access-Control-Allow-Origin", "*")
     }
 }
 
