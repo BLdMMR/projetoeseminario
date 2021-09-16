@@ -1,4 +1,5 @@
-import {Api, HTTP_METHOD} from '../api/Api'
+import {Api, HTTP_METHOD} from './Api'
+import {MessageService} from "./MessageService";
 
 
 export class AuthService {
@@ -48,11 +49,9 @@ export class AuthService {
         AuthService.user = loginResponse
         console.log("USER: ")
         console.log(AuthService.user)
-        if (loginResponse.enabled){
-            return loginResponse.type
-        } else {
-            return "User Not Confirmed"
-        }
+
+        MessageService.initialize()
+        return loginResponse.type
 
     }).catch(err => {
         console.log("Error Occured")
@@ -65,7 +64,10 @@ export class AuthService {
       return Api.fetchFromAPI(
           HTTP_METHOD.DELETE,
           `/auth/logout?token=${AuthService.getToken()}`
-      )
+      ).then((res) => {
+          MessageService.finalize()
+          return Promise.resolve(res)
+      })
   }
 
   public static signup(username: string, email: string, password: string, type: string): Promise<any> {
