@@ -12,15 +12,18 @@ function SearchPage(props: any) {
     const [done, setDone] = useState<Boolean>(true)
     const searchParams = useLocation().search
     const name = new URLSearchParams(searchParams).get('nameToSearchBy');
+    const tag = new URLSearchParams(searchParams).get('tagToSearchBy')
     console.log(`Token: ${AuthService.getToken()}`)
 
     useEffect(() => {
         if (done) {
             setDone(false)
+            const path = name == null?
+                `/public/home/tags?tagToSearchBy=${tag}&token=${AuthService.getToken()}`:
+                `/public/home/search?nameToSearchBy=${name}&token=${AuthService.getToken()}`
             Api?.fetchFromAPI(
                 HTTP_METHOD.GET,
-                `/public/home/search?nameToSearchBy=${name}&token=${AuthService.getToken()}`
-
+                path
                 ).then(data => {
                     console.log(`Data fetched: ${data}`)
                     setContent(data)

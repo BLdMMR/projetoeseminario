@@ -25,6 +25,7 @@ class HomeController (private val service: HomeService, private val userService:
 
     @GetMapping("public/home/tags")
     fun searchByTag(@RequestParam tagToSearchBy: String): HomeService.Searchlist {
+        println(tagToSearchBy)
         val tag = tagToSearchBy.replace('-', ' ')
         return service.searchByTag(Tag(tag))
     }

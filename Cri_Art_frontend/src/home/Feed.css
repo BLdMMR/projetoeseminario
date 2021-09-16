@@ -25,8 +25,13 @@
 
 .card {
     position: relative;
-    margin: auto;
+    /*margin: auto;*/
     height: auto;
-    width: 75vw;
+    width: 50vw;
     margin-bottom: 50px;
+
+}
+
+#post-card{
+    transform: translateX(25%);
 }

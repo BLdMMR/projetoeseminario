@@ -25,6 +25,10 @@
   z-index: 3;
 }
 
+.dropdown-menu {
+  columns: 2;
+}
+
 #login_button {
 }
 

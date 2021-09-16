@@ -48,12 +48,18 @@ export default function ArtistProfile(props: any) {
         console.log("User wants to follow this artist")
     }
 
+    const followCheckbox = AuthService.getToken() ?
+        <span><input type={"checkbox"} className={"btn-check"} id={"btn-check-follow"} onClick={handleFollow}/>
+    <label className="btn btn-outline-primary" htmlFor={"btn-check-follow"} onClick={()=>{setFollow(follow === "Follow" ? "Following" : "Follow")}} defaultChecked={follow != "Follow"}>{follow}</label></span> :
+        <h6>Log in to follow</h6>
+
     if (data) {
         return id !== AuthService.getId() ? (
             <div className="artist-profile">
                 <div className={"artist-details"}>
-                    <input type={"checkbox"} className={"btn-check"} id={"btn-check-follow"} onClick={handleFollow}/>
-                    <label className="btn btn-outline-primary" htmlFor={"btn-check-follow"} onClick={()=>{setFollow(follow === "Follow" ? "Following" : "Follow")}} defaultChecked={follow != "Follow"}>{follow}</label>
+                    {followCheckbox}
+                    {/*<input type={"checkbox"} className={"btn-check"} id={"btn-check-follow"} onClick={handleFollow}/>*/}
+                    {/*<label className="btn btn-outline-primary" htmlFor={"btn-check-follow"} onClick={()=>{setFollow(follow === "Follow" ? "Following" : "Follow")}} defaultChecked={follow != "Follow"}>{follow}</label>*/}
                     <div>
                         {data.tags.map((tag) => {
                             return <button className={"btn btn-outline-primary"}>{tag}</button>

@@ -37,7 +37,7 @@ class HomeService (private val artistRepository: ArtistRepository, private val w
         val list :LinkedList<FeedPost> = LinkedList()
         for(id :UUID in listOfFollows){
             val currArtist = artistRepository.getArtistById(id)
-            for(work: WorkSaveModel in workRepository.getAllWorks(id)){
+            for(work: WorkSaveModel in workRepository.getWorksFromLastWeek(id)){
                 list.add(work.toWorkPost(currArtist!!.artist_id, currArtist.username))
             }
         }

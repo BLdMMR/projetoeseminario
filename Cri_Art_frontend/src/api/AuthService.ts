@@ -49,13 +49,11 @@ export class AuthService {
         AuthService.user = loginResponse
         console.log("USER: ")
         console.log(AuthService.user)
-
         MessageService.initialize()
         return loginResponse.type
 
     }).catch(err => {
-        console.log("Error Occured")
-        console.log(err)
+        console.log("Error Occurred", err)
     })
 
   }

@@ -23,7 +23,7 @@ function FeedPage(props: any) {
     function renderFeed(work: Pub) : JSX.Element{
         console.log("Printing " + work.work.work_name)
         return (
-            <div className="card">
+            <div className="card" id={'post-card'}>
                 <img src={`data:image/${work.work.fileExtension};base64,` + work.work.content} className="card-img-top" alt="..."/>
                     <div className="card-body">
                         <h5 className="card-title">{work.artist_name}</h5>

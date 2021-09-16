@@ -26,7 +26,7 @@ class ArtistRepository (private val es_repository : IArtistRepository){
     }
 
     fun getAllArtistsByTag(tag :Tag): List<Artist> {
-        return es_repository.findAll().toList().filter { it.tags.contains(tag) }
+        return es_repository.findAll().toList().filter { it.tags.contains(tag.tag_name) }
     }
 
     //DEBUG TO SEE WHAT'S IN REPO
@@ -62,7 +62,8 @@ class ArtistRepository (private val es_repository : IArtistRepository){
 
     fun searchArtist(nameToSearchBy: String): List<Artist> {
         val all = es_repository.findAll()
-        val filtered = all.filter { it.username == nameToSearchBy || it.username.contains(nameToSearchBy) || it.description.contains(nameToSearchBy) }
+        val filtered = all.filter { it.username == nameToSearchBy || it.username.toLowerCase().contains(nameToSearchBy.toLowerCase()) || it.description.contains(nameToSearchBy) }
+        println(filtered)
         return filtered
     }
 

@@ -7,6 +7,7 @@ import pt.isel.leic.ps.g42.criart.models.Tag
 import pt.isel.leic.ps.g42.criart.models.Work
 import pt.isel.leic.ps.g42.criart.models.WorkSaveModel
 import pt.isel.leic.ps.g42.criart.storage.irepositories.IWorkRepository
+import java.sql.Timestamp
 import java.util.*
 
 
@@ -24,6 +25,10 @@ class WorkRepository (private val es_repository : IWorkRepository){
 
     fun getAllWorks(aid: UUID): List<WorkSaveModel> {
         return es_repository.findAll().filter { it.owner.equals(aid) }
+    }
+
+    fun getWorksFromLastWeek(aid: UUID): List<WorkSaveModel> {
+        return getAllWorks(aid).filter {  System.currentTimeMillis() - 604800000 < it.timestamp }
     }
 
     fun addComment(work_id: UUID, comment: String, username: String, id: UUID): WorkSaveModel {
