@@ -13,7 +13,7 @@ import kotlin.reflect.full.memberProperties
 
 //@CrossOrigin(origins = ["http://localhost:3000"])
 //@CrossOrigin("https://cri-art.herokuapp.com")
-@CrossOrigin(origins = ["http://localhost:3000", "https://cri-art.herokuapp.com"])
+@CrossOrigin
 @RestController
 class HomeController (private val service: HomeService, private val userService: UserService){
 
