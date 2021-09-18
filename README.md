@@ -9,4 +9,7 @@
 ---
 
 ## Installation
-> For detailed instructions on how to install the **Cri Art** application please check the [INSTALL.md](INSTALL.md) file
+> For detailed instructions on how to install the **Cri Art** application please check the following *INSTALL* files:
+> * For the backend: [INSTALL.md](INSTALL.md)
+> * For the frontend: [INSTALL.md](INSTALL.md)
+---
