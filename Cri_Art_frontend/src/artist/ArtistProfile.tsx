@@ -57,16 +57,14 @@ export default function ArtistProfile(props: any) {
         return id !== AuthService.getId() ? (
             <div className="artist-profile">
                 <div className={"artist-details"}>
+                    <h2>{data.username}</h2>
+                    <p className={'artist-description'}>{data.description}</p>
                     {followCheckbox}
-                    {/*<input type={"checkbox"} className={"btn-check"} id={"btn-check-follow"} onClick={handleFollow}/>*/}
-                    {/*<label className="btn btn-outline-primary" htmlFor={"btn-check-follow"} onClick={()=>{setFollow(follow === "Follow" ? "Following" : "Follow")}} defaultChecked={follow != "Follow"}>{follow}</label>*/}
                     <div>
                         {data.tags.map((tag) => {
                             return <button className={"btn btn-outline-primary"}>{tag}</button>
                         })}
                     </div>
-                    <h2>{data.username}</h2>
-                    <p>{data.description}</p>
                 </div>
                 <div className={"artist-portfolio"}>
                     <WorkManagement id={id}/>
@@ -77,8 +75,6 @@ export default function ArtistProfile(props: any) {
                 <div className={"artist-details"}>
                     <h2>{data.username}</h2>
                     <p className={"artist-description"}>{data.description}</p>
-
-                    <h4>Tags:</h4>
                     <div>
                         {data.tags.map((tag) => {
                             return <button className={"btn btn-outline-primary artist-tag"}>{tag}</button>

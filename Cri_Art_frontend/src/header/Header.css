@@ -2,11 +2,10 @@
   position: fixed;
   background-color: #ffb164;
   display: flex;
-  justify-content: space-between;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   justify-items: center;
-  align-content: center;
   width: 100vw;
   height: 10vh;
   z-index: 3;
@@ -16,8 +15,8 @@
   position: fixed;
   background-color: #ffb164;
   display: flex;
-  justify-content: space-between;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   justify-items: center;
   width: 100vw;
@@ -26,13 +25,16 @@
 }
 
 .dropdown-menu {
-  columns: 2;
+  margin: 8px;
 }
 
-#login_button {
+#tag-dropdown {
+  margin-left: 8px;
+
 }
 
-#logo {
+#ddoptions{
+  columns: 3;
 }
 
 .App {
@@ -42,14 +44,17 @@
 .logo-section {
   margin-left: 25px;
 }
-
-.logo-section-unauthenticated {
+.logo-section:hover{
+  background-color: #ffb164;
 }
 
 .search-section {
   display: flex;
-  min-width: 25vw;
-  margin-left: -50px;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  width: 33vw;
+  height: 8vh;
 }
 
 #header_search_button {
@@ -57,6 +62,11 @@
   border-color: #4686f2;
   margin-left: 8px;
 
+}
+
+.search-btns {
+  width: 100px;
+  height: auto;
 }
 
 .auth-section {
@@ -71,10 +81,6 @@
 .auth-button {
   margin-right: 20px;
   cursor: pointer;
-}
-
-#search_bar {
-  width: 25vw;
 }
 
 /* .behind-header {

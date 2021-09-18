@@ -73,12 +73,12 @@ export default function Header(props: any) {
           <div className={'search-section'}>
             <input type="text" className="form-control" id="header-search-bar" ref={searchRef} />
             <button type="button" id='header_search_button' className="btn btn-primary" onClick={HandleSearch}>Search</button>
-              <div className="btn-group">
+              <div className="btn-group" id={'search-btns'}>
                   <button type="button" className="btn btn-primary" data-bs-toggle="dropdown"
-                          aria-expanded="false">
-                      Search by tag
+                          aria-expanded="false" id={"tag-dropdown"}>
+                      Tags
                   </button>
-                  <ul className="dropdown-menu">
+                  <ul className="dropdown-menu" id={"ddoptions"}>
                       {tags.map(renderTag)}
                   </ul>
               </div>
@@ -88,6 +88,7 @@ export default function Header(props: any) {
                 <button type="button" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     Options
                 </button>
+
                 <ul className="dropdown-menu">
                     <li>
                         <button type="button" id='profile' className="dropdown-item" onClick={handleProfile}>{AuthService.getType()=="ARTIST"?"My Profile":"Settings"}</button>

@@ -1,13 +1,13 @@
 .search-results {
+    /*margin-top: 5vh;*/
     display: inline-flex;
+    flex-direction: column;
     width: 250px;
     position: relative;
     top: 15vh;
     left: 50vw;
-    transform: translateX(-50%);
 }
 
-.card {
-    height: 15vh;
-    transform: translateY(50%);
+#search-card {
+    transform: translateX(-50%);
 }

@@ -3,7 +3,7 @@ import {useHistory, useLocation} from 'react-router-dom'
 import React, {useEffect, useState} from 'react'
 import {Api, HTTP_METHOD} from "../api/Api";
 import {AuthService} from "../api/AuthService";
-//import './SearchPage.css'
+import './SearchPage.css'
 
 
 function SearchPage(props: any) {
@@ -42,7 +42,7 @@ function SearchPage(props: any) {
         const href = `/artist/${artist.id}`
         console.log(artist)
         return(
-            <div className="card">
+            <div className="card" id={"search-card"}>
                 <div className="card-header">
                     <h5 className="card-title">{artist.username}</h5>
                 </div>
