@@ -73,7 +73,7 @@ export default function Header(props: any) {
           <div className={'search-section'}>
             <input type="text" className="form-control" id="header-search-bar" ref={searchRef} />
             <button type="button" id='header_search_button' className="btn btn-primary" onClick={HandleSearch}>Search</button>
-              <div className="btn-group" id={'search-btns'}>
+              {/*<div className="btn-group" id={'search-btns'}>*/}
                   <button type="button" className="btn btn-primary" data-bs-toggle="dropdown"
                           aria-expanded="false" id={"tag-dropdown"}>
                       Tags
@@ -81,34 +81,23 @@ export default function Header(props: any) {
                   <ul className="dropdown-menu" id={"ddoptions"}>
                       {tags.map(renderTag)}
                   </ul>
-              </div>
+              {/*</div>*/}
           </div>
-        <div className={"auth-section"}>
-            <div className="btn-group">
+            <nav className="btn-group" id={"options-menu"}>
                 <button type="button" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     Options
                 </button>
 
-                <ul className="dropdown-menu">
+                <ul className="dropdown-menu" id={"dpdnmenu"}>
                     <li>
                         <button type="button" id='profile' className="dropdown-item" onClick={handleProfile}>{AuthService.getType()=="ARTIST"?"My Profile":"Settings"}</button>
-                    </li>
-                    <li>
-                        <button type="button" className="dropdown-item" onClick={handleProfile}>Messages</button>
                     </li>
                     <li><hr className="dropdown-divider"/></li>
                     <li>
                         <button type="button" className="dropdown-item" onClick={handleLogout}>Logout</button>
                     </li>
                 </ul>
-            </div>
-        {/*  <div className={'auth-section'}>*/}
-        {/*      <button type="button" id='profile' className="btn btn-outline-primary" onClick={handleProfile}>{AuthService.getType()=="ARTIST"?"My Profile":"Settings"}</button>*/}
-        {/*  </div>*/}
-        {/*  <div className={'auth-section'}>*/}
-        {/*      <button type="button" id='login-btn' className="btn btn-outline-primary" onClick={handleLogout}>Logout</button>*/}
-        {/*</div>*/}
-        </div>
+            </nav>
         </nav>
         <div className={'behind-header'}>
         </div>

@@ -37,6 +37,7 @@ function FeedPage(props: any) {
 
     return feed ? (
         <div className={'feed'}>
+
             {feed!.map(renderFeed)}
         </div>
     ) : (

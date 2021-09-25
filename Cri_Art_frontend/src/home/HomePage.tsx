@@ -30,11 +30,21 @@ function HomePage(props: any) {
 
   return AuthService.getToken()? (
       <div>
+          <div className="sidenav">
+            <button type="button" className="dropdown-item" onClick={() => history.push("/about")}>About</button>
+            <button type="button" className="dropdown-item" onClick={() => history.push("/about")}>Contact</button>
+
+          </div>
         <FeedPage/>
       </div>
     ) :
     (
         <div>
+            <div className="sidenav">
+                <button type="button" className="dropdown-item" onClick={() => history.push("/about")}>About</button>
+                <button type="button" className="dropdown-item" onClick={() => history.push("/about")}>Contact</button>
+
+            </div>
         <div className={"home-page"} >
         {/*<img id={"backg"} src={bg}/>*/}
           <div className={'search-bar-home'}>

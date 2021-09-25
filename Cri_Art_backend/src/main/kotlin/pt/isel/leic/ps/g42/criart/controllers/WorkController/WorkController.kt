@@ -53,12 +53,12 @@ class WorkController (private val services : WorkServices) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null)
         println(user.username)
         val work = services
-                .addCommentToWork(
-                    UUID.fromString(work_id),
-                    comment,
-                    user.username!!,
-                    user.id!!
-                )
+            .addCommentToWork(
+                UUID.fromString(work_id),
+                comment,
+                user.username!!,
+                user.id!!
+            )
         return ResponseEntity.ok().body(true)
     }
 
@@ -69,5 +69,10 @@ class WorkController (private val services : WorkServices) {
         return ResponseEntity.ok(status)
     }
 
+    @DeleteMapping("/{wid}")
+    fun deleteWork(@PathVariable("wid") work_id: String, @RequestAttribute user: User): ResponseEntity<String> {
+        val msg = services.deleteWork(UUID.fromString(work_id), user.id)
+        return if (msg.equals("Work Removed Successfully")) ResponseEntity.ok().body(msg) else ResponseEntity<String>(HttpStatus.NOT_FOUND)
+    }
 
 }

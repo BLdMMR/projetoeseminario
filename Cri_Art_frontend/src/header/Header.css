@@ -8,7 +8,7 @@
   justify-items: center;
   width: 100vw;
   height: 10vh;
-  z-index: 3;
+  z-index: 300;
 }
 
 .navbar-unauthenticated {
@@ -21,11 +21,11 @@
   justify-items: center;
   width: 100vw;
   height: 10vh;
-  z-index: 3;
+  z-index: 300;
 }
 
 .dropdown-menu {
-  margin: 8px;
+  /*margin: 8px;*/
 }
 
 #tag-dropdown {
@@ -33,8 +33,13 @@
 
 }
 
+#dpdnmenu {
+  /*transform: translateX(-15%)*/
+}
+
 #ddoptions{
   columns: 3;
+  transform: translateX(100%);
 }
 
 .App {
@@ -69,6 +74,17 @@
   height: auto;
 }
 
+#options-menu {
+  display: flex;
+  flex-direction: column;
+  margin-right: 2vw;
+  margin-bottom: 20px;
+  /*align-items: center;*/
+  /*justify-items: center;*/
+  /*justify-items: center;*/
+
+}
+
 .auth-section {
   display: flex;
   flex-direction: row;
@@ -83,10 +99,10 @@
   cursor: pointer;
 }
 
-/* .behind-header {
+.behind-header {
 
-  height: 5vh;
-} */
+  height: 10vh;
+}
 
 #sign-up-btn {
   margin-right: 20px;

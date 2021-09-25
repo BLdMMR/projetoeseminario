@@ -10,6 +10,7 @@ import {SRLWrapper} from "simple-react-lightbox";
 const videoFormats = ['mp4', 'mov', 'wmv']
 
 
+
 export default function WorkPost(props: { work: Work }) {
     const commentRef = useRef<HTMLTextAreaElement>(null)
     const [arrow, setArrow] = useState(arrow_up)
@@ -45,31 +46,31 @@ export default function WorkPost(props: { work: Work }) {
         })
     }
 
-    function handleComment() {
-        const commentContent = commentRef.current!!.value
-        Api.fetchFromAPI(
-            HTTP_METHOD.POST,
-            `/artist/${work.owner}/worksofart/${work.id}?token=${AuthService.getToken()}`,
-            commentContent
-        ).then(success => {
-            if (success) console.log("Success")
-            const commentArray = comments
-            commentArray.push(new Comment(commentContent, AuthService.getId()!!, work.id, AuthService.getUser()?.name!!))
-            setComment(commentArray)
-        }).catch(err => {
-            Error(err)
-        })
-    }
-
-    function renderComments(comment: Comment) {
-        console.log(comment.user_name)
-        return (
-            <div>
-            <h4>{comment.user_name}</h4>
-            <p>{comment.comment}</p>
-            </div>
-        )
-    }
+    // function handleComment() {
+    //     const commentContent = commentRef.current!!.value
+    //     Api.fetchFromAPI(
+    //         HTTP_METHOD.POST,
+    //         `/artist/${work.owner}/worksofart/${work.id}?token=${AuthService.getToken()}`,
+    //         commentContent
+    //     ).then(success => {
+    //         if (success) console.log("Success")
+    //         const commentArray = comments
+    //         commentArray.push(new Comment(commentContent, AuthService.getId()!!, work.id, AuthService.getUser()?.name!!))
+    //         setComment(commentArray)
+    //     }).catch(err => {
+    //         Error(err)
+    //     })
+    // }
+    //
+    // function renderComments(comment: Comment) {
+    //     console.log(comment.user_name)
+    //     return (
+    //         <div>
+    //         <h4>{comment.user_name}</h4>
+    //         <p>{comment.comment}</p>
+    //         </div>
+    //     )
+    // }
 
 
     return isVideo(work!!.fileExtension) ? (
@@ -94,13 +95,11 @@ export default function WorkPost(props: { work: Work }) {
                                 <img src={`data:image/${work.fileExtension};base64,` + work.content} alt={work.work_name}
                                      className={"work-image-modal"}/>
                                 <h3>{work.description}</h3>
+                                {work.owner == AuthService.getId() ?
+                                    <button type="button" className="btn btn-danger">Delete</button> : <></>
+                                }
                             </SRLWrapper>
-                                <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" className="scrollspy-example">
-                                    {comments.length > 0 ? comments.map(renderComments) : <h4>No Comments</h4>}
-
-                                    <textarea className="textarea" ref={commentRef} role="textbox" contentEditable id={'comment-box'} placeholder={"Write Comment Here"}/>
-                                    <button type={'button'} className={'btn btn-primary'} onClick={handleComment}>Comment</button>
-                                </div>
+                            <CommentSection comments={work.comments} owner={work.owner} id={work.id}/>
                         </div>
                     </div>
                 </div>
@@ -123,6 +122,45 @@ export default function WorkPost(props: { work: Work }) {
     )
 
 
+}
+
+export function CommentSection(props: {comments: Comment[], owner: string, id: string}) {
+    const [comments, setComment] = useState<Comment[]>(props.comments)
+    const commentRef = useRef<HTMLTextAreaElement>(null)
+
+
+    function handleComment() {
+        const commentContent = commentRef.current!!.value
+        Api.fetchFromAPI(
+            HTTP_METHOD.POST,
+            `/artist/${props.owner}/worksofart/${props.id}?token=${AuthService.getToken()}`,
+            commentContent
+        ).then(success => {
+            if (success) console.log("Success")
+            setComment((comms) => {comms.push(new Comment(commentContent, AuthService.getId()!!, props.id, AuthService.getUser()?.name!!)); return comms})
+        }).catch(err => {
+            Error(err)
+        })
+    }
+
+    function renderComments(comment: Comment) {
+        console.log(comment.user_name)
+        return (
+            <div>
+                <h4>{comment.user_name}</h4>
+                <p>{comment.comment}</p>
+            </div>
+        )
+    }
+
+    return(
+        <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" className="scrollspy-example">
+            {comments.length > 0 ? comments.map(renderComments) : <h4>No Comments</h4>}
+
+            <textarea className="textarea" ref={commentRef} role="textbox" contentEditable id={'comment-box'} placeholder={"Write Comment Here"}/>
+            <button type={'button'} className={'btn btn-primary'} onClick={handleComment}>Comment</button>
+        </div>
+    )
 }
 
 export class Comment {
