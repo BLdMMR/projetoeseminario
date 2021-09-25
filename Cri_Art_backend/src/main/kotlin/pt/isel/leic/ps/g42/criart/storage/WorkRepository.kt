@@ -1,6 +1,8 @@
 package pt.isel.leic.ps.g42.criart.storage
 
 import org.slf4j.LoggerFactory
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
 import pt.isel.leic.ps.g42.criart.models.Comment
 import pt.isel.leic.ps.g42.criart.models.Tag
@@ -9,6 +11,7 @@ import pt.isel.leic.ps.g42.criart.models.WorkSaveModel
 import pt.isel.leic.ps.g42.criart.storage.irepositories.IWorkRepository
 import java.sql.Timestamp
 import java.util.*
+import kotlin.NoSuchElementException
 
 
 @Component
@@ -61,6 +64,21 @@ class WorkRepository (private val es_repository : IWorkRepository){
         es_repository.deleteById(workId)
         es_repository.save(work)
         return true
+    }
+
+    fun getWork(workId: UUID): WorkSaveModel? {
+         if (es_repository.findById(workId).isEmpty) {
+             return null
+         }
+         return es_repository.findById(workId).get()
+    }
+
+    fun deleteWork(workId: UUID): Boolean {
+        es_repository.deleteById(workId)
+        if (getWork(workId) != null) {
+            return true
+        }
+        return false
     }
 
 }

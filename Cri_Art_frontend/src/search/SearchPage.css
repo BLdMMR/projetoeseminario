@@ -1,13 +1,33 @@
 .search-results {
-    /*margin-top: 5vh;*/
+    margin-top: 5vh;
     display: inline-flex;
     flex-direction: column;
     width: 250px;
     position: relative;
-    top: 15vh;
+    /*top: 15vh;*/
     left: 50vw;
+}
+
+.search-results h3 {
+    transform: translateX(-220%);
+    margin-bottom: 20px;
 }
 
 #search-card {
     transform: translateX(-50%);
 }
+
+.re-search {
+    margin-top: 20px;
+    margin-left: 25vw;
+    width: 50vw;
+    display: flex;
+
+    align-content: center;
+    justify-content: center;
+
+}
+
+/*.sr-title {*/
+/*    margin: 10vh;*/
+/*}*/

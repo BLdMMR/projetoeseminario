@@ -1,6 +1,6 @@
 import {Artist, SearchResult} from './SearchResult'
 import {useHistory, useLocation} from 'react-router-dom'
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {Api, HTTP_METHOD} from "../api/Api";
 import {AuthService} from "../api/AuthService";
 import './SearchPage.css'
@@ -13,14 +13,17 @@ function SearchPage(props: any) {
     const searchParams = useLocation().search
     const name = new URLSearchParams(searchParams).get('nameToSearchBy');
     const tag = new URLSearchParams(searchParams).get('tagToSearchBy')
+    const searchPar = name? name : tag
+    const [searchParam, setSearchParam] = useState<string>(searchPar!!)
+    const searchRef = useRef<HTMLInputElement>(null)
     console.log(`Token: ${AuthService.getToken()}`)
 
     useEffect(() => {
         if (done) {
             setDone(false)
             const path = name == null?
-                `/public/home/tags?tagToSearchBy=${tag}&token=${AuthService.getToken()}`:
-                `/public/home/search?nameToSearchBy=${name}&token=${AuthService.getToken()}`
+                `/public/home/tags?tagToSearchBy=${searchParam}&token=${AuthService.getToken()}`:
+                `/public/home/search?nameToSearchBy=${searchParam}&token=${AuthService.getToken()}`
             Api?.fetchFromAPI(
                 HTTP_METHOD.GET,
                 path
@@ -33,7 +36,7 @@ function SearchPage(props: any) {
             console.log(content)
             
         } 
-    }, [content, setContent])
+    }, [content, setContent, searchParam, setSearchParam])
 
 
 
@@ -60,10 +63,12 @@ function SearchPage(props: any) {
 
     return done ? (
         <div>
-            <div>
-                <h3>Search results</h3>
+            <div className={'re-search'}>
+                <input type="text" className="form-control" id="header-search-bar" ref={searchRef} />
+                <button type="button" id='header_search_button' className="btn btn-primary" onClick={() => setSearchParam(searchRef.current!.value)}>Search</button>
             </div>
             <div className={"search-results"}>
+                <h3>Search results:</h3>
                 {content.artistList?.map(renderArtists)}
             </div>
         </div>

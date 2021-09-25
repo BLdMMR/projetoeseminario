@@ -24,4 +24,11 @@ class WorkServices (private val repository : WorkRepository){
     fun upvoteAndDownvote(work_id: UUID?, id: UUID): Boolean {
         return repository.upvoteAndDownvote(work_id!!, id)
     }
+
+    fun deleteWork(work_id: UUID?, user_id: UUID?): String{
+        if (repository.getWork(work_id!!)?.owner != user_id) {
+            return "User is not the owner of this resource"
+        }
+        return if(repository.deleteWork(work_id)) "Work Removed Successfully" else "Unable to remove work"
+    }
 }

@@ -1,6 +1,33 @@
 .App {
   text-align: center;
+  background: url("home/background.svg");
+  background-size: cover;
 }
+.sidenav {
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  background-color: #ffdab6;
+  overflow-x: hidden;
+  padding-top: 10vh;
+}
+
+.sidenav button {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-family: "Calibri";
+  font-size: 25px;
+  color: #000000;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #4686f2;
+}
+
 
 .debug-authservices {
   display: flex;
