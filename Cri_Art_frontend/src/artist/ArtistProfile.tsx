@@ -61,8 +61,8 @@ export default function ArtistProfile(props: any) {
                     <p className={'artist-description'}>{data.description}</p>
                     {followCheckbox}
                     <div>
-                        {data.tags.map((tag) => {
-                            return <button className={"btn btn-outline-primary"}>{tag}</button>
+                        {data.tags.map((tag, idx) => {
+                            return <button key={tag + idx} className={"btn btn-outline-primary"}>{tag}</button>
                         })}
                     </div>
                 </div>
@@ -76,8 +76,8 @@ export default function ArtistProfile(props: any) {
                     <h2>{data.username}</h2>
                     <p className={"artist-description"}>{data.description}</p>
                     <div>
-                        {data.tags.map((tag) => {
-                            return <button className={"btn btn-outline-primary artist-tag"}>{tag}</button>
+                        {data.tags.map((tag, idx) => {
+                            return <button key={tag + idx} className={"btn btn-outline-primary artist-tag"}>{tag}</button>
                         })}
                     </div>
                 </div>
