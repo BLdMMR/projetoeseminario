@@ -25,7 +25,7 @@ server {
       #add_header 'Access-Control-Max-Age' 86400;
       #add_header 'Content-Type' 'text/plain charset=UTF-8';
       #add_header 'Content-Length' 0;
-      return 204;
+      #return 204;
     #}
 
 	proxy_pass $BACKEND_ADDRESS;
