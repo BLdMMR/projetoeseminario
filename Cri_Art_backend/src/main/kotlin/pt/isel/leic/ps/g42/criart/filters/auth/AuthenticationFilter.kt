@@ -52,6 +52,7 @@ class AuthenticationFilter(private val authService: AuthService) : OncePerReques
 
     override fun shouldNotFilter(request: HttpServletRequest): Boolean {
         val result = request.requestURI.contains(this.filterExclusionUriMatcher)
+                || request.method.equals(HttpMethod.OPTIONS.name)
                 || (request.requestURI.contains("/artist/")
                     && request.method.equals(HttpMethod.GET.name))
         return result

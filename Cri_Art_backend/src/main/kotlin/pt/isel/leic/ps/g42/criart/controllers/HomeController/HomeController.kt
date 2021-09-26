@@ -11,9 +11,7 @@ import pt.isel.leic.ps.g42.criart.services.UserService
 import java.util.*
 import kotlin.reflect.full.memberProperties
 
-//@CrossOrigin(origins = ["http://localhost:3000"])
-//@CrossOrigin("https://cri-art.herokuapp.com")
-@CrossOrigin
+
 @RestController
 class HomeController (private val service: HomeService, private val userService: UserService){
 

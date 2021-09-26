@@ -13,7 +13,6 @@ import pt.isel.leic.ps.g42.criart.services.UserService
 import java.util.*
 import java.util.logging.Logger
 
-@CrossOrigin
 @RestController
 @RequestMapping("/artist")
 class ArtistController (private val services : ArtistServices, private val userService: UserService) {
@@ -59,6 +58,4 @@ class ArtistController (private val services : ArtistServices, private val userS
         log.info("Trying to follow artist")
         userService.followArtist(user, UUID.fromString(artist_id))
     }
-
-    
 }
