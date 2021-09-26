@@ -54,9 +54,9 @@ export default function Header(props: any) {
         }
     }
 
-    function renderTag(tag: string) {
+    function renderTag(tag: string, idx: number) {
       return (
-          <li><button className="dropdown-item" onClick={() => {history.push(`/search?tagToSearchBy=${tag}`)}}>{tag}</button></li>
+          <li key={tag + idx}><button className="dropdown-item" onClick={() => {history.push(`/search?tagToSearchBy=${tag}`)}}>{tag}</button></li>
 
       )
     }
