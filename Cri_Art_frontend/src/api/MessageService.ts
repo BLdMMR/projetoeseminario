@@ -6,9 +6,9 @@ import {Observable, Subject} from "rxjs";
 
 export class MessageService {
 
-    //private static readonly WEBSOCKET_ADDRESS = "wss://cri-art.herokuapp.com/api/echo"
+    private static readonly WEBSOCKET_ADDRESS = "wss://cri-art.herokuapp.com/api/echo"
 
-    private static readonly WEBSOCKET_ADDRESS = "ws://localhost:8080/api/echo"
+    //private static readonly WEBSOCKET_ADDRESS = "ws://localhost:8080/api/echo"
 
     private static websocket: WebSocket
     private static isInitialized: boolean
