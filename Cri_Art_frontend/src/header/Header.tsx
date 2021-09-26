@@ -19,6 +19,8 @@ export default function Header(props: any) {
               if (tags) {
                   setTags(tags)
               }
+          }).catch(err => {
+            console.log(err)
           })
       }
   }, [tags, setTags])
