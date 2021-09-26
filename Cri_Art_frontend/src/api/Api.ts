@@ -19,14 +19,13 @@ export class Api {
 
     const headers = {
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': 'Origin,X-Requested-With,Content-Type,Accept'
+      'Access-Control-Allow-Origin': '*'
+      //'Access-Control-Allow-Headers': 'Origin,X-Requested-With,Content-Type,Accept'
     }
 
     const request = {
       method: method,
-      headers: headers,
-      mode: 'cors'
+      headers: headers
     } as any
 
     if(method !== HTTP_METHOD.GET && method !== HTTP_METHOD.HEAD) {

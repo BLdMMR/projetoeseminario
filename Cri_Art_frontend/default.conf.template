@@ -17,7 +17,7 @@ server {
   }
 
   location /api {
-    add_header 'Access-Control-Allow-Origin' '*' always;
+    add_header Access-Control-Allow-Origin *;
 
 	proxy_pass $BACKEND_ADDRESS;
 	proxy_http_version 1.1;
