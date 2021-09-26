@@ -24,7 +24,8 @@ export class Api {
     const request = {
       method: method,
       headers: headers,
-      mode: 'cors'
+      mode: 'cors',
+      credentials: 'omit'
     } as any
 
     if(method !== HTTP_METHOD.GET && method !== HTTP_METHOD.HEAD) {
