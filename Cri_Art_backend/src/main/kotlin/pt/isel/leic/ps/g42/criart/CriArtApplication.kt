@@ -2,7 +2,6 @@ package pt.isel.leic.ps.g42.criart
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 
 
 @SpringBootApplication
