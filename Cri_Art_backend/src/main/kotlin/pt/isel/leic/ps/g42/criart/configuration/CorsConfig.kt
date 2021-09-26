@@ -5,13 +5,13 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import java.util.*
 
-@Configuration
-class WebConfiguration : WebMvcConfigurer {
-
-    override fun addCorsMappings(registry: CorsRegistry) {
-        registry.addMapping("/**")
-                .allowedMethods("*")
-                .allowedOrigins("*")
-                .allowedHeaders("*")
-    }
-}
+//@Configuration
+//class WebConfiguration : WebMvcConfigurer {
+//
+//    override fun addCorsMappings(registry: CorsRegistry) {
+//        registry.addMapping("/**")
+//                .allowedMethods("*")
+//                .allowedOrigins("*")
+//                .allowedHeaders("*")
+//    }
+//}

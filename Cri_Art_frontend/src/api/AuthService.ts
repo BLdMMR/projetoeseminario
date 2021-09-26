@@ -71,7 +71,7 @@ export class AuthService {
       return loginResponse.type
 
     }).catch(err => {
-      console.log('Error Occurred', err)
+      console.error(err)
     })
 
   }
