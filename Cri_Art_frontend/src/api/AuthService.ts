@@ -1,6 +1,6 @@
 import {Api, HTTP_METHOD} from './Api'
 import {MessageService} from "./MessageService";
-import Cookies, {Cookie} from "universal-cookie";
+import Cookies from "universal-cookie";
 
 
 export class AuthService {
