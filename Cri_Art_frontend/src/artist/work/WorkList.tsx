@@ -8,7 +8,6 @@ export default function WorkList(props :any) {
     const id = props.id
     const [works, setWorks] = useState<Work[]>([])
 
-
     function renderWorks(work: Work) {
         return <WorkPost work={work}/>
     }

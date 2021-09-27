@@ -12,7 +12,7 @@ import java.util.*
 import java.util.logging.Logger
 import org.springframework.http.ResponseEntity as ResponseEntity
 
-@CrossOrigin
+
 @RestController
 @RequestMapping("/auth")
 class AuthController(
@@ -28,14 +28,9 @@ class AuthController(
     )
     fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<LoginResponse> {
 
-        var token: UUID? = null
-        var lgnRes :LoginResponse? = null
-        try {
-            lgnRes = this.authService.loginUser(loginRequest.email, loginRequest.password)
-            this.log.info(token.toString())
-        } catch (exception: Exception) {
-            println("${exception.message} - ${exception.javaClass.name}")
-        }
+        var lgnRes :LoginResponse?
+        lgnRes = this.authService.loginUser(loginRequest.email, loginRequest.password)
+
         if (lgnRes == null)
             return ResponseEntity(lgnRes, HttpStatus.NOT_FOUND)
         return ResponseEntity(lgnRes, HttpStatus.CREATED)

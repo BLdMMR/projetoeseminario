@@ -65,7 +65,6 @@ class WebSocketEchoHandler: TextWebSocketHandler() {
     override fun afterConnectionEstablished(session: WebSocketSession) {
         val user: User = session.attributes["user"] as User
         openSessions[user.id!!] = session
-
     }
 
     @Override
@@ -82,7 +81,5 @@ class WebSocketEchoHandler: TextWebSocketHandler() {
         for (session in openSessions.values) {
             session.sendMessage(TextMessage(echo))
         }
-
     }
-
 }

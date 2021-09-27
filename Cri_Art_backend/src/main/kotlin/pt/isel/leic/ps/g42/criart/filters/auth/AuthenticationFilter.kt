@@ -2,6 +2,7 @@ package pt.isel.leic.ps.g42.criart.filters.auth
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
+import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import pt.isel.leic.ps.g42.criart.services.AuthService
@@ -50,8 +51,11 @@ class AuthenticationFilter(private val authService: AuthService) : OncePerReques
     private val filterExclusionUriMatcher = Regex("^(/api/auth/|/api/public/)")
 
     override fun shouldNotFilter(request: HttpServletRequest): Boolean {
-        val notFiltered = request.requestURI.contains(this.filterExclusionUriMatcher) || (request.requestURI.contains("/artist/") && !request.method.equals("POST") && !request.method.equals("PUT"))
-        return notFiltered
+        val result = request.requestURI.contains(this.filterExclusionUriMatcher)
+                || request.method.equals(HttpMethod.OPTIONS.name)
+                || (request.requestURI.contains("/artist/")
+                    && request.method.equals(HttpMethod.GET.name))
+        return result
     }
 
     @Bean
