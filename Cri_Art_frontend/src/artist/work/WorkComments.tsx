@@ -6,10 +6,10 @@ export default function WorkComments(props: {work: Work}) {
 
     return (
         <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <img src={`data:image/${work.fileExtension};base64,` + work.content}/>
+            {/*<img src={`data:image/${work.fileExtension};base64,` + work.content}/>
             <div>
 
-            </div>
+            </div>*/}
         </div>
     )
 }
