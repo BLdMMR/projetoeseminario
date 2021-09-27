@@ -18,7 +18,8 @@ export class Api {
     path = path ? Api.API_BASE_URL.concat(path) : Api.API_BASE_URL
 
     const headers = {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Connection': 'close'
     }
 
     const request = {
