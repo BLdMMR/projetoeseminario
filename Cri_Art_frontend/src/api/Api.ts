@@ -19,7 +19,7 @@ export class Api {
 
     const headers = {
       'Content-Type': 'application/json',
-      'Connection': 'close'
+      'Access-Control-Allow-Origin': '*'
     }
 
     const request = {
