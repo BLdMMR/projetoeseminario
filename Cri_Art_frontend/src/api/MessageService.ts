@@ -10,6 +10,8 @@ export class MessageService {
 
   //private static readonly WEBSOCKET_ADDRESS = "ws://localhost:8080/api/echo"
 
+  //private static readonly WEBSOCKET_ADDRESS = "ws://localhost:3000/api/echo"
+
   private static websocket: WebSocket
   private static isInitialized: boolean
 
