@@ -72,6 +72,7 @@ class WorkController (private val services : WorkServices) {
     @DeleteMapping("/{wid}")
     fun deleteWork(@PathVariable("wid") work_id: String, @RequestAttribute user: User): ResponseEntity<String> {
         val msg = services.deleteWork(UUID.fromString(work_id), user.id)
+        println(msg)
         return if (msg.equals("Work Removed Successfully")) ResponseEntity.ok().body(msg) else ResponseEntity<String>(HttpStatus.NOT_FOUND)
     }
 

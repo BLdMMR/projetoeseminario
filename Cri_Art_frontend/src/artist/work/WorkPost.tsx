@@ -73,6 +73,20 @@ export default function WorkPost(props: { work: Work }) {
     // }
 
 
+    function handleDelete() {
+        Api.fetchFromAPI(
+            HTTP_METHOD.DELETE,
+            `/artist/${work.owner}/worksofart/${work.id}?token=${AuthService.getToken()}`
+        )
+            .then((res) => {
+                console.log(res)
+                window.location.reload()
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
     return isVideo(work!!.fileExtension) ? (
         <video width="320" height="240" controls>
             <source src={`data:video/${work.fileExtension};base64,${work.content}`} type={`video/webm`}/>
@@ -96,7 +110,7 @@ export default function WorkPost(props: { work: Work }) {
                                      className={"work-image-modal"}/>
                                 <h3>{work.description}</h3>
                                 {work.owner == AuthService.getId() ?
-                                    <button type="button" className="btn btn-danger">Delete</button> : <></>
+                                    <button type="button" className="btn btn-danger" onClick={handleDelete}>Delete</button> : <></>
                                 }
                             </SRLWrapper>
                             <CommentSection comments={work.comments} owner={work.owner} id={work.id}/>

@@ -27,6 +27,7 @@ class WorkServices (private val repository : WorkRepository){
 
     fun deleteWork(work_id: UUID?, user_id: UUID?): String{
         if (repository.getWork(work_id!!)?.owner != user_id) {
+            println("User is not the owner of this resource")
             return "User is not the owner of this resource"
         }
         return if(repository.deleteWork(work_id)) "Work Removed Successfully" else "Unable to remove work"
