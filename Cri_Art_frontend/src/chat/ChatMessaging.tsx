@@ -2,14 +2,12 @@ import {MessageService} from "../api/MessageService";
 import {useState} from "react";
 
 
-
-export default function ChatMessages(props: any) {
+export default function ChatMessaging(props: any) {
   const [typedMessage, setTypedMessage] = useState<string>("")
-
 
   return <div>
     <div className={"chat-message-list-section"}>
-      {props.messages.map((message, idx) => <div className={"chat-message"} key={message + idx}>{message}</div>)}
+      {props.messages.map((message: string, idx: number) => <div className={"chat-message"} key={message + idx}>{message}</div>)}
     </div>
     <div className={"chat-input-section"}>
       <div className="input-group mb-3">

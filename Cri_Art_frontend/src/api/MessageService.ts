@@ -10,9 +10,8 @@ export class MessageService {
 
   //private static readonly WEBSOCKET_ADDRESS = "ws://localhost:8080/api/echo"
 
-  //private static readonly WEBSOCKET_ADDRESS = "ws://localhost:3000/api/echo"
 
-  private static websocket: WebSocket
+  private static websocket?: WebSocket;
   private static isInitialized: boolean
 
   private static readonly messageEmitter: Subject<string> = new Subject()
@@ -37,10 +36,7 @@ export class MessageService {
 
       this.websocket.onclose = () => {
         console.log("Websocket has been closed")
-        if(AuthService.getToken()) {
-          this.isInitialized = false
-          this.initialize()
-        }
+        this.websocket = undefined;
       }
     }
   }
@@ -55,7 +51,7 @@ export class MessageService {
       return
     } else if (this.isInitialized) {
       console.log("Sending message: " + message)
-      this.websocket.send(message)
+      this.websocket?.send(message)
     } else {
       console.log("Websocket not initialized!")
     }

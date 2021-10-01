@@ -3,7 +3,7 @@ import {AuthService} from "../api/AuthService";
 import {useEffect, useState} from "react";
 import {MessageService} from "../api/MessageService";
 import ChatWrapperHeader from "./ChatWrapperHeader";
-import ChatMessages from "./ChatMessages";
+import ChatMessaging from "./ChatMessaging";
 
 
 export default function Chat(props: any) {
@@ -14,13 +14,13 @@ export default function Chat(props: any) {
   useEffect(() => {
     const sub = MessageService.getMessageStream().subscribe(message => {
       console.log("New message: " + message)
-
       if (message) {
         messages.push(message)
         const newArray = messages.slice()
         setMessages(newArray)
       }
     })
+
     MessageService.initialize()
     return () => sub.unsubscribe()
   }, [])
@@ -31,7 +31,6 @@ export default function Chat(props: any) {
 
   return <div className={"chat-wrapper " + (open ? "chat-wrapper-open" : "chat-wrapper-closed")}>
     <ChatWrapperHeader open={open} onChange={setOpen}></ChatWrapperHeader>
-
-    <ChatMessages messages={messages}></ChatMessages>
+    <ChatMessaging messages={messages}></ChatMessaging>
   </div>
 }
