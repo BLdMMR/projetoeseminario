@@ -55,7 +55,7 @@ export class MessageService {
       return
     } else if (this.isInitialized) {
       console.log("Sending message: " + message)
-      this.websocket.send(message)
+      this.websocket.send(JSON.stringify(new Message(AuthService.getId(), message)))
     } else {
       console.log("Websocket not initialized!")
     }
@@ -65,4 +65,17 @@ export class MessageService {
     return MessageService.messageStream
   }
 
+}
+
+class Message{
+  private senderId: string | undefined;
+  private message: String;
+
+  constructor(
+      id: string | undefined,
+      message: String
+  ) {
+    this.senderId = id
+    this.message = message
+  }
 }

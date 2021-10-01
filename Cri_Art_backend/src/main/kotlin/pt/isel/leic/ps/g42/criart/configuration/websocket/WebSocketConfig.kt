@@ -40,7 +40,7 @@ class WebSocketConfig(val messageController: MessageController): WebSocketConfig
 
     @Bean
     fun messageHandlerFactory(): WebSocketHandler {
-        return this.messageController
+        return messageController
     }
 
     @Bean
