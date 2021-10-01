@@ -3,9 +3,12 @@ import {Api, HTTP_METHOD} from "../api/Api";
 import {AuthService} from "../api/AuthService";
 import './Feed.css'
 import {useHistory} from "react-router-dom";
+import SearchBar from "../search/SearchBar";
+import CaughtUp from "../icons/HuionSketch_1633042513466.png"
 
 function FeedPage(props: any) {
-    const [feed, setFeed] = useState<Pub[]>()
+    const [feed, setFeed] = useState<Pub[]>([])
+    const [hasLoaded, setHasLoaded] = useState<boolean>(false)
     const history = useHistory()
 
     if (!feed) {
@@ -14,6 +17,7 @@ function FeedPage(props: any) {
             `/feed?token=${AuthService.getToken()}`
         ).then((resFeed) => {
             setFeed(resFeed)
+            setHasLoaded(true)
 
         }).catch(err => {
             console.error(err)
@@ -35,12 +39,7 @@ function FeedPage(props: any) {
         )
     }
 
-    return feed ? (
-        <div className={'feed'}>
-
-            {feed!.map(renderFeed)}
-        </div>
-    ) : (
+    return !feed && !hasLoaded ? (
         <div className={"loading-feed"}>
             <h2>Loading Feed...</h2>
             <div className="spinner-border text-primary" role="status">
@@ -48,6 +47,18 @@ function FeedPage(props: any) {
             </div>
         </div>
 
+    ) : (
+        <div className={'feed'}>
+            {!feed[0] ? <div>
+                <img src={CaughtUp}/>
+                <span>
+                    <SearchBar/>
+                </span>
+            </div> :
+                <h4/>}
+            {/*TODO: Put a search bar for user to search new artists*/}
+            {feed!.map(renderFeed)}
+        </div>
     )
 }
 

@@ -35,3 +35,15 @@
 #post-card{
     transform: translateX(25%);
 }
+.feed img {
+    width: 92vw;
+    transform: translate(-5.5%,-15%);
+    z-index: 30;
+    opacity: 50%;
+}
+
+.search-bar-feed {
+    position: absolute;
+    z-index: 40;
+    transform: translate(0, -50%);
+}

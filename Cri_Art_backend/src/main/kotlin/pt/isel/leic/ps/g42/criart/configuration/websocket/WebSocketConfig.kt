@@ -1,5 +1,6 @@
 package pt.isel.leic.ps.g42.criart.configuration.websocket
 
+import com.fasterxml.jackson.annotation.JsonCreator
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -83,3 +84,4 @@ class WebSocketEchoHandler: TextWebSocketHandler() {
         }
     }
 }
+

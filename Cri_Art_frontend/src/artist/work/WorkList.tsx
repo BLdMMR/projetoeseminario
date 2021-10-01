@@ -7,6 +7,7 @@ import {useHistory} from "react-router-dom";
 export default function WorkList(props :any) {
     const id = props.id
     const [works, setWorks] = useState<Work[]>([])
+    const [hasLoaded, setHasLoaded] = useState<boolean>(false)
 
     function renderWorks(work: Work) {
         return <WorkPost work={work}/>
@@ -44,13 +45,6 @@ export default function WorkList(props :any) {
                 console.log("error")
             })
             //TODO->Change this to be from the API service class
-
-            // Api.fetchFromAPI(
-            //     HTTP_METHOD.POST,
-            //     `/artist/${id}/worksofart?token=${AuthService.getToken()}`,
-            //     headers,
-            //     fdata
-            // )
         }
     }
     {/*    THIS IS JUST TO CHECK SOMETHING  */}
@@ -63,13 +57,14 @@ export default function WorkList(props :any) {
             `/artist/${id}/worksofart?token=${AuthService.getToken()}`
         ).then((listOfWorks) => {
             setWorks(listOfWorks)
+            setHasLoaded(true)
         })
         /*}*/
     }, [workAdded, setWorkAdded])
 
 
 
-    return works.length == 0 ? (
+    return (works.length == 0 && !hasLoaded) ? (
         <div>
             <h3>Loading works...</h3>
             <div className="spinner-border text-primary" role="status">
@@ -78,38 +73,20 @@ export default function WorkList(props :any) {
         </div>
     ) : (
         <div className={"work-panel"}>
-            <h3>Works Of Art:</h3>
+            <h3>{works.length!= 0 ? "Works Of Art:" : "No works to show"}</h3>
             <div>
                 {works.map(renderWorks)}
             </div>
             {/*    THIS IS JUST TO CHECK SOMETHING  */}
-            <div className="offcanvas-body small">
+            {AuthService.getId() == props.id ? <div className="offcanvas-body small">
                 <h3>Add another work to your Portfolio</h3>
                 <div className="mb-3">
                     <input className="form-control" type="file" onChange={handleFileSubmited} id="formFile"/>
-                    <textarea ref={descRef} className={"textarea"} placeholder={"Here you can write the description of your work"}/>
+                    <textarea ref={descRef} className={"textarea"}
+                              placeholder={"Here you can write the description of your work"}/>
                 </div>
                 <button type="button" className={"btn btn-primary"} onClick={handleSubmit}>Submit</button>
-            </div>
-
-            {/*<div className="offcanvas offcanvas-bottom" tabIndex={4} id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">*/}
-            {/*    <div className="offcanvas-header">*/}
-            {/*        <h5 className="offcanvas-title" id="offcanvasBottomLabel">Add Work</h5>*/}
-            {/*        <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"/>*/}
-            {/*    </div>*/}
-            {/*    <div className="offcanvas-body small">*/}
-            {/*        <div className="mb-3">*/}
-            {/*            <input className="form-control" type="file" onChange={handleFileSubmited} id="formFile"/>*/}
-            {/*            <textarea ref={descRef} className={"textarea"} placeholder={"Write the description of the work"}/>*/}
-            {/*        </div>*/}
-            {/*        <button type="button" className={"btn btn-primary"} onClick={handleSubmit}>Submit</button>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-            {/*<button className="btn btn-primary" type="button" data-bs-toggle="offcanvas"*/}
-            {/*        data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">*/}
-            {/*    Add Work to Portfolio*/}
-            {/*</button>*/}
-            {/*    THIS IS JUST TO CHECK SOMETHING  */}
+            </div> : <></>}
         </div>
     )
 }

@@ -40,6 +40,8 @@ class MessageController(
 
     @Override
     override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
+        println("Banana from handleTextMessage")
+
         val jsonString: String = message.payload
         val messageInput: InboundMessage = this.objectMapper.readValue(jsonString)
 
