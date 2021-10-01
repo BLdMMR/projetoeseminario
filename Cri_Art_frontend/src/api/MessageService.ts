@@ -19,7 +19,7 @@ export class MessageService {
 
   public static initialize() {
 
-    if ((this.websocket == null || this.websocket.readyState === WebSocket.CLOSED) && AuthService.getToken()) {
+    if ((this.websocket == null || this.websocket.readyState === WebSocket.CLOSED) && AuthService.getToken() && !this.isInitialized) {
       this.websocket = new WebSocket(this.WEBSOCKET_ADDRESS + "?token=" + AuthService.getToken())
       console.log("Opened websocket with token: " + AuthService.getToken())
       this.websocket.onopen = () => {
@@ -36,7 +36,7 @@ export class MessageService {
 
       this.websocket.onclose = () => {
         console.log("Websocket has been closed")
-        this.websocket = undefined;
+        this.isInitialized = false
       }
     }
   }
