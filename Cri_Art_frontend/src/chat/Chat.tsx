@@ -21,12 +21,13 @@ export default function Chat(props: any) {
       }
     })
 
-    MessageService.initialize()
     return () => sub.unsubscribe()
   }, [])
 
   if (!AuthService.getToken()) {
     return null
+  } else {
+    MessageService.initialize()
   }
 
   return <div className={"chat-wrapper " + (open ? "chat-wrapper-open" : "chat-wrapper-closed")}>
