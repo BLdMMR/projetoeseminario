@@ -88,6 +88,7 @@ class AuthService(
 
         val token = Token(userId = user.id, token = UUID.randomUUID(), type = TokenType.LOGIN)
         this.tokenRepository.save(token)
+        println(user)
         return user.toLoginResponse(token.token!!)
 //        return user
     }

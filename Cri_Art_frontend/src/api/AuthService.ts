@@ -71,6 +71,7 @@ export class AuthService {
       return loginResponse.type
 
     }).catch(err => {
+      console.log("Error")
       console.error(err)
     })
 
@@ -82,6 +83,7 @@ export class AuthService {
       `/auth/logout?token=${AuthService.getToken()}`
     ).then((res) => {
       MessageService.finalize()
+      AuthService.removeInfo()
       return Promise.resolve(res)
     })
   }

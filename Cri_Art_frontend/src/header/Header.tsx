@@ -39,7 +39,6 @@ export default function Header(props: any) {
         .then(response => {
             if (response) {
                 console.log("Logging out")
-                AuthService.removeInfo()
                 history.push("/login")
             }
         })

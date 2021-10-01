@@ -75,7 +75,9 @@ class WorkRepository (private val es_repository : IWorkRepository){
 
     fun deleteWork(workId: UUID): Boolean {
         es_repository.deleteById(workId)
+        println(getWork(workId))
         if (getWork(workId) != null) {
+            log.info("Removed")
             return true
         }
         return false
