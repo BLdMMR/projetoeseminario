@@ -22,12 +22,17 @@ import java.util.concurrent.ConcurrentHashMap
 @EnableWebSocket
 class WebSocketConfig(val messageController: MessageController): WebSocketConfigurer {
 
-    private val log = LoggerFactory.getLogger(this::class.java.name)
+    companion object {
+        private val log = LoggerFactory.getLogger(this::class.java.name)
+        private const val ECHO_PATH = "/echo"
+        private const val MESSAGE_PATH = "/message"
+    }
+
 
     @Override
     override fun registerWebSocketHandlers(registry: WebSocketHandlerRegistry) {
-        registry.addHandler(echoHandlerFactory(), "/echo")
-                .addHandler(messageHandlerFactory(), "/message")
+        registry.addHandler(echoHandlerFactory(), ECHO_PATH)
+                .addHandler(messageHandlerFactory(), MESSAGE_PATH)
             .setAllowedOrigins("*")
             .addInterceptors(HttpSessionHandshakeInterceptor())
     }
