@@ -1,5 +1,6 @@
 package pt.isel.leic.ps.g42.criart.services
 
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import pt.isel.leic.ps.g42.criart.models.Message
 import pt.isel.leic.ps.g42.criart.models.User
@@ -11,14 +12,17 @@ import kotlin.collections.HashMap
 @Service
 class MessageService(private val messageRepository: IMessageRepository) {
 
-    fun addMessage(sourceUserId: UUID, destinationUserId: UUID, message: String): Message {
-        val newMessage = Message(UUID.randomUUID(), sourceUserId, destinationUserId, message, LocalDateTime.now())
+    fun addMessage(sourceUsername: String, destinationUsername: String, message: String): Message {
+
+        val newMessage = Message(UUID.randomUUID(), sourceUsername, destinationUsername, message, System.currentTimeMillis())
         this.messageRepository.save(newMessage)
         return newMessage
     }
 
-    fun getMessages(userId: UUID) {
-
+    fun getMessages(username: String): Array<Message> {
+        val result = this.messageRepository.findByUsername(username, username, Pageable.unpaged())
+                                            .get().toArray { size -> Array<Message?>(size) { _ -> null } }
+        return result as Array<Message>
     }
 
 }

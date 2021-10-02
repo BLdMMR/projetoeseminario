@@ -4,7 +4,7 @@ export default function ChatWrapperHeader(props: any) {
 
   return <div className={"chat-wrapper-header"}>
     <div className={"chat-wrapper-header-title"}>Messages</div>
-    <div className={"chat-wrapper-header-button"} onClick={() => props.onChange(!props.open)}>
+    <div className={"chat-wrapper-header-button"} onClick={() => props.onOpen(!props.open)}>
       {props.open
         ? <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                className="bi bi-chevron-down" viewBox="0 0 16 16">

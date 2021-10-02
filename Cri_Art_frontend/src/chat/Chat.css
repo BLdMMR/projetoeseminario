@@ -45,6 +45,10 @@
     cursor: pointer;
 }
 
+.chat-wrapper-header-button:hover {
+    background-color: burlywood;
+}
+
 .chat-message-list-section {
     width: 100%;
     height: 390px;
@@ -65,4 +69,25 @@
 
 .chat-message {
     border-bottom: 1px solid grey;
+}
+
+.contacts-title {
+    font-weight: bold;
+}
+
+.contact {
+    cursor: pointer;
+}
+
+.contact:hover {
+    background-color: burlywood;
+}
+
+.chat-user-header-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.chat-user {
+    font-weight: bold;
 }
