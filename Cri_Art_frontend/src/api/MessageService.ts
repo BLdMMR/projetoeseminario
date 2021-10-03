@@ -6,6 +6,7 @@ import {Observable, Subject} from "rxjs";
 export interface TextMessage {
   messageId: string;
   senderUsername: string;
+  recipientUsername: string;
   message: string;
   time: number;
 }
