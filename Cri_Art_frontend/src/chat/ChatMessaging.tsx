@@ -19,7 +19,7 @@ export default function ChatMessaging(props: any) {
       return message.senderUsername === props.selectedUsername
         || message.recipientUsername === props.selectedUsername
     }
-  })
+  }).sort((m1: TextMessage, m2: TextMessage) => m1.time - m2.time)
 
   return <div>
     <div className={"chat-user-header-section"}>
