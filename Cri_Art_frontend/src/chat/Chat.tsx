@@ -9,10 +9,12 @@ import ChatContacts from "./ChatContacts";
 
 export default function Chat(props: any) {
   const [open, setOpen] = useState(false)
-  const [messages] = useState<Array<TextMessage>>([])
-  const [selectedUser, setSelectedUser] = useState<string>()
-  //the following variable is just to trigger re-rendering at will
-  const [randomNumber, setRandomNumber] = useState<number>()
+  const [messages, setMessages] = useState<Array<TextMessage>>([])
+  const [selectedUsername, setSelectedUsername] = useState<string>('')
+  /* The purpose of the following state variable
+   is to trigger re-rendering at will */
+  const [randomNumber, setRandomNumber] = useState<number>(0)
+
 
   useEffect(() => {
     const sub = MessageService.getMessageStream().subscribe(message => {
@@ -22,7 +24,6 @@ export default function Chat(props: any) {
         setRandomNumber(Math.random())
       }
     })
-
     return () => sub.unsubscribe()
   }, [])
 
@@ -32,10 +33,16 @@ export default function Chat(props: any) {
     MessageService.initialize()
   }
 
+  const handleSelectUsername = (newUsername: string) => setSelectedUsername(newUsername)
+
   return <div className={"chat-wrapper " + (open ? "chat-wrapper-open" : "chat-wrapper-closed")}>
     <ChatWrapperHeader open={open} onOpen={setOpen}></ChatWrapperHeader>
-    {selectedUser
-      ? <ChatMessaging onSelectedUser={setSelectedUser} messages={messages}></ChatMessaging>
-      : <ChatContacts onSelectUser={setSelectedUser} messages={messages}></ChatContacts>}
+    {selectedUsername !== ''
+      ? <ChatMessaging selectedUsername={selectedUsername}
+                       selectUsername={handleSelectUsername}
+                       messages={messages}></ChatMessaging>
+      : <ChatContacts selectedUsername={selectedUsername}
+                      selectUsername={handleSelectUsername}
+                      messages={messages}></ChatContacts>}
   </div>
 }

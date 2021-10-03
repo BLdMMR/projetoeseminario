@@ -51,7 +51,7 @@
 
 .chat-message-list-section {
     width: 100%;
-    height: 390px;
+    height: 330px;
     padding: 20px;
     overflow-y: auto;
     word-break: break-all;
@@ -61,7 +61,7 @@
 
 .chat-input-section {
     position: absolute;
-    //bottom: 0;
+    bottom: 0;
     width: 100%;
     padding-left: 10px;
     padding-right: 10px;
@@ -75,19 +75,28 @@
     font-weight: bold;
 }
 
-.contact {
-    cursor: pointer;
-}
-
 .contact:hover {
     background-color: burlywood;
+    cursor: pointer;
 }
 
 .chat-user-header-section {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin: 10px 20px;
 }
 
 .chat-user {
     font-weight: bold;
+}
+
+.back-button:hover {
+    background-color: burlywood;
+    cursor: pointer;
+}
+
+.chat-message-time {
+    font-style: italic;
+    font-size: 12px;
 }
