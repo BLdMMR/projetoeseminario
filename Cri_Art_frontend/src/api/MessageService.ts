@@ -23,6 +23,12 @@ export class MessageService {
   private static readonly messageEmitter: Subject<TextMessage> = new Subject()
   private static readonly messageStream: Observable<TextMessage> = MessageService.messageEmitter.asObservable()
 
+  private static readonly keepAliveInterval = setInterval(() => {
+    if (MessageService.websocket?.readyState === WebSocket.OPEN) {
+      MessageService.websocket?.send('__keepalive_ping__')
+    }
+  }, 3000)
+
   public static initialize() {
 
     if ((this.websocket == null || this.websocket.readyState === WebSocket.CLOSED) && AuthService.getToken() && !this.isInitialized) {
@@ -35,8 +41,10 @@ export class MessageService {
 
       this.websocket.onmessage = (message => {
         console.log("Websocket message received: ", message.data)
-        const messageObj = JSON.parse(message.data)
-        this.messageEmitter.next(messageObj as TextMessage)
+        if (message.data !== '__keepalive_pong__') {
+          const messageObj = JSON.parse(message.data)
+          this.messageEmitter.next(messageObj as TextMessage)
+        }
       })
 
       this.websocket.onerror = (error) => console.error("An error happened: " + JSON.stringify(error))

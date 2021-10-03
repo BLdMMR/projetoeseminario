@@ -51,8 +51,12 @@ class MessageController(
 
     @Override
     override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
-        val jsonString: String = message.payload
-        val messageInput: InboundMessage = this.objectMapper.readValue(jsonString)
+        val payloadString: String = message.payload
+        if (payloadString == "__keepalive_ping__") {
+            session.sendMessage(TextMessage("__keepalive_pong__"))
+            return
+        }
+        val messageInput: InboundMessage = this.objectMapper.readValue(payloadString)
 
         val user: User = session.attributes["user"] as User
         val messageEntity = this.messageService.addMessage(user.username!!, messageInput.recipientUsername, messageInput.message)
