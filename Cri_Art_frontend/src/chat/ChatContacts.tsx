@@ -2,8 +2,9 @@ import {TextMessage} from "../api/MessageService";
 
 
 export default function ChatContacts(props: any) {
-  const usernames = props.messages.map((msg: TextMessage) => msg.senderUsername);
-  const usernamesNonRepeated: Array<string> = Array.from(new Set(usernames))
+  const senders = props.messages.map((msg: TextMessage) => msg.senderUsername);
+  const recipients = props.messages.map((msg: TextMessage) => msg.recipientUsername);
+  const usernamesNonRepeated: Array<string> = Array.from(new Set([...senders, ...recipients]))
 
   return <div className={"chat-message-list-section"}>
       <span className={"contacts-title"}>Contacts</span><br/>

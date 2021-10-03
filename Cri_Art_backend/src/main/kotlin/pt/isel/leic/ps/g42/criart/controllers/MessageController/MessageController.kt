@@ -27,7 +27,7 @@ class MessageController(
 
     private fun sendMessage(session: WebSocketSession?, message: Message) {
 
-        val outbound = OutboundMessage(message.id.toString(), message.senderUsername, message.message, message.timestamp)
+        val outbound = OutboundMessage(message.id.toString(), message.senderUsername, message.recipientUsername, message.message, message.timestamp)
         val payload: String = this.objectMapper.writeValueAsString(outbound)
 
         val websocketMessage = TextMessage(payload)

@@ -69,6 +69,7 @@
 
 .chat-message {
     border-bottom: 1px solid grey;
+    word-break: break-word;
 }
 
 .contacts-title {

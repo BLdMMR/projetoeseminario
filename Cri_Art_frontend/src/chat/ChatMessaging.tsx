@@ -1,5 +1,6 @@
 import {MessageService, TextMessage} from "../api/MessageService";
 import {useEffect, useState} from "react";
+import {AuthService} from "../api/AuthService";
 
 
 export default function ChatMessaging(props: any) {
@@ -8,6 +9,16 @@ export default function ChatMessaging(props: any) {
   useEffect(() => {
     const messageList = document.getElementById("messageList");
     messageList!!.scrollTop = messageList!!.scrollHeight;
+  })
+
+  const messages = props.messages.filter((message: TextMessage) => {
+    if (props.selectedUsername === AuthService.getUser()?.name) {
+      return message.senderUsername === props.selectedUsername
+        && message.recipientUsername === props.selectedUsername
+    } else {
+      return message.senderUsername === props.selectedUsername
+        || message.recipientUsername === props.selectedUsername
+    }
   })
 
   return <div>
@@ -22,7 +33,7 @@ export default function ChatMessaging(props: any) {
       </div>
     </div>
     <div className={"chat-message-list-section"} id={"messageList"}>
-      {props.messages.map((message: TextMessage, idx: number) =>
+      {messages.map((message: TextMessage, idx: number) =>
         <div className={"chat-message"} key={message?.time + '' + idx}>
           <span className={"chat-user"}>{message.senderUsername}</span>
           <span className={"chat-message-time"}>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -30,7 +41,6 @@ export default function ChatMessaging(props: any) {
           <br/>
           {message.message}
         </div>)
-
       }
     </div>
     <div className={"chat-input-section"}>
