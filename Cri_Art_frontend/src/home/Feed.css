@@ -39,8 +39,7 @@
 .feed img {
     width: 100%;
     transform: translate(0%, -15%);
+    z-index: 300;
 }
 
-.search-bar {
-    z-index: 400;
-}
+
