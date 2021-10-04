@@ -17,4 +17,5 @@ interface IUserRepository: ElasticsearchRepository<User, UUID> {
 
     @Query("{\"bool\" : {\"must\": {\"match\" : {\"username\" : \"?0\"}}}}")
     fun findByUsername(username: String, pageable: Pageable): Page<User?>
+
 }

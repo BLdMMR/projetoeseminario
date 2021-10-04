@@ -9,8 +9,8 @@ import java.util.*
 data class Message (
     @Id
     val id: UUID,
-    val sourceUserId: UUID,
-    val destinationUserId: UUID,
+    val senderUsername: String,
+    val recipientUsername: String,
     val message: String,
-    val date: LocalDateTime
+    val timestamp: Long
 )

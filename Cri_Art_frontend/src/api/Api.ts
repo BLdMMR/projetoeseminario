@@ -10,9 +10,15 @@ export enum HTTP_METHOD {
 
 
 export class Api {
+<<<<<<< HEAD
   //private static readonly API_BASE_URL = 'https://cri-art.herokuapp.com/api'
+=======
+
+  private static readonly API_BASE_URL = 'https://cri-art.herokuapp.com/api'
+>>>>>>> 78d5ffbe36c290a752866a656387f25c96dfd5e5
 
   private static readonly API_BASE_URL = 'http://localhost:8080/api'
+
 
   public static fetchFromAPI(method: HTTP_METHOD, path: string, body?: any): Promise<any> {
     path = path ? Api.API_BASE_URL.concat(path) : Api.API_BASE_URL

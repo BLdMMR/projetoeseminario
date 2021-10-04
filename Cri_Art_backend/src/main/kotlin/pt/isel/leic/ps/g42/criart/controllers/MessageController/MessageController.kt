@@ -22,31 +22,47 @@ class MessageController(
 ): TextWebSocketHandler() {
 
     companion object {
-        private val openSessions: ConcurrentHashMap<UUID, WebSocketSession> = ConcurrentHashMap()
+        private val openSessions: ConcurrentHashMap<String, WebSocketSession> = ConcurrentHashMap()
+    }
+
+    private fun sendMessage(session: WebSocketSession?, message: Message) {
+
+        val outbound = OutboundMessage(message.id.toString(), message.senderUsername, message.recipientUsername, message.message, message.timestamp)
+        val payload: String = this.objectMapper.writeValueAsString(outbound)
+
+        val websocketMessage = TextMessage(payload)
+        session?.sendMessage(websocketMessage)
     }
 
     @Override
     override fun afterConnectionEstablished(session: WebSocketSession) {
         val user: User = session.attributes["user"] as User
-        openSessions[user.id!!] = session
+        openSessions[user.username!!] = session
+        val messages = this.messageService.getMessages(user.username!!)
 
+        messages.forEach { message -> this.sendMessage(session, message) }
     }
 
     @Override
     override fun afterConnectionClosed(session: WebSocketSession, status: CloseStatus) {
         val user: User = session.attributes["user"] as User
-        openSessions.remove(user.id)
+        openSessions.remove(user.username)
     }
 
     @Override
     override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
-        val jsonString: String = message.payload
-        val messageInput: InboundMessage = this.objectMapper.readValue(jsonString)
+        val payloadString: String = message.payload
+        if (payloadString == "__keepalive_ping__") {
+            session.sendMessage(TextMessage("__keepalive_pong__"))
+            return
+        }
+        val messageInput: InboundMessage = this.objectMapper.readValue(payloadString)
 
         val user: User = session.attributes["user"] as User
-        this.messageService.addMessage(user.id!!, messageInput.receiverId, messageInput.message)
+        val messageEntity = this.messageService.addMessage(user.username!!, messageInput.recipientUsername, messageInput.message)
 
-        val receiverSession = openSessions[messageInput.receiverId]
-        receiverSession?.sendMessage(message)
+        val receiverSession = openSessions[messageInput.recipientUsername]
+        this.sendMessage(receiverSession, messageEntity)
+        this.sendMessage(session, messageEntity)
     }
 }
