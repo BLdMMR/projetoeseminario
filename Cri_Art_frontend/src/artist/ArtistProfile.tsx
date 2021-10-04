@@ -58,7 +58,7 @@ export default function ArtistProfile(props: any) {
         <h6>Log in to follow</h6>
 
     function handleSendMessage() {
-        MessageService.sendMessage(data!!.id, messageRef.current!!.value)
+        MessageService.sendMessage(data!!.username, messageRef.current!!.value)
     }
 
     if (data) {
