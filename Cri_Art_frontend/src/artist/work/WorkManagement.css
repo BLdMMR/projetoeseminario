@@ -50,13 +50,13 @@
 
 }
 
-.modal-content{
+#post-modal-content{
     height: 75vh;
     width: 90vw;
     transform: translateX(-32.5%);
 }
 
-.modal-body {
+#post-modal-body {
     display: flex;
     flex-direction: row;
     overflow: auto;
@@ -76,8 +76,4 @@
 
 #comment-box {
     content: 'Write Comment Here!';
-}
-
-.textarea{
-
 }

@@ -45,4 +45,5 @@ export default function Chat(props: any) {
                       selectUsername={handleSelectUsername}
                       messages={messages}></ChatContacts>}
   </div>
+
 }

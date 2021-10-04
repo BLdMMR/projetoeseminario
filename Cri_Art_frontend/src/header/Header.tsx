@@ -4,6 +4,7 @@ import logo from '../icons/new_logo.svg';
 import './Header.css'
 import {AuthService} from "../api/AuthService";
 import {Api, HTTP_METHOD} from "../api/Api";
+import SearchBar from "../search/SearchBar";
 
 export default function Header(props: any) {
 
@@ -71,6 +72,7 @@ export default function Header(props: any) {
               <img src={logo} className="ui left mini image" alt="logo" id='logo'/>
             </Link>
           </div>
+            {/*<SearchBar></SearchBar>*/}
           <div className={'search-section'}>
             <input type="text" className="form-control" id="header-search-bar" ref={searchRef} />
             <button type="button" id='header_search_button' className="btn btn-primary" onClick={HandleSearch}>Search</button>

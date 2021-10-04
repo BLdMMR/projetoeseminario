@@ -6,3 +6,4 @@ data class InboundMessage(
     val recipientUsername: String,
     val message: String
 )
+

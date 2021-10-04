@@ -3,6 +3,7 @@ package pt.isel.leic.ps.g42.criart.controllers.MessageController
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.socket.CloseStatus
 import org.springframework.web.socket.TextMessage
@@ -24,6 +25,8 @@ class MessageController(
     companion object {
         private val openSessions: ConcurrentHashMap<String, WebSocketSession> = ConcurrentHashMap()
     }
+
+    private val log = LoggerFactory.getLogger(this::class.simpleName)
 
     private fun sendMessage(session: WebSocketSession?, message: Message) {
 
@@ -51,6 +54,8 @@ class MessageController(
 
     @Override
     override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
+        log.info("Incomming message")
+
         val payloadString: String = message.payload
         if (payloadString == "__keepalive_ping__") {
             session.sendMessage(TextMessage("__keepalive_pong__"))
@@ -59,6 +64,9 @@ class MessageController(
         val messageInput: InboundMessage = this.objectMapper.readValue(payloadString)
 
         val user: User = session.attributes["user"] as User
+
+        log.info("Message from: ${user.username}")
+
         val messageEntity = this.messageService.addMessage(user.username!!, messageInput.recipientUsername, messageInput.message)
 
         val receiverSession = openSessions[messageInput.recipientUsername]

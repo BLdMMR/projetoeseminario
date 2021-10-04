@@ -1,5 +1,6 @@
 package pt.isel.leic.ps.g42.criart.configuration.websocket
 
+import com.fasterxml.jackson.annotation.JsonCreator
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -44,7 +45,7 @@ class WebSocketConfig(val messageController: MessageController): WebSocketConfig
 
     @Bean
     fun messageHandlerFactory(): WebSocketHandler {
-        return this.messageController
+        return messageController
     }
 
     @Bean
@@ -88,3 +89,4 @@ class WebSocketEchoHandler: TextWebSocketHandler() {
         }
     }
 }
+

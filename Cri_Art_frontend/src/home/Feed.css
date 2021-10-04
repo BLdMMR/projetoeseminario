@@ -17,9 +17,10 @@
 
 .loading-feed {
     display: flex;
-    width: 50vw;top: 30vh;
+    width: 50vw;
+    top: 30vh;
     left: 50vw;
-    transform: translateX(-50%);
+    transform: translate(50%, 50%);
 }
 
 
@@ -34,4 +35,12 @@
 
 #post-card{
     transform: translateX(25%);
+}
+.feed img {
+    width: 100%;
+    transform: translate(0%, -15%);
+}
+
+.search-bar {
+    z-index: 400;
 }

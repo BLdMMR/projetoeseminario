@@ -18,6 +18,7 @@ export class MessageService {
   //private static readonly WEBSOCKET_ADDRESS = "ws://localhost:8080/api/message"
 
 
+
   private static websocket?: WebSocket;
   private static isInitialized: boolean
 
@@ -69,6 +70,7 @@ export class MessageService {
       const msgObj = { recipientUsername: username, message: message }
       console.log("Sending message: ", msgObj)
       this.websocket?.send(JSON.stringify(msgObj))
+
     } else {
       console.log("Websocket not initialized!")
     }
@@ -78,4 +80,17 @@ export class MessageService {
     return MessageService.messageStream
   }
 
+}
+
+class Message{
+  private senderId: string | undefined;
+  private message: String;
+
+  constructor(
+      id: string | undefined,
+      message: String
+  ) {
+    this.senderId = id
+    this.message = message
+  }
 }

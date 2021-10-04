@@ -19,6 +19,7 @@ export class AuthService {
   private static set user(user: User | undefined) {
     if (!user) {
       AuthService.cookies.remove(AuthService.CRI_ART_USER_COOKIE_NAME)
+      AuthService.cookies.set(AuthService.CRI_ART_USER_COOKIE_NAME, null)
     } else {
       AuthService.cookies.set(AuthService.CRI_ART_USER_COOKIE_NAME, user);
     }
@@ -80,6 +81,8 @@ export class AuthService {
       HTTP_METHOD.DELETE,
       `/auth/logout?token=${AuthService.getToken()}`
     ).then((res) => {
+      console.log("Response from API")
+      console.log(res)
       MessageService.finalize()
       AuthService.removeInfo()
       return Promise.resolve(res)

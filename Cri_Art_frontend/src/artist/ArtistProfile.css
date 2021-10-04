@@ -30,3 +30,21 @@
     margin: 5px;
 }
 
+#MessageModal{
+    z-index: 9000;
+
+}
+
+#message-modal-content{
+height: 50vh;
+}
+
+#message-modal-body {
+    display: flex;
+    flex-direction: row;
+    overflow: auto;
+}
+
+.modal-body textarea {
+    width: 100%
+}
