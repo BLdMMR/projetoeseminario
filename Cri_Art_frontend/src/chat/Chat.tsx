@@ -2,13 +2,16 @@ import './Chat.css'
 import {AuthService} from "../api/AuthService";
 import {useEffect, useState} from "react";
 import {MessageService} from "../api/MessageService";
-import {Subscription} from "rxjs";
+import {Api, HTTP_METHOD} from "../api/Api";
 
 
 export default function Chat(props: any) {
     const [open, setOpen] = useState(false)
     const [messages, setMessages] = useState<Array<string>>([])
     const [typedMessage, setTypedMessage] = useState<string>("")
+
+    const [userId, setUserId] = useState<String>("")
+    const [conversations, setConversations] = useState<string[]>()
 
     useEffect( () => {
         const sub = MessageService.getMessageStream().subscribe(message => {
@@ -25,9 +28,42 @@ export default function Chat(props: any) {
         return () => sub.unsubscribe()
     }, [])
 
+    useEffect(() => {
+        Api.fetchFromAPI(
+            HTTP_METHOD.GET,
+            `/messagelist?token=${AuthService.getToken()}`
+        ).then(res => {
+            if (res) {
+                setConversations(res)
+            }
+        })
+    }, [])
+
     if (!AuthService.getToken()) {
         return null
     }
+
+    return (<div className={"chat-wrapper " + (open ? "chat-wrapper-open" : "chat-wrapper-closed")}>
+        <div className={"chat-wrapper-header"}>
+            <div className={"chat-wrapper-header-title"}>Messages</div>
+            <div className={"chat-wrapper-header-button"} onClick={() => setOpen(!open)}>
+                {open
+                    ? <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                           className="bi bi-chevron-down" viewBox="0 0 16 16">
+                        <path fillRule="evenodd"
+                              d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+                    : <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                           className="bi bi-chevron-up" viewBox="0 0 16 16">
+                        <path fillRule="evenodd"
+                              d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+                    </svg>}
+            </div>
+        </div>
+
+    </div>
+
+    )
 
     return <div className={"chat-wrapper " + (open ? "chat-wrapper-open" : "chat-wrapper-closed")}>
         <div className={"chat-wrapper-header"}>
@@ -59,7 +95,7 @@ export default function Chat(props: any) {
                 <div className="input-group-append">
                     <button className="btn btn-outline-secondary" type="button"
                         onClick={() => {
-                            MessageService.sendMessage(typedMessage)
+                            //MessageService.sendMessage(typedMessage)
                             setTypedMessage("")
                         }}>Send</button>
                 </div>

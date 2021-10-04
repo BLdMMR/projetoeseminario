@@ -17,8 +17,19 @@ class MessageService(private val messageRepository: IMessageRepository) {
         return newMessage
     }
 
-    fun getMessages(userId: UUID) {
-
+    fun getDifferentConversations(userId: UUID): LinkedList<UUID> {
+        var allMsgs = messageRepository.findAll()
+        allMsgs.filter { it.sourceUserId == userId || it.destinationUserId == userId}
+        val convosIds = LinkedList<UUID>()
+        allMsgs.forEach {
+            if (!convosIds.contains(it.destinationUserId) && !convosIds.contains(it.sourceUserId)) {
+                val toAdd:UUID
+                if (it.sourceUserId == userId) toAdd = it.destinationUserId
+                else toAdd = it.sourceUserId
+                convosIds.add(toAdd)
+            }
+        }
+        return convosIds
     }
 
 }

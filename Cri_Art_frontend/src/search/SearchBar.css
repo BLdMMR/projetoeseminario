@@ -1,0 +1,11 @@
+.search-bar {
+    display: inline-flex;
+    position: relative;
+    width: 50vw;
+    height: 50px;
+    top: 30vh;
+    left: 50vw;
+    z-index: 3;
+
+    transform: translateX(-50%);
+}

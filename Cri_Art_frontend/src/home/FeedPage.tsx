@@ -4,7 +4,7 @@ import {AuthService} from "../api/AuthService";
 import './Feed.css'
 import {useHistory} from "react-router-dom";
 import SearchBar from "../search/SearchBar";
-import CaughtUp from "../icons/HuionSketch_1633042513466.png"
+import CaughtUp from "../icons/youreAllCaughtUpBG.png"
 
 function FeedPage(props: any) {
     const [feed, setFeed] = useState<Pub[]>([])
@@ -18,7 +18,6 @@ function FeedPage(props: any) {
         ).then((resFeed) => {
             setFeed(resFeed)
             setHasLoaded(true)
-
         }).catch(err => {
             console.error(err)
         })
@@ -56,7 +55,6 @@ function FeedPage(props: any) {
                 </span>
             </div> :
                 <h4/>}
-            {/*TODO: Put a search bar for user to search new artists*/}
             {feed!.map(renderFeed)}
         </div>
     )

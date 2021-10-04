@@ -5,6 +5,7 @@ import {AuthService} from "../api/AuthService";
 import {Artist} from "../search/SearchResult";
 import "./ArtistProfile.css"
 import WorkManagement from "./work/WorkManagement";
+import {MessageService} from "../api/MessageService";
 
 
 
@@ -12,6 +13,8 @@ export default function ArtistProfile(props: any) {
     const id = useLocation().pathname.split('/')[2]
     const [data, setData] = useState<Artist>()
     const [follow, setFollow] = useState<string | undefined>(undefined)
+
+    const messageRef = useRef<HTMLTextAreaElement>(null)
 
 
      useEffect(() => {
@@ -54,7 +57,12 @@ export default function ArtistProfile(props: any) {
     <label className="btn btn-outline-primary" htmlFor={"btn-check-follow"} onClick={()=>{setFollow(follow === "Follow" ? "Following" : "Follow")}} defaultChecked={follow != "Follow"}>{follow}</label></span> :
         <h6>Log in to follow</h6>
 
+    function handleSendMessage() {
+        MessageService.sendMessage(AuthService.getId()!!, data!!.id, messageRef.current!!.value)
+    }
+
     if (data) {
+
         return id !== AuthService.getId() ? (
             <div className="artist-profile">
                 <div className={"artist-details"}>
@@ -65,6 +73,29 @@ export default function ArtistProfile(props: any) {
                         {data.tags.map((tag, idx) => {
                             return <button key={tag + idx} className={"btn btn-outline-primary"}>{tag}</button>
                         })}
+                    </div>
+                    <button type="button" className="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#MessageModal">
+                        Message Artist
+                    </button>
+
+                    <div className="modal fade" id="MessageModal" aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div className="modal-dialog">
+                            <div className="modal-content" id={"message-modal-content"}>
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="exampleModalLabel">{`Message ${data.username}`}</h5>
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div className="modal-body" id={"message-modal-body"}>
+                                    <textarea ref={messageRef}/>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-primary" onClick={handleSendMessage}>Send Message</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className={"artist-portfolio"}>

@@ -17,9 +17,10 @@
 
 .loading-feed {
     display: flex;
-    width: 50vw;top: 30vh;
+    width: 50vw;
+    top: 30vh;
     left: 50vw;
-    transform: translateX(-50%);
+    transform: translate(50%, 50%);
 }
 
 
@@ -36,14 +37,10 @@
     transform: translateX(25%);
 }
 .feed img {
-    width: calc(100vw - 320px);
+    width: 100%;
+    transform: translate(0%, -15%);
 }
 
-.search-bar-feed {
-    position: absolute;
+.search-bar {
     z-index: 400;
-    top: 33%;
-    left: 25%;
-    width: 600px;
-
 }

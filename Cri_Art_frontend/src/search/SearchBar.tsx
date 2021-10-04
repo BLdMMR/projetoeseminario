@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from "react";
 import {useHistory} from "react-router-dom";
 import {Api, HTTP_METHOD} from "../api/Api";
+import "./SearchBar.css"
 
 
 function SearchBar() {
@@ -39,7 +40,7 @@ function SearchBar() {
 
 
     return (
-        <div className={'search-bar-feed'}>
+        <div className={'search-bar'}>
             <input type="text" className="form-control" id="exampleFormControlInput1" ref={searchRef}/>
             {/* <input type="text" id='home_search_bar' ref={searchRef}/> */}
             <button type="button" id='home_search_button' className="btn btn-primary"

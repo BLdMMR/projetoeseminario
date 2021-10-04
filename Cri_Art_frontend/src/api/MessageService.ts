@@ -49,7 +49,7 @@ export class MessageService {
     this.websocket?.close()
   }
 
-  public static sendMessage(message: string) {
+  public static sendMessage(senderId: string, recieverId: string, message: string) {
     if (!message) {
       console.log("Empty message!")
       return

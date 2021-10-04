@@ -98,12 +98,12 @@ export default function WorkPost(props: { work: Work }) {
             <div className={"modal fade"} id={`exampleModalToggle-${work.id}`} aria-hidden="true"
                  aria-labelledby="exampleModalToggleLabel">
                 <div className="modal-dialog modal-dialog-centered">
-                    <div className="modal-content">
+                    <div className="modal-content" id={"post-modal-content"}>
                         <div className="modal-header">
                             <h5 className="modal-title" id="exampleModalToggleLabel">{work.work_name}</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
                         </div>
-                        <div className="modal-body">
+                        <div className="modal-body" id={"post-modal-body"}>
                             <SRLWrapper>
                                 {/*<a href = {`data:image/${work.fileExtension};base64,` + work.content}></a>*/}
                                 <img src={`data:image/${work.fileExtension};base64,` + work.content} alt={work.work_name}
