@@ -50,9 +50,7 @@ function FeedPage(props: any) {
         <div className={'feed'}>
             {!feed[0] ? <div>
                 <img src={CaughtUp}/>
-                <span>
-                    <SearchBar location={"feed"}/>
-                </span>
+                <SearchBar location={"feed"}/>
             </div> :
                 <h4/>}
             {feed!.map(renderFeed)}
