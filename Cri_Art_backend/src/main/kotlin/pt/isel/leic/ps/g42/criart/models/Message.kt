@@ -13,4 +13,4 @@ data class Message (
     val recipientUsername: String,
     val message: String,
     val timestamp: Long
-)
+) 
