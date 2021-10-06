@@ -5,6 +5,7 @@ import {MessageService, TextMessage} from "../api/MessageService";
 import ChatWrapperHeader from "./ChatWrapperHeader";
 import ChatMessaging from "./ChatMessaging";
 import ChatContacts from "./ChatContacts";
+import {UserActionService} from "../user/UserActionService";
 
 
 export default function Chat(props: any) {
@@ -17,14 +18,22 @@ export default function Chat(props: any) {
 
 
   useEffect(() => {
-    const sub = MessageService.getMessageStream().subscribe(message => {
+    const messageSub = MessageService.getMessageStream().subscribe(message => {
       console.log("New message: ", message)
       if (!messages.some(msg => msg.messageId === message.messageId)) {
         messages.push(message)
         setRandomNumber(Math.random())
       }
     })
-    return () => sub.unsubscribe()
+    const userSub = UserActionService.getSelectUsernameChatStream().subscribe(username => {
+      setSelectedUsername(username);
+      setOpen(true);
+    })
+
+    return () => {
+      messageSub.unsubscribe()
+      userSub.unsubscribe()
+    }
   }, [])
 
   if (!AuthService.getToken()) {
