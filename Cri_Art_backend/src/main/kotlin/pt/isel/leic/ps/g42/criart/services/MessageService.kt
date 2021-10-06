@@ -12,7 +12,7 @@ import kotlin.collections.HashMap
 @Service
 class MessageService(private val messageRepository: IMessageRepository) {
 
-    fun putMessage(sourceUsername: String, destinationUsername: String, message: String): Message {
+    fun addMessage(sourceUsername: String, destinationUsername: String, message: String): Message {
 
         val newMessage = Message(UUID.randomUUID(), sourceUsername, destinationUsername, message, System.currentTimeMillis())
         this.messageRepository.save(newMessage)
