@@ -13,10 +13,9 @@ export interface TextMessage {
 
 export class MessageService {
 
-  private static readonly WEBSOCKET_ADDRESS = "wss://cri-art.herokuapp.com/api/message"
+  //private static readonly WEBSOCKET_ADDRESS = "wss://cri-art.herokuapp.com/api/message"
 
-  //private static readonly WEBSOCKET_ADDRESS = "ws://localhost:8080/api/message"
-
+  private static readonly WEBSOCKET_ADDRESS = "ws://localhost:8080/api/message"
 
 
   private static websocket?: WebSocket;
@@ -32,8 +31,8 @@ export class MessageService {
   }, 3000)
 
   public static initialize() {
-
-    if ((this.websocket == null || this.websocket.readyState === WebSocket.CLOSED) && AuthService.getToken() && !this.isInitialized) {
+    const websocketIsDead = this.websocket == null || this.websocket.readyState === WebSocket.CLOSED;
+    if (websocketIsDead && AuthService.getToken() && !this.isInitialized) {
       this.websocket = new WebSocket(this.WEBSOCKET_ADDRESS + "?token=" + AuthService.getToken())
       console.log("Opened websocket with token: " + AuthService.getToken())
       this.websocket.onopen = () => {

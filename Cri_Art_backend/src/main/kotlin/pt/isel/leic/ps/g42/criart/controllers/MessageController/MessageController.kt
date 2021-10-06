@@ -54,7 +54,6 @@ class MessageController(
 
     @Override
     override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
-        log.info("Incomming message")
 
         val payloadString: String = message.payload
         if (payloadString == "__keepalive_ping__") {

@@ -6,6 +6,7 @@ import {Artist} from "../search/SearchResult";
 import "./ArtistProfile.css"
 import WorkManagement from "./work/WorkManagement";
 import {MessageService} from "../api/MessageService";
+import {UserActionService} from "../user/UserActionService";
 
 
 
@@ -61,6 +62,10 @@ export default function ArtistProfile(props: any) {
         MessageService.sendMessage(data!!.username, messageRef.current!!.value)
     }
 
+    function handleOpenChat() {
+        UserActionService.selectUsernameChat(data!!.username)
+    }
+
     if (data) {
 
         return id !== AuthService.getId() ? (
@@ -74,29 +79,9 @@ export default function ArtistProfile(props: any) {
                             return <button key={tag + idx} className={"btn btn-outline-primary"}>{tag}</button>
                         })}
                     </div>
-                    <button type="button" className="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#MessageModal">
-                        Message Artist
-                    </button>
-
-                    <div className="modal fade" id="MessageModal" aria-labelledby="exampleModalLabel"
-                         aria-hidden="true">
-                        <div className="modal-dialog">
-                            <div className="modal-content" id={"message-modal-content"}>
-                                <div className="modal-header">
-                                    <h5 className="modal-title" id="exampleModalLabel">{`Message ${data.username}`}</h5>
-                                    <button type="button" className="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                </div>
-                                <div className="modal-body" id={"message-modal-body"}>
-                                    <textarea ref={messageRef}/>
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-primary" onClick={handleSendMessage}>Send Message</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                     <button type="button" className="btn btn-primary" onClick={handleOpenChat}>
+                         Message Artist
+                     </button>
                 </div>
                 <div className={"artist-portfolio"}>
                     <WorkManagement id={id}/>
@@ -207,3 +192,30 @@ function EditProfile(props: {artistInfo: Artist}) {
         </div>
     )
 }
+
+
+//
+// <button type="button" className="btn btn-primary" data-bs-toggle="modal"
+//         data-bs-target="#MessageModal">
+//     Message Artist
+// </button>
+//
+// <div className="modal fade" id="MessageModal" aria-labelledby="exampleModalLabel"
+//      aria-hidden="true">
+//     <div className="modal-dialog">
+//         <div className="modal-content" id={"message-modal-content"}>
+//             <div className="modal-header">
+//                 <h5 className="modal-title" id="exampleModalLabel">{`Message ${data.username}`}</h5>
+//                 <button type="button" className="btn-close" data-bs-dismiss="modal"
+//                         aria-label="Close"></button>
+//             </div>
+//             <div className="modal-body" id={"message-modal-body"}>
+//                 <textarea ref={messageRef}/>
+//             </div>
+//             <div className="modal-footer">
+//                 <button type="button" className="btn btn-primary" onClick={handleSendMessage}>Send Message</button>
+//             </div>
+//         </div>
+//     </div>
+// </div>
+
