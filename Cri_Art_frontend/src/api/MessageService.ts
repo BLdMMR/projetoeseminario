@@ -13,9 +13,9 @@ export interface TextMessage {
 
 export class MessageService {
 
-  //private static readonly WEBSOCKET_ADDRESS = "wss://cri-art.herokuapp.com/api/message"
+  private static readonly WEBSOCKET_ADDRESS = "wss://cri-art.herokuapp.com/api/message"
 
-  private static readonly WEBSOCKET_ADDRESS = "ws://localhost:8080/api/message"
+  //private static readonly WEBSOCKET_ADDRESS = "ws://localhost:8080/api/message"
 
 
   private static websocket?: WebSocket;
