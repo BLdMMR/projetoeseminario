@@ -4,7 +4,6 @@ import {AuthService} from "../api/AuthService";
 
 
 export default function ChatMessaging(props: any) {
-  //const [typedMessage, setTypedMessage] = useState<string>("")
 
   useEffect(() => {
     const messageList = document.getElementById("messageList");
@@ -21,13 +20,9 @@ export default function ChatMessaging(props: any) {
     }
   }).sort((m1: TextMessage, m2: TextMessage) => m1.timestamp - m2.timestamp)
 
-  console.log("messaging: ", messages)
-  messages.forEach((msg: TextMessage) => {
-        if (!msg.hasBeenRead) {
-          console.log("wasn't read: ", msg)
-          MessageService.sendMessage(msg.id, undefined, undefined)
-        }
-      })
+  messages.filter((msg: TextMessage) => !msg.hasBeenRead)
+    .forEach((msg: TextMessage) =>
+          MessageService.sendMessage(msg.id))
 
   return <div>
     <div className={"chat-user-header-section"}>
@@ -53,17 +48,13 @@ export default function ChatMessaging(props: any) {
     </div>
     <div className={"chat-input-section"}>
       <div className="input-group mb-3">
-        <input type="text" className="form-control" id={"chat-input"} placeholder="Type message"
-               //value={typedMessage}
-               //onChange={(e) => setTypedMessage(e.target.value)}
-        />
+        <input type="text" className="form-control" id={"chat-input"} placeholder="Type message"/>
         <div className="input-group-append">
           <button className="btn btn-outline-secondary" type="button"
                   onClick={() => {
                     const textValue = (document.getElementById("chat-input") as HTMLInputElement).value;
                     (document.getElementById("chat-input") as HTMLInputElement).value = "";
-                    MessageService.sendMessage(undefined, props.selectedUsername, textValue)//typedMessage)
-                    //setTypedMessage("")
+                    MessageService.sendMessage(undefined, props.selectedUsername, textValue)
                   }}>Send
           </button>
         </div>
