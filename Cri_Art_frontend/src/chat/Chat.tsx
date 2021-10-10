@@ -15,15 +15,22 @@ export default function Chat(props: any) {
   /* The purpose of the following state variable
    is to trigger re-rendering at will */
   const [randomNumber, setRandomNumber] = useState<number>(0)
+  const [usersNewMessages, setUsersNewMessages] = useState<Array<string>>([])
 
 
   useEffect(() => {
     const messageSub = MessageService.getMessageStream().subscribe(message => {
-      console.log("New message: ", message)
-      if (!messages.some(msg => msg.messageId === message.messageId)) {
+
+      const existingMsgIdx = messages.findIndex(msg => msg.id === message.id)
+      if (existingMsgIdx === -1) {
         messages.push(message)
-        setRandomNumber(Math.random())
+      } else {
+        messages[existingMsgIdx] = message
       }
+      const usersNewMsg = messages.filter(msg => !msg.hasBeenRead).map(msg => msg.senderUsername)
+      setUsersNewMessages(usersNewMsg)
+
+      setRandomNumber(Math.random())
     })
     const userSub = UserActionService.getSelectUsernameChatStream().subscribe(username => {
       setSelectedUsername(username);
@@ -45,14 +52,17 @@ export default function Chat(props: any) {
   const handleSelectUsername = (newUsername: string) => setSelectedUsername(newUsername)
 
   return <div className={"chat-wrapper " + (open ? "chat-wrapper-open" : "chat-wrapper-closed")}>
-    <ChatWrapperHeader open={open} onOpen={setOpen}></ChatWrapperHeader>
+    <ChatWrapperHeader open={open} onOpen={setOpen} hasNewMessages={usersNewMessages.length > 0}>
+    </ChatWrapperHeader>
     {selectedUsername !== ''
       ? <ChatMessaging selectedUsername={selectedUsername}
                        selectUsername={handleSelectUsername}
                        messages={messages}></ChatMessaging>
       : <ChatContacts selectedUsername={selectedUsername}
                       selectUsername={handleSelectUsername}
-                      messages={messages}></ChatContacts>}
+                      messages={messages}
+                      usersNewMessages={usersNewMessages}></ChatContacts>
+    }
   </div>
 
 }

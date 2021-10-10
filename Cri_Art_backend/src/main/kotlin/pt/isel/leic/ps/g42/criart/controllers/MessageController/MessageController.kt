@@ -29,9 +29,7 @@ class MessageController(
     private val log = LoggerFactory.getLogger(this::class.simpleName)
 
     private fun sendMessage(session: WebSocketSession?, message: Message) {
-
-        val outbound = OutboundMessage(message.id.toString(), message.senderUsername, message.recipientUsername, message.message, message.timestamp)
-        val payload: String = this.objectMapper.writeValueAsString(outbound)
+        val payload: String = this.objectMapper.writeValueAsString(message)
 
         val websocketMessage = TextMessage(payload)
         session?.sendMessage(websocketMessage)
@@ -66,10 +64,20 @@ class MessageController(
 
         log.info("Message from: ${user.username}")
 
-        val messageEntity = this.messageService.addMessage(user.username!!, messageInput.recipientUsername, messageInput.message)
+        messageInput.messageId?.let {
+            val messageEntity = this.messageService.acknowledgeMessage(messageInput.messageId)
+            this.sendMessage(session, messageEntity)
+        } ?: run {
+            val messageEntity = this.messageService.addMessage(
+                    user.username!!,
+                    messageInput.newMessage!!.recipientUsername,
+                    messageInput.newMessage!!.message)
 
-        val receiverSession = openSessions[messageInput.recipientUsername]
-        this.sendMessage(receiverSession, messageEntity)
-        this.sendMessage(session, messageEntity)
+            val receiverSession = openSessions[messageInput.newMessage!!.recipientUsername]
+
+            this.sendMessage(receiverSession, messageEntity)
+            this.sendMessage(session, messageEntity)
+        }
+
     }
 }

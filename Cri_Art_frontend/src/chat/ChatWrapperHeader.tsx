@@ -2,7 +2,7 @@
 
 export default function ChatWrapperHeader(props: any) {
 
-  return <div className={"chat-wrapper-header"}>
+  return <div className={"chat-wrapper-header " + (props.hasNewMessages ? "blinking-animation" : "")}>
     <div className={"chat-wrapper-header-title"}>Messages</div>
     <div className={"chat-wrapper-header-button"} onClick={() => props.onOpen(!props.open)}>
       {props.open

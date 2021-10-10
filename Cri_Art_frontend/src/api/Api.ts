@@ -11,9 +11,9 @@ export enum HTTP_METHOD {
 
 export class Api {
 
-  private static readonly API_BASE_URL = 'https://cri-art.herokuapp.com/api'
-
-  //private static readonly API_BASE_URL = 'http://localhost:8080/api'
+  private static readonly API_BASE_URL = process.env.NODE_ENV === "development"
+                                                ? "http://localhost:8080/api"
+                                                : "https://cri-art.herokuapp.com/api";
 
 
     public static fetchFromAPI(method: HTTP_METHOD, path: string, body?: any): Promise<any> {

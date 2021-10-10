@@ -13,8 +13,14 @@ import kotlin.collections.HashMap
 class MessageService(private val messageRepository: IMessageRepository) {
 
     fun addMessage(sourceUsername: String, destinationUsername: String, message: String): Message {
+        val newMessage = Message(UUID.randomUUID(), sourceUsername, destinationUsername, message, System.currentTimeMillis(), false)
+        this.messageRepository.save(newMessage)
+        return newMessage
+    }
 
-        val newMessage = Message(UUID.randomUUID(), sourceUsername, destinationUsername, message, System.currentTimeMillis())
+    fun acknowledgeMessage(messageId: UUID): Message {
+        val newMessage = this.messageRepository.findById(messageId).get()
+        newMessage.hasBeenRead = true
         this.messageRepository.save(newMessage)
         return newMessage
     }
