@@ -101,3 +101,21 @@
     font-style: italic;
     font-size: 12px;
 }
+
+.blinking-animation {
+    animation: blink 1s infinite;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+}
+
+@keyframes blink {
+    from {
+        background-color: antiquewhite;
+    }
+    50% {
+        background-color: burlywood;
+    }
+    to {
+        background-color: antiquewhite;
+    }
+}

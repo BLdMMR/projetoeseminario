@@ -4,22 +4,22 @@ import Chat from "../chat/Chat";
 import {Observable, Subject} from "rxjs";
 
 export interface TextMessage {
-  messageId: string;
+  id: string;
   senderUsername: string;
   recipientUsername: string;
   message: string;
-  time: number;
+  timestamp: number;
+  hasBeenRead: boolean;
 }
 
 export class MessageService {
 
-  private static readonly WEBSOCKET_ADDRESS = "wss://cri-art.herokuapp.com/api/message"
-
-  //private static readonly WEBSOCKET_ADDRESS = "ws://localhost:8080/api/message"
-
+  private static readonly WEBSOCKET_ADDRESS = process.env.NODE_ENV === "development"
+                                                ? "ws://localhost:8080/api/message"
+                                                : "wss://cri-art.herokuapp.com/api/message";
 
   private static websocket?: WebSocket;
-  private static isInitialized: boolean
+  private static isInitialized: boolean;
 
   private static readonly messageEmitter: Subject<TextMessage> = new Subject()
   private static readonly messageStream: Observable<TextMessage> = MessageService.messageEmitter.asObservable()
@@ -61,12 +61,14 @@ export class MessageService {
     this.websocket?.close()
   }
 
-  public static sendMessage(username: string, message: string) {
-    if (!message) {
+  public static sendMessage(id?: string, username?: string, message?: string) {
+    if (!message && !id) {
       console.log("Empty message!")
       return
     } else if (this.isInitialized) {
-      const msgObj = { recipientUsername: username, message: message }
+      const msgObj = id
+        ? { messageId: id }
+        : { newMessage: { recipientUsername: username, message: message }}
       console.log("Sending message: ", msgObj)
       this.websocket?.send(JSON.stringify(msgObj))
 
@@ -79,17 +81,4 @@ export class MessageService {
     return MessageService.messageStream
   }
 
-}
-
-class Message{
-  private senderId: string | undefined;
-  private message: String;
-
-  constructor(
-      id: string | undefined,
-      message: String
-  ) {
-    this.senderId = id
-    this.message = message
-  }
 }

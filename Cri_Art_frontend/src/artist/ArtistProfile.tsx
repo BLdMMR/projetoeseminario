@@ -58,10 +58,6 @@ export default function ArtistProfile(props: any) {
     <label className="btn btn-outline-primary" htmlFor={"btn-check-follow"} onClick={()=>{setFollow(follow === "Follow" ? "Following" : "Follow")}} defaultChecked={follow != "Follow"}>{follow}</label></span> :
         <h6>Log in to follow</h6>
 
-    function handleSendMessage() {
-        MessageService.sendMessage(data!!.username, messageRef.current!!.value)
-    }
-
     function handleOpenChat() {
         UserActionService.selectUsernameChat(data!!.username)
     }
@@ -192,30 +188,4 @@ function EditProfile(props: {artistInfo: Artist}) {
         </div>
     )
 }
-
-
-//
-// <button type="button" className="btn btn-primary" data-bs-toggle="modal"
-//         data-bs-target="#MessageModal">
-//     Message Artist
-// </button>
-//
-// <div className="modal fade" id="MessageModal" aria-labelledby="exampleModalLabel"
-//      aria-hidden="true">
-//     <div className="modal-dialog">
-//         <div className="modal-content" id={"message-modal-content"}>
-//             <div className="modal-header">
-//                 <h5 className="modal-title" id="exampleModalLabel">{`Message ${data.username}`}</h5>
-//                 <button type="button" className="btn-close" data-bs-dismiss="modal"
-//                         aria-label="Close"></button>
-//             </div>
-//             <div className="modal-body" id={"message-modal-body"}>
-//                 <textarea ref={messageRef}/>
-//             </div>
-//             <div className="modal-footer">
-//                 <button type="button" className="btn btn-primary" onClick={handleSendMessage}>Send Message</button>
-//             </div>
-//         </div>
-//     </div>
-// </div>
 

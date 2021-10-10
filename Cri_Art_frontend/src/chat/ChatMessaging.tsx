@@ -4,7 +4,7 @@ import {AuthService} from "../api/AuthService";
 
 
 export default function ChatMessaging(props: any) {
-  const [typedMessage, setTypedMessage] = useState<string>("")
+  //const [typedMessage, setTypedMessage] = useState<string>("")
 
   useEffect(() => {
     const messageList = document.getElementById("messageList");
@@ -19,7 +19,15 @@ export default function ChatMessaging(props: any) {
       return message.senderUsername === props.selectedUsername
         || message.recipientUsername === props.selectedUsername
     }
-  }).sort((m1: TextMessage, m2: TextMessage) => m1.time - m2.time)
+  }).sort((m1: TextMessage, m2: TextMessage) => m1.timestamp - m2.timestamp)
+
+  console.log("messaging: ", messages)
+  messages.forEach((msg: TextMessage) => {
+        if (!msg.hasBeenRead) {
+          console.log("wasn't read: ", msg)
+          MessageService.sendMessage(msg.id, undefined, undefined)
+        }
+      })
 
   return <div>
     <div className={"chat-user-header-section"}>
@@ -34,10 +42,10 @@ export default function ChatMessaging(props: any) {
     </div>
     <div className={"chat-message-list-section"} id={"messageList"}>
       {messages.map((message: TextMessage, idx: number) =>
-        <div className={"chat-message"} key={message?.time + '' + idx}>
+        <div className={"chat-message"} key={message?.timestamp + '' + idx}>
           <span className={"chat-user"}>{message.senderUsername}</span>
           <span className={"chat-message-time"}>&nbsp;&nbsp;&nbsp;&nbsp;
-            {new Date(message.time).toLocaleString("en-GB")}</span>
+            {new Date(message.timestamp).toLocaleString("en-GB")}</span>
           <br/>
           {message.message}
         </div>)
@@ -45,14 +53,17 @@ export default function ChatMessaging(props: any) {
     </div>
     <div className={"chat-input-section"}>
       <div className="input-group mb-3">
-        <input type="text" className="form-control" placeholder="Type message"
-               value={typedMessage}
-               onChange={(e) => setTypedMessage(e.target.value)}/>
+        <input type="text" className="form-control" id={"chat-input"} placeholder="Type message"
+               //value={typedMessage}
+               //onChange={(e) => setTypedMessage(e.target.value)}
+        />
         <div className="input-group-append">
           <button className="btn btn-outline-secondary" type="button"
                   onClick={() => {
-                    MessageService.sendMessage(props.selectedUsername, typedMessage)
-                    setTypedMessage("")
+                    const textValue = (document.getElementById("chat-input") as HTMLInputElement).value;
+                    (document.getElementById("chat-input") as HTMLInputElement).value = "";
+                    MessageService.sendMessage(undefined, props.selectedUsername, textValue)//typedMessage)
+                    //setTypedMessage("")
                   }}>Send
           </button>
         </div>
