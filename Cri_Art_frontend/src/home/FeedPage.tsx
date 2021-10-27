@@ -11,17 +11,17 @@ function FeedPage(props: any) {
     const [hasLoaded, setHasLoaded] = useState<boolean>(false)
     const history = useHistory()
 
-    if (!feed.length) {
+    useEffect(() => {
         Api.fetchFromAPI(
-            HTTP_METHOD.GET,
-            `/feed?token=${AuthService.getToken()}`
+          HTTP_METHOD.GET,
+          `/feed?token=${AuthService.getToken()}`
         ).then((resFeed) => {
             setFeed(resFeed)
             setHasLoaded(true)
         }).catch(err => {
             console.error(err)
         })
-    }
+    }, [])
 
     function renderFeed(work: Pub) : JSX.Element{
         console.log("Printing " + work.work.work_name)

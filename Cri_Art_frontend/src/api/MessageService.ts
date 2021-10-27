@@ -27,12 +27,15 @@ export class MessageService {
   private static readonly keepAliveInterval = setInterval(() => {
     if (MessageService.websocket?.readyState === WebSocket.OPEN) {
       MessageService.websocket?.send('__keepalive_ping__')
+    } else {
+      MessageService.initialize();
     }
   }, 3000)
 
   public static initialize() {
-    const websocketIsDead = this.websocket == null || this.websocket.readyState === WebSocket.CLOSED;
-    if (websocketIsDead && AuthService.getToken() && !this.isInitialized) {
+    const isDead = this.websocket == null || this.websocket.readyState === WebSocket.CLOSED;
+    const isClosing = this.websocket?.readyState === WebSocket.CLOSED
+    if (isDead && AuthService.getToken() && !this.isInitialized && !isClosing) {
       this.websocket = new WebSocket(this.WEBSOCKET_ADDRESS + "?token=" + AuthService.getToken())
       console.log("Opened websocket with token: " + AuthService.getToken())
       this.websocket.onopen = () => {
