@@ -5,7 +5,7 @@
     height: 50px;
     top: 30vh;
     left: 50vw;
-    z-index: 3;
+    z-index: 400;
 
     transform: translateX(-50%);
 }
