@@ -11,7 +11,7 @@ function FeedPage(props: any) {
     const [hasLoaded, setHasLoaded] = useState<boolean>(false)
     const history = useHistory()
 
-    if (!feed) {
+    if (!feed.length) {
         Api.fetchFromAPI(
             HTTP_METHOD.GET,
             `/feed?token=${AuthService.getToken()}`
@@ -38,7 +38,7 @@ function FeedPage(props: any) {
         )
     }
 
-    return !feed && !hasLoaded ? (
+    return !feed.length && !hasLoaded ? (
         <div className={"loading-feed"}>
             <h2>Loading Feed...</h2>
             <div className="spinner-border text-primary" role="status">
