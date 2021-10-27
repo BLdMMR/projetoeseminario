@@ -37,11 +37,13 @@ export default function ArtistProfile(props: any) {
          }
          if (!follow) {
              setFollow("Follow")
-             AuthService.getUser()?.listOfFollows.forEach((artist_id) => {
-                 if (artist_id === id) {
-                     setFollow("Following")
-                 }
-             })
+             if (AuthService.getUser()) {
+                 AuthService.getUser()?.listOfFollows?.forEach((artist_id) => {
+                     if (artist_id === id) {
+                         setFollow("Following")
+                     }
+                 })
+             }
          }
      }, [data, setData, follow, setFollow, id])
 
