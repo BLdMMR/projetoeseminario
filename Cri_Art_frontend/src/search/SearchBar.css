@@ -13,9 +13,9 @@
 .search-bar-feed {
     opacity: 90%;
     display: inline-flex;
-    position: relative;
+    position: absolute;
     max-width: 50vw;
-    transform: translate(25%, -750%);
+    transform: translate(-125%, 650%);
     z-index: 400;
 }
 
