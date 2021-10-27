@@ -38,6 +38,7 @@
 }
 .feed img {
     width: 100%;
+    position: relative;
     transform: translate(0%, -15%);
     z-index: 300;
 }
