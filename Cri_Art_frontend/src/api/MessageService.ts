@@ -27,6 +27,8 @@ export class MessageService {
   private static readonly keepAliveInterval = setInterval(() => {
     if (MessageService.websocket?.readyState === WebSocket.OPEN) {
       MessageService.websocket?.send('__keepalive_ping__')
+    } else {
+      MessageService.initialize();
     }
   }, 3000)
 
