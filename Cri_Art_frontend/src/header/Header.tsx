@@ -50,9 +50,13 @@ export default function Header(props: any) {
             if (AuthService.hasProfile())
                 history.push(`/artist/${AuthService.getId()}?token=${AuthService.getToken()}`)
             else history.push(`create-profile?token=${AuthService.getToken()}`)
+
+          window.location.reload()
         }
         else {
             history.push(`/settings?token=${AuthService.getToken()}`)
+
+          window.location.reload()
         }
     }
 
@@ -73,7 +77,7 @@ export default function Header(props: any) {
             </Link>
           </div>
             {/*<SearchBar></SearchBar>*/}
-          <div className={'search-section'}>
+          { window.location.pathname.includes("/search") ? <div></div> : <div className={'search-section'}>
             <input type="text" className="form-control" id="header-search-bar" ref={searchRef} />
             <button type="button" id='header_search_button' className="btn btn-primary" onClick={HandleSearch}>Search</button>
               {/*<div className="btn-group" id={'search-btns'}>*/}
@@ -85,7 +89,7 @@ export default function Header(props: any) {
                       {tags.map(renderTag)}
                   </ul>
               {/*</div>*/}
-          </div>
+          </div> }
             <nav className="btn-group" id={"options-menu"}>
                 <button type="button" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     Options

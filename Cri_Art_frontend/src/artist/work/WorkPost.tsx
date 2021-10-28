@@ -12,21 +12,14 @@ const videoFormats = ['mp4', 'mov', 'wmv']
 
 
 export default function WorkPost(props: { work: Work }) {
-    const commentRef = useRef<HTMLTextAreaElement>(null)
     const [arrow, setArrow] = useState(arrow_up)
-    const [toggleComment, setToggleComment] = useState<boolean>(false)
     const work = props.work
-    const [comments, setComment] = useState<Comment[]>(work.comments)
 
     useEffect(() => {
         if (work.ups.find(AuthService.getId)) {
             setArrow(arrow_up_rev)
         }
     }, [arrow])
-
-    useEffect(() => {
-
-    }, [comments, setComment])
 
     function isVideo(fileExtension: string) {
         videoFormats.forEach((idx) => {
@@ -155,7 +148,16 @@ export function CommentSection(props: {comments: Comment[], owner: string, id: s
             commentContent
         ).then(success => {
             if (success) console.log("Success")
-            setComment((comms) => {comms.push(new Comment(commentContent, AuthService.getId()!!, props.id, AuthService.getUser()?.name!!)); return comms})
+            setComment((comms) => {
+                const result = comms.slice();
+
+                result.push(new Comment(commentContent, AuthService.getId()!!, props.id, AuthService.getUser()?.name!!));
+                return result;
+            });
+            commentRef.current!!.value = "";
+            const commentList = document.getElementById("comments-list");
+            commentList!!.scrollTop = commentList!!.scrollHeight;
+
         }).catch(err => {
             Error(err)
         })
@@ -172,7 +174,7 @@ export function CommentSection(props: {comments: Comment[], owner: string, id: s
     }
 
     return(
-        <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" className="scrollspy-example">
+        <div id={"comments-list"} data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" className="scrollspy-example">
             {comments.length > 0 ? comments.map(renderComments) : <h4>No Comments</h4>}
             {AuthService.getToken() != null ? <span><textarea className="textarea" ref={commentRef} role="textbox" contentEditable id={'comment-box'} placeholder={"Write Comment Here"}/>
                 <button type={'button'} className={'btn btn-primary'} onClick={handleComment}>Comment</button></span>: <></>}
