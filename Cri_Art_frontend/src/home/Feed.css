@@ -28,7 +28,7 @@
     position: relative;
     /*margin: auto;*/
     height: auto;
-    width: 50vw;
+    width: fit-content;
     margin-bottom: 50px;
 
 }

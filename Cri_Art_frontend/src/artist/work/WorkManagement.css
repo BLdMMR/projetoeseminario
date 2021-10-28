@@ -1,7 +1,14 @@
 .work-image {
     height: 500px;
-    width: auto;
+    width: fit-content;
+    object-fit: cover;
 }
+
+.card-body {
+
+    width: fit-content;
+}
+
 .works {
     display: flex;
     flex-direction: column;

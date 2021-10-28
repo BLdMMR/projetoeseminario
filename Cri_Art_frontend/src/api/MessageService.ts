@@ -34,7 +34,7 @@ export class MessageService {
 
   public static initialize() {
     const isDead = this.websocket == null || this.websocket.readyState === WebSocket.CLOSED;
-    const isClosing = this.websocket?.readyState === WebSocket.CLOSED
+    const isClosing = this.websocket?.readyState === WebSocket.CLOSING
     if (isDead && AuthService.getToken() && !this.isInitialized && !isClosing) {
       this.websocket = new WebSocket(this.WEBSOCKET_ADDRESS + "?token=" + AuthService.getToken())
       console.log("Opened websocket with token: " + AuthService.getToken())

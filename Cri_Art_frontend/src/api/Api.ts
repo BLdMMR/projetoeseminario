@@ -15,6 +15,10 @@ export class Api {
                                                 ? "http://localhost:8080/api"
                                                 : "https://cri-art.herokuapp.com/api";
 
+  public static getApiBaseUrl(): string {
+    return Api.API_BASE_URL;
+  }
+
 
     public static fetchFromAPI(method: HTTP_METHOD, path: string, body?: any): Promise<any> {
     path = path ? Api.API_BASE_URL.concat(path) : Api.API_BASE_URL

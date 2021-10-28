@@ -29,7 +29,8 @@ export default function WorkManagement(props: any) {
             fdata.append('name', file.name)
             fdata.append('description', descRef.current!!.value)
             fdata.forEach(console.log)
-            fetch(`http://localhost:8080/api/artist/${id}/worksofart?token=${AuthService.getToken()}`, {
+
+            fetch(`${Api.getApiBaseUrl()}/artist/${id}/worksofart?token=${AuthService.getToken()}`, {
                 method: "POST",
                 headers: new Headers(),
                 body: fdata

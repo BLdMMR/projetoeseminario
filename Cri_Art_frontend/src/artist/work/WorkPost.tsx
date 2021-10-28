@@ -81,8 +81,12 @@ export default function WorkPost(props: { work: Work }) {
             .then((res) => {
                 console.log(res)
                 window.location.reload()
+                //history.push(`/artist/${id}?token=${AuthService.getToken()}`)
+
             })
             .catch(err => {
+                window.location.reload()
+
                 console.log(err)
             })
     }
@@ -110,7 +114,7 @@ export default function WorkPost(props: { work: Work }) {
                                      className={"work-image-modal"}/>
                                 <h3>{work.description}</h3>
                                 {work.owner == AuthService.getId() ?
-                                    <button type="button" className="btn btn-danger" onClick={handleDelete}>Delete</button> : <></>
+                                    <button type="button" data-bs-dismiss="modal" className="btn btn-danger" onClick={handleDelete}>Delete</button> : <></>
                                 }
                             </SRLWrapper>
                             <CommentSection comments={work.comments} owner={work.owner} id={work.id}/>
