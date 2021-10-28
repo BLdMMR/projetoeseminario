@@ -7,16 +7,37 @@ import './SearchPage.css'
 
 
 function SearchPage(props: any) {
-    const history = useHistory()
+
     const [content, setContent] = useState<SearchResult>(new SearchResult())
     const [done, setDone] = useState<Boolean>(true)
+    const [tags, setTags] = useState<string[]>([])
+
+    const history = useHistory()
     const searchParams = useLocation().search
+
     const name = new URLSearchParams(searchParams).get('nameToSearchBy');
     const tag = new URLSearchParams(searchParams).get('tagToSearchBy')
+
     const searchPar = name? name : tag
     const [searchParam, setSearchParam] = useState<string>(searchPar!!)
+
     const searchRef = useRef<HTMLInputElement>(null)
-    console.log(`Token: ${AuthService.getToken()}`)
+
+    useEffect(() => {
+        if (tags.length <= 0){
+            Api.fetchFromAPI(
+                HTTP_METHOD.GET,
+                `/public/tags`,
+                null
+            ).then(tags => {
+                if (tags) {
+                    setTags(tags)
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+        }
+    }, [])
 
     useEffect(() => {
         if (done) {
@@ -38,9 +59,6 @@ function SearchPage(props: any) {
         } 
     }, [content, setContent, searchParam, setSearchParam])
 
-
-
-
     function renderArtists(artist: Artist) {
         const href = `/artist/${artist.id}`
         console.log(artist)
@@ -60,15 +78,27 @@ function SearchPage(props: any) {
         )
     }
 
+    function renderTag(tag: string, idx: number) {
+        return (
+            <li key={tag + idx}><button className="dropdown-item" onClick={() => setSearchParam(tag)}>{tag}</button></li>
+        )
+    }
 
     return done ? (
         <div>
             <div className={'re-search'}>
                 <input type="text" className="form-control" id="header-search-bar" ref={searchRef} />
                 <button type="button" id='header_search_button' className="btn btn-primary" onClick={() => setSearchParam(searchRef.current!.value)}>Search</button>
+                <button type="button" className="btn btn-primary" data-bs-toggle="dropdown"
+                        aria-expanded="false" id={"tag-dropdown"}>
+                    Tags
+                </button>
+                <ul className="dropdown-menu" id={"ddoptions"}>
+                    {tags.map(renderTag)}
+                </ul>
             </div>
             <div className={"search-results"}>
-                <h3>Search results:</h3>
+                <h3>Search results for {searchParam}:</h3>
                 {content.artistList?.map(renderArtists)}
             </div>
         </div>

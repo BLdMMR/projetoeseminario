@@ -14,6 +14,7 @@ const videoFormats = ['mp4', 'mov', 'wmv']
 export default function WorkPost(props: { work: Work }) {
     const [arrow, setArrow] = useState(arrow_up)
     const work = props.work
+    const [numOfLikes, setNumOfLikes] = useState(work.ups.length)
 
     useEffect(() => {
         if (work.ups.find(AuthService.getId)) {
@@ -33,7 +34,9 @@ export default function WorkPost(props: { work: Work }) {
             HTTP_METHOD.PUT,
             `/artist/${work.owner}/worksofart/${work.id}?token=${AuthService.getToken()}`
         ).then((status) => {
+            work.ups.includes(AuthService.getId()!!) ? work.ups = work.ups.filter((id) => id != AuthService.getId()!!) : work.ups.push(AuthService.getId()!!)
             arrow == arrow_up ? setArrow(arrow_up_rev) : setArrow(arrow_up)
+            setNumOfLikes(work.ups.length)
         }).catch(err => {
             console.log(err)
         })
@@ -127,6 +130,7 @@ export default function WorkPost(props: { work: Work }) {
                     <button className={"btn btn-primary"} id={'upvote'}>
                         <img src={arrow} onClick={() => handleUpvote()}/>
                     </button>
+                    <h6>{numOfLikes} {numOfLikes == 1 ? "upvote" : "upvotes" }</h6>
                 </div>
             </div>
         </div>

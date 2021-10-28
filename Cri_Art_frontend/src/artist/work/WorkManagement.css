@@ -9,6 +9,10 @@
     width: fit-content;
 }
 
+.work-actions {
+    font-family: Roboto;
+}
+
 .works {
     display: flex;
     flex-direction: column;
