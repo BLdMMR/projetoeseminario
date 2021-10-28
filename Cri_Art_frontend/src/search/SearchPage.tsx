@@ -11,14 +11,15 @@ function SearchPage(props: any) {
     const [content, setContent] = useState<SearchResult>(new SearchResult())
     const [done, setDone] = useState<Boolean>(true)
     const [tags, setTags] = useState<string[]>([])
+    const [paramType, setParamType] = useState<string>();
 
     const history = useHistory()
     const searchParams = useLocation().search
 
-    const name = new URLSearchParams(searchParams).get('nameToSearchBy');
-    const tag = new URLSearchParams(searchParams).get('tagToSearchBy')
+    const nameQuery = new URLSearchParams(searchParams).get('nameToSearchBy');
+    const tagQuery = new URLSearchParams(searchParams).get('tagToSearchBy')
 
-    const searchPar = name? name : tag
+    const searchPar = nameQuery? nameQuery : tagQuery
     const [searchParam, setSearchParam] = useState<string>(searchPar!!)
 
     const searchRef = useRef<HTMLInputElement>(null)
@@ -42,9 +43,9 @@ function SearchPage(props: any) {
     useEffect(() => {
         if (done) {
             setDone(false)
-            const path = name == null?
-                `/public/home/tags?tagToSearchBy=${searchParam}&token=${AuthService.getToken()}`:
-                `/public/home/search?nameToSearchBy=${searchParam}&token=${AuthService.getToken()}`
+            const path = paramType === 'tag'
+                ? `/public/home/tags?tagToSearchBy=${searchParam}&token=${AuthService.getToken()}`
+                : `/public/home/search?nameToSearchBy=${searchParam}&token=${AuthService.getToken()}`
             Api?.fetchFromAPI(
                 HTTP_METHOD.GET,
                 path
@@ -57,7 +58,7 @@ function SearchPage(props: any) {
             console.log(content)
             
         } 
-    }, [content, setContent, searchParam, setSearchParam])
+    }, [searchParam, setSearchParam])
 
     function renderArtists(artist: Artist) {
         const href = `/artist/${artist.id}`
@@ -80,7 +81,10 @@ function SearchPage(props: any) {
 
     function renderTag(tag: string, idx: number) {
         return (
-            <li key={tag + idx}><button className="dropdown-item" onClick={() => setSearchParam(tag)}>{tag}</button></li>
+            <li key={tag + idx}><button className="dropdown-item" onClick={() => {
+                setParamType('tag')
+                setSearchParam(tag)
+            }}>{tag}</button></li>
         )
     }
 
@@ -88,7 +92,10 @@ function SearchPage(props: any) {
         <div>
             <div className={'re-search'}>
                 <input type="text" className="form-control" id="header-search-bar" ref={searchRef} />
-                <button type="button" id='header_search_button' className="btn btn-primary" onClick={() => setSearchParam(searchRef.current!.value)}>Search</button>
+                <button type="button" id='header_search_button' className="btn btn-primary" onClick={() => {
+                    setParamType('name')
+                    setSearchParam(searchRef.current!.value)
+                }}>Search</button>
                 <button type="button" className="btn btn-primary" data-bs-toggle="dropdown"
                         aria-expanded="false" id={"tag-dropdown"}>
                     Tags
